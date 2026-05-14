@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UIPF — Universal Isotropic Pressure Field | Ahad, The Architect</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap');
+:root{
+  --maroon:#5C0A0A;--maroon2:#8B1A1A;--gold:#C8A435;--gold2:#E8D080;
+  --cream:#FAF6EE;--cream2:#F0E8D8;--dark:#0E0808;--dark2:#1A0808;
+  --blue:#2E4A6B;--blue2:#4A7AAB;--teal:#1A5C5C;
+  --green:#1A5C2A;--purple:#3A1A5C;--space:#06040F;
+  --txt:#1C1008;--box:#F5EFE0;--brd:#A07020;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'EB Garamond',serif;background:var(--cream);color:var(--txt);font-size:16px;line-height:1.75;}
+.jbar{background:var(--maroon);color:var(--gold2);text-align:center;padding:7px 1rem;font-family:'JetBrains Mono',monospace;font-size:0.63rem;letter-spacing:0.15em;border-bottom:2px solid var(--gold);}
+.topnav{position:sticky;top:0;z-index:200;background:var(--cream);border-bottom:2px solid var(--maroon);box-shadow:0 2px 12px rgba(92,10,10,0.12);}
+.navi{max-width:1100px;margin:0 auto;display:flex;align-items:center;padding:0 1.5rem;gap:0;}
+.nbrand{font-family:'Cinzel',serif;font-size:0.78rem;font-weight:700;color:var(--maroon);letter-spacing:0.12em;padding:0.7rem 1.5rem 0.7rem 0;white-space:nowrap;border-right:1px solid rgba(92,10,10,0.2);margin-right:0;}
+.nlinks{display:flex;align-items:center;gap:0;overflow-x:auto;flex:1;scrollbar-width:none;}
+.nlinks::-webkit-scrollbar{display:none;}
+.nb{font-family:'Cinzel',serif;font-size:0.58rem;font-weight:600;letter-spacing:0.07em;color:var(--maroon);background:none;border:none;padding:0 0.75rem;height:44px;cursor:pointer;transition:all 0.2s;white-space:nowrap;border-bottom:3px solid transparent;}
+.nb:hover{background:rgba(92,10,10,0.05);}
+.nb.active{color:var(--maroon);border-bottom:3px solid var(--gold);background:rgba(200,164,53,0.08);}
+.nb .nt{font-size:0.42rem;background:var(--green);color:white;padding:1px 4px;border-radius:2px;margin-left:3px;vertical-align:middle;font-family:'JetBrains Mono',monospace;}
+.page{display:none;min-height:100vh;}
+.page.active{display:block;animation:fi 0.35s ease;}
+@keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+/* COVER */
+.cover{background:linear-gradient(180deg,var(--maroon) 0%,#140808 55%,var(--dark) 100%);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:3rem 2rem;text-align:center;position:relative;overflow:hidden;}
+.cover::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(200,164,53,0.07) 0%,transparent 70%);pointer-events:none;}
+.corn{font-size:1.4rem;color:var(--gold);letter-spacing:1.4rem;margin-bottom:2rem;opacity:0.65;animation:pls 3s ease-in-out infinite;}
+@keyframes pls{0%,100%{opacity:0.35}50%{opacity:0.85}}
+.cjour{font-family:'JetBrains Mono',monospace;font-size:0.63rem;letter-spacing:0.2em;color:var(--gold2);opacity:0.65;margin-bottom:2.5rem;text-transform:uppercase;}
+.cover h1{font-family:'Cinzel',serif;font-size:clamp(1.8rem,5vw,3.8rem);font-weight:900;color:var(--gold);letter-spacing:0.04em;line-height:1.1;text-shadow:0 0 60px rgba(200,164,53,0.2);margin-bottom:0.8rem;}
+.cover h2{font-family:'EB Garamond',serif;font-size:clamp(1rem,2.2vw,1.45rem);font-style:italic;color:var(--cream2);opacity:0.82;margin-bottom:2rem;max-width:700px;}
+.crule{width:240px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0 auto 2rem;}
+.cauth{font-family:'Cinzel',serif;font-size:1rem;font-weight:600;color:var(--gold);margin-bottom:0.3rem;}
+.cinst{font-family:'EB Garamond',serif;font-size:0.9rem;color:var(--cream2);opacity:0.65;margin-bottom:2.5rem;}
+.cabst{max-width:680px;background:rgba(250,246,238,0.05);border:1px solid rgba(200,164,53,0.22);border-radius:4px;padding:1.5rem 2rem;margin-bottom:2rem;text-align:left;}
+.cabst .abtl{font-family:'Cinzel',serif;font-size:0.7rem;font-weight:700;letter-spacing:0.15em;color:var(--gold);margin-bottom:0.7rem;text-align:center;}
+.cabst p{font-size:0.9rem;color:var(--cream2);line-height:1.78;opacity:0.82;}
+.ckw{font-family:'JetBrains Mono',monospace;font-size:0.62rem;color:var(--gold2);opacity:0.45;max-width:680px;text-align:center;line-height:1.8;}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:0.75rem;max-width:900px;width:100%;margin-top:2.5rem;}
+.cgc{background:rgba(250,246,238,0.04);border:1px solid rgba(200,164,53,0.18);border-radius:4px;padding:0.9rem;cursor:pointer;transition:all 0.25s;text-align:left;}
+.cgc:hover{background:rgba(200,164,53,0.09);border-color:rgba(200,164,53,0.45);transform:translateY(-2px);}
+.cgc .cn{font-family:'JetBrains Mono',monospace;font-size:0.58rem;color:var(--gold);opacity:0.55;}
+.cgc .ct{font-family:'Cinzel',serif;font-size:0.73rem;font-weight:600;color:var(--gold);margin:0.22rem 0 0.28rem;}
+.cgc .cd{font-size:0.76rem;color:var(--cream2);opacity:0.6;line-height:1.5;}
+.cgc .cnew{display:inline-block;font-size:0.48rem;background:var(--green);color:white;padding:1px 5px;border-radius:2px;font-family:'JetBrains Mono',monospace;margin-bottom:0.18rem;}
+/* PAPER PAGES */
+.pw{max-width:860px;margin:0 auto;padding:2.5rem 2rem 5rem;}
+.sh{padding-bottom:0.8rem;border-bottom:2px solid var(--maroon);margin-bottom:2rem;}
+.sh h1{font-family:'Cinzel',serif;font-size:clamp(1.2rem,2.5vw,1.8rem);font-weight:700;color:var(--maroon);line-height:1.2;margin-bottom:0.3rem;}
+.sh .ss{font-style:italic;color:var(--maroon2);font-size:1rem;opacity:0.75;}
+.nbdg{display:inline-block;font-size:0.53rem;background:var(--green);color:white;padding:2px 7px;border-radius:3px;font-family:'JetBrains Mono',monospace;letter-spacing:0.08em;margin-left:0.5rem;vertical-align:middle;}
+.bt{font-size:1.02rem;color:var(--txt);line-height:1.85;margin-bottom:1.2rem;}
+.bt b{color:var(--maroon);}
+.bt i{color:var(--maroon2);}
+.ssec{font-family:'Cinzel',serif;font-size:1rem;font-weight:600;color:var(--maroon2);margin:1.8rem 0 0.7rem;padding-left:0.9rem;border-left:3px solid var(--maroon2);}
+.cb{border-radius:3px;padding:1.2rem 1.5rem;margin:1.5rem 0;border-left:4px solid;}
+.cb.gold{background:rgba(200,164,53,0.07);border-color:var(--gold);}
+.cb.maroon{background:rgba(92,10,10,0.06);border-color:var(--maroon2);}
+.cb.blue{background:rgba(46,74,107,0.07);border-color:var(--blue);}
+.cb.green{background:rgba(26,92,42,0.07);border-color:var(--green);}
+.cb.purple{background:rgba(58,26,92,0.07);border-color:var(--purple);}
+.cbt{font-family:'Cinzel',serif;font-size:0.7rem;font-weight:700;letter-spacing:0.12em;margin-bottom:0.6rem;text-transform:uppercase;}
+.cb.gold .cbt{color:var(--gold);}
+.cb.maroon .cbt{color:var(--maroon2);}
+.cb.blue .cbt{color:var(--blue2);}
+.cb.green .cbt{color:var(--green);}
+.cb.purple .cbt{color:var(--purple);}
+.cb p,.cb li{font-size:0.95rem;line-height:1.75;}
+.cb ul{padding-left:1.2rem;}
+.cb li{margin-bottom:0.3rem;}
+.mb{background:rgba(46,74,107,0.07);border:1px solid rgba(46,74,107,0.28);border-radius:3px;padding:0.95rem 1.5rem;margin:1.1rem 0;text-align:center;}
+.me{font-family:'JetBrains Mono',monospace;font-size:0.98rem;font-weight:600;color:var(--blue);display:block;margin-bottom:0.38rem;letter-spacing:0.02em;}
+.ml{font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:rgba(46,74,107,0.68);line-height:1.6;}
+.dt{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:0.9rem;}
+.dt th{background:var(--maroon);color:var(--gold2);font-family:'Cinzel',serif;font-size:0.67rem;letter-spacing:0.08em;padding:0.62rem 0.8rem;text-align:left;}
+.dt td{padding:0.58rem 0.8rem;border-bottom:1px solid rgba(92,10,10,0.1);vertical-align:top;line-height:1.6;color:var(--txt);}
+.dt tr:nth-child(even) td{background:rgba(92,10,10,0.025);}
+.dt tr:hover td{background:rgba(200,164,53,0.055);}
+.dt td b{color:var(--maroon);}
+.bl{list-style:none;padding:0;margin:0.8rem 0;}
+.bl li{padding:0.32rem 0 0.32rem 1.5rem;position:relative;color:var(--txt);font-size:0.97rem;line-height:1.7;border-bottom:1px solid rgba(92,10,10,0.05);}
+.bl li::before{content:'◆';position:absolute;left:0;color:var(--gold);font-size:0.58rem;top:0.6rem;}
+.bl li b{color:var(--maroon);}
+.steps{display:flex;flex-direction:column;gap:0.7rem;margin:1rem 0;}
+.step{display:flex;gap:1rem;background:rgba(92,10,10,0.04);border:1px solid rgba(92,10,10,0.1);border-radius:3px;padding:1rem;}
+.sn{font-family:'Cinzel',serif;font-size:1.3rem;font-weight:900;color:var(--gold);opacity:0.4;min-width:2rem;line-height:1;padding-top:0.1rem;}
+.sc .stl{font-family:'Cinzel',serif;font-size:0.8rem;font-weight:600;color:var(--maroon2);margin-bottom:0.3rem;}
+.sc p{font-size:0.9rem;color:var(--txt);line-height:1.65;}
+/* ANIM WRAPPERS */
+.aw{background:var(--space);border:1px solid rgba(200,164,53,0.22);border-radius:4px;margin:1.5rem 0;position:relative;overflow:hidden;}
+.aw canvas{display:block;width:100%;}
+.atl{font-family:'Cinzel',serif;font-size:0.76rem;font-weight:600;color:var(--gold);text-align:center;padding:0.55rem 1rem;border-bottom:1px solid rgba(200,164,53,0.14);letter-spacing:0.08em;background:rgba(92,10,10,0.28);}
+.ac{font-size:0.76rem;font-style:italic;color:rgba(200,190,170,0.58);text-align:center;padding:0.62rem 1rem;border-top:1px solid rgba(200,164,53,0.1);background:rgba(0,0,0,0.28);}
+/* TOGGLE CARDS */
+.tgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(195px,1fr));gap:0.65rem;margin:1rem 0;}
+.tc{background:var(--box);border:1px solid rgba(200,164,53,0.22);border-radius:3px;padding:0.85rem;cursor:pointer;transition:all 0.2s;}
+.tc:hover,.tc.open{background:rgba(200,164,53,0.1);border-color:var(--gold);}
+.tc .ttl{font-family:'Cinzel',serif;font-size:0.73rem;color:var(--maroon);font-weight:600;display:flex;justify-content:space-between;align-items:center;}
+.tc .ttl span{color:var(--gold);font-size:1rem;}
+.td{display:none;margin-top:0.55rem;padding-top:0.55rem;border-top:1px solid rgba(200,164,53,0.18);font-size:0.86rem;color:var(--txt);line-height:1.62;}
+.tc.open .td{display:block;}
+/* PREDICTIONS */
+.pgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:0.8rem;margin:1rem 0;}
+.pc{background:rgba(26,92,42,0.07);border:1px solid rgba(26,92,42,0.22);border-radius:3px;padding:1rem;}
+.pn{font-family:'JetBrains Mono',monospace;font-size:0.6rem;color:var(--green);margin-bottom:0.4rem;}
+.pc p{font-size:0.87rem;color:var(--txt);line-height:1.65;}
+/* FILTER BARS */
+.fbars{margin:1rem 0;}
+.fbar{display:flex;align-items:center;gap:1rem;padding:0.45rem 0;}
+.flab{font-family:'JetBrains Mono',monospace;font-size:0.73rem;color:var(--txt);min-width:130px;}
+.ftrack{flex:1;height:18px;background:rgba(92,10,10,0.08);border-radius:2px;overflow:hidden;}
+.ffill{height:100%;border-radius:2px;transition:width 1.5s ease;}
+.fpct{font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--maroon2);min-width:48px;text-align:right;}
+/* CONCLUSION */
+.concl{display:flex;flex-direction:column;gap:0.5rem;margin:1rem 0;}
+.ci{display:flex;gap:0.8rem;align-items:flex-start;padding:0.75rem 1rem;background:var(--box);border:1px solid rgba(200,164,53,0.14);border-radius:3px;}
+.cin{font-family:'Cinzel',serif;font-size:0.7rem;font-weight:700;color:var(--gold);min-width:1.5rem;padding-top:0.1rem;}
+.cit{font-size:0.9rem;color:var(--txt);line-height:1.65;}
+.cit b{color:var(--maroon);}
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:var(--cream2);}
+::-webkit-scrollbar-thumb{background:rgba(92,10,10,0.28);border-radius:2px;}
+@media(max-width:600px){.nbrand{display:none;}.nb{padding:0 0.5rem;font-size:0.5rem;}.pw{padding:1.5rem 1rem 4rem;}}
+</style>
+</head>
+<body>
+<div class="jbar">JOURNAL OF UNIVERSAL PRESSURE STUDIES &amp; ATOMIC FIELD THEORY &nbsp;|&nbsp; VOL. II &nbsp;|&nbsp; ISSUE I &nbsp;|&nbsp; 2026 &nbsp;|&nbsp; ISSN: AAD-2026-UIPF</div>
+<nav class="topnav">
+<div class="navi">
+  <div class="nbrand">UIPF ◆ THE ARCHITECT</div>
+  <div class="nlinks">
+    <button class="nb active" onclick="go('cover')">HOME</button>
+    <button class="nb" onclick="go('intro')">§1 MUQADDIMA</button>
+    <button class="nb" onclick="go('legacy')">§2 NEWTON/EINSTEIN</button>
+    <button class="nb" onclick="go('math')">§3 MATHEMATICS</button>
+    <button class="nb" onclick="go('atom')">§4 ATOM</button>
+    <button class="nb" onclick="go('bh')">§5 BLACK HOLE</button>
+    <button class="nb" onclick="go('cycle')">§6 UNIVERSAL CYCLE</button>
+    <button class="nb" onclick="go('dm')">§7 DARK MATTER</button>
+    <button class="nb" onclick="go('decay')">§8 FIELD DECAY</button>
+    <button class="nb" onclick="go('rot')">§9 ROTATION <span class="nt">NEW</span></button>
+    <button class="nb" onclick="go('anom')">§10 ANOMALIES <span class="nt">NEW</span></button>
+    <button class="nb" onclick="go('zg')">§11 ZERO-G <span class="nt">NEW</span></button>
+    <button class="nb" onclick="go('solar')">§12 SOLAR SHIELD <span class="nt">NEW</span></button>
+    <button class="nb" onclick="go('natija')">NATIJA</button>
+  </div>
+</div>
+</nav>
+
+<!-- COVER -->
+<div id="page-cover" class="page active">
+<div class="cover">
+  <div class="corn">◈ ◈ ◈</div>
+  <div class="cjour">Al-Adal Dynamics Institute · Research Publication · April 2026</div>
+  <h1>UNIVERSAL ISOTROPIC<br>PRESSURE FIELD</h1>
+  <h2>Magnetic Cancellation: Gravity, Mass, Black Holes aur Universal Cycles ka Mukammal Mechanical Framework</h2>
+  <div class="crule"></div>
+  <div class="cauth">AHAD — THE ARCHITECT</div>
+  <div class="cinst">Founding Theorist, Universal Pressure Protocol (UPP) · Al-Adal Dynamics Institute</div>
+  <div class="cabst">
+    <div class="abtl">◈ Abstract — Khulasa ◈</div>
+    <p>Yeh research paper Universal Isotropic Pressure Field (UIPF) aur Universal Pressure Protocol (UPP) ka mukammal framework pesh karta hai. Hamara central argument yeh hai ke kainaat ka asal default halat <em>"Floating State"</em> hai — aur jo cheez hum "gravity" kehte hain woh dar asal Zameen ki electromagnetic Cancellation Shield ka ek residual byproduct hai. Newton ki pull theory aur Einstein ki curvature model ki bunyadi mechanical khamiyon ko mathematically expose kiya gaya hai. Black Hole ko "Universal Matter Integrator" redefine kiya gaya hai. Ek tripartite Universal Recycling Cycle establish ki gayi hai. Char naye sections — Rotation-Layer Synchronization, Regional Anomalies, Zero-G Chamber Engineering, aur Solar Shield Nested Filter System — is Vol. II mein shamil hain.</p>
+  </div>
+  <div class="ckw">Keywords: UIPF · Cancellation Shield · Floating State · Magnetic Cancellation · Black Hole Mass Integration · Universal Recycling Cycle · Dark Matter as UIPF · Field Decay Emergency · Rotation-Layer Synchronization · Zero-G Engineering · Solar Heliosphere Filter · Deep Space Barrier</div>
+  <div class="cgrid">
+    <div class="cgc" onclick="go('intro')"><div class="cn">§ 01</div><div class="ct">Muqaddima</div><div class="cd">Core thesis — UIPF ka residual = gravity</div></div>
+    <div class="cgc" onclick="go('legacy')"><div class="cn">§ 02</div><div class="ct">Newton/Einstein</div><div class="cd">Legacy physics ki mechanical khamiyan</div></div>
+    <div class="cgc" onclick="go('math')"><div class="cn">§ 03</div><div class="ct">Mathematics</div><div class="cd">UIPF equations aur derivations</div></div>
+    <div class="cgc" onclick="go('atom')"><div class="cn">§ 04</div><div class="ct">Atom</div><div class="cd">Complete electromagnetic unit</div></div>
+    <div class="cgc" onclick="go('bh')"><div class="cn">§ 05</div><div class="ct">Black Hole</div><div class="cd">Mass integrator — singularity busted</div></div>
+    <div class="cgc" onclick="go('cycle')"><div class="cn">§ 06</div><div class="ct">Universal Cycle</div><div class="cd">Big Bang → BH → New Universe</div></div>
+    <div class="cgc" onclick="go('dm')"><div class="cn">§ 07</div><div class="ct">Dark Matter</div><div class="cd">UIPF pressure field hi Dark Matter hai</div></div>
+    <div class="cgc" onclick="go('decay')"><div class="cn">§ 08</div><div class="ct">Field Decay</div><div class="cd">2026 mechanical global emergency</div></div>
+    <div class="cgc" onclick="go('rot')"><div class="cn">§ 09</div><div class="ct">Rotation Layers <span class="cnew">NEW</span></div><div class="cd">Zameen ki rotation UIPF filter karti hai</div></div>
+    <div class="cgc" onclick="go('anom')"><div class="cn">§ 10</div><div class="ct">Anomalies <span class="cnew">NEW</span></div><div class="cd">Natural Zero-G prototype points</div></div>
+    <div class="cgc" onclick="go('zg')"><div class="cn">§ 11</div><div class="ct">Zero-G Chamber <span class="cnew">NEW</span></div><div class="cd">Artificial floating state design</div></div>
+    <div class="cgc" onclick="go('solar')"><div class="cn">§ 12</div><div class="ct">Solar Shield <span class="cnew">NEW</span></div><div class="cd">Double filter + deep space barrier</div></div>
+  </div>
+</div>
+</div>
+
+<!-- §1 MUQADDIMA -->
+<div id="page-intro" class="page"><div class="pw">
+  <div class="sh"><h1>§ 1 — Muqaddima</h1><div class="ss">Purani Theory ki Nakami aur UIPF ki Zaroorat</div></div>
+  <p class="bt">Sadiyon se insaan yeh maanta raha hai ke <b>"Gravity"</b> ek haqeeqi pull force hai — ek khinchaahat jo Zameen apni taraf laga raha hai. Newton ne ise ek precise mathematical formula mein dala, Einstein ne space-time curvature se explain kiya. Magar dono theories mein ek bunyadi sawaal ka jawab nahi: <b>agar gravity ek pull hai, toh woh pull kahan se paida hoti hai? Uska physical mechanism kya hai?</b></p>
+  <p class="bt">Ahad Architect ne is sawaal ko dobara zindah kiya. Unka argument: hum ne gravity ko ek <i>answer</i> maan liya, jabke woh sirf ek <i>observation</i> tha. Jab hum cosmos ki taraf dekhte hain, sab jagah objects <i>float</i> karte hain. ISS mein astronauts weightless hain. Moon par gravity 1/6 hai. Deep space mein asteroids bina kisi direction ke drift karte hain.</p>
+  <div class="cb maroon"><div class="cbt">◈ Core Insight ◈</div><p><b>Kainaat ka asal default halat "Floating State" hai</b> — jisme UIPF har simt se equal shiddat se kaam karta hai, koi net directional force nahi hoti. Zameen ki surface par jo kuch "alag" hota hai, woh Zameen ki apni electromagnetic properties ki wajah se hai — koi mysterious pull force nahi.</p></div>
+  <div class="aw"><div class="atl">ANIMATION 1 — UIPF: Floating State (Deep Space) vs. Earth Cancellation Mechanism</div><canvas id="c1" height="320"></canvas><div class="ac">Left: Deep space mein UIPF sab taraf se equal — net force = zero — Floating State. Right: Earth ki electromagnetic shield UIPF ko neeche se block karti hai — uncancelled pressure upar se push karta hai — yahi downward residual = Weight (W).</div></div>
+  <div class="ssec">Zameen Kheenchti Nahi — Sirf Cancel Karti Hai</div>
+  <p class="bt">Kainaat mein pressure har taraf se aata hai — <b>omnidirectional</b>. Jab yeh pressure sab simt se equal ho, koi net force nahi hoti — object float karta hai. Zameen is state ko disturb karti hai — apni magnetic aur electric field ke zariye UIPF ko partially cancel karke ek directional asymmetry paida karti hai. Woh asymmetry hi "gravity" hai.</p>
+  <div class="cb gold"><div class="cbt">◈ Central Thesis ◈</div><ul class="bl" style="margin:0"><li>Gravity = UIPF ka residual jo Zameen ki Cancellation Shield rok nahi paati</li><li>Deep space: UIPF isotropic → Net force zero → Floating State (DEFAULT)</li><li>Earth surface: UIPF partially cancelled → Residual downward → Weight</li><li>Zameen kuch nahi "kheenchti" — sirf ek taraf ka raasta unblocked chhod deti hai</li></ul></div>
+</div></div>
+
+<!-- §2 NEWTON/EINSTEIN -->
+<div id="page-legacy" class="page"><div class="pw">
+  <div class="sh"><h1>§ 2 — Newton aur Einstein ki Nakami</h1><div class="ss">Legacy Physics — Mathematical Hai, Mechanical Nahi</div></div>
+  <div class="ssec">2.1 — Newton ki Pull Theory</div>
+  <p class="bt">Newton ka Universal Gravitation Law mathematically productive raha — magar mechanically hollow. Equation yeh hai:</p>
+  <div class="mb"><span class="me">F = G × (m₁ × m₂) / r²</span><span class="ml">G = 6.674 × 10⁻¹¹ N·m²·kg⁻² | m₁, m₂ = masses | r = distance<br>Magnitude deta hai — lekin CAUSE nahi batata. Newton ne khud kaha: "I feign no hypotheses."</span></div>
+  <div class="tgrid">
+    <div class="tc" onclick="this.classList.toggle('open')"><div class="ttl">Pull ka Physical Agent <span>+</span></div><div class="td">Pull kis agent se produce hoti hai? Koi medium, koi field, koi carrier particle specify nahi.<br><br><b>UIPF Answer:</b> UIPF omnidirectional pressure field hi woh agent hai. Earth partially blocks it — asymmetry = apparent pull.</div></div>
+    <div class="tc" onclick="this.classList.toggle('open')"><div class="ttl">Action at Distance <span>+</span></div><div class="td">Force bina medium ke kaise act karti hai? Zameen kisi cheez ko bina physical contact ke kaise kheenchti hai?<br><br><b>UIPF Answer:</b> UIPF field hi woh medium hai. Zameen is field ko locally asymmetric karti hai — koi mysterious action nahi.</div></div>
+    <div class="tc" onclick="this.classList.toggle('open')"><div class="ttl">Cutoff Mechanism <span>+</span></div><div class="td">Pull Zameen ke centre se aage kyun nahi kheenchti? Theory koi cutoff mechanism nahi deti.<br><br><b>UIPF Answer:</b> Cancellation shield ki range = magnetosphere ki range. Shield ke bahar = UIPF isotropic = weightlessness.</div></div>
+  </div>
+  <div class="aw"><div class="atl">ANIMATION 2 — Newton "Pull" Model vs. UIPF "Pressure Cancellation" Model</div><canvas id="c2" height="260"></canvas><div class="ac">Left: Newton model — mysterious pull force Earth se bahar aati hai, koi physical source nahi (question mark). Right: UIPF model — omnidirectional pressure arrows Earth ki magnetic shield se neeche block hote hain, uncancelled pressure upar se push karta hai. Mechanically complete.</div></div>
+  <div class="ssec">2.2 — Einstein ki Space-Time Curvature</div>
+  <div class="mb"><span class="me">G_μν + Λg_μν = (8πG/c⁴) × T_μν</span><span class="ml">G_μν = Einstein tensor (curvature) | T_μν = stress-energy | Λ = cosmological constant<br>Mass curvature DESCRIBE karta hai — WHY: koi physical mechanism nahi</span></div>
+  <p class="bt">Einstein ki GR ek beautiful geometric model hai — magar sirf ek description hai. UIPF mein: mass UIPF ko locally absorb aur redirect karta hai. Yeh redistribution hi space mein trajectories ko curve karta dikhta hai. Space-time curvature = UIPF pressure field redistribution ka geometric representation.</p>
+  <div class="cb maroon"><div class="cbt">◈ Refutation Summary ◈</div><ul class="bl" style="margin:0"><li><b>Newton:</b> Magnitude only, no cause. UIPF = missing mechanism.</li><li><b>Einstein:</b> Geometric description, no physical "why". UIPF explains curvature as pressure redistribution.</li><li><b>Both:</b> Cannot explain space weightlessness mechanically. UIPF: it is the universal DEFAULT state.</li><li><b>G constant:</b> Not fundamental — derived parameter of Earth's cancellation geometry.</li></ul></div>
+</div></div>
+
+<!-- §3 MATH -->
+<div id="page-math" class="page"><div class="pw">
+  <div class="sh"><h1>§ 3 — Mathematical Engine of UIPF</h1><div class="ss">Complete Derivation — Weight, Cancellation, G as Derived Constant</div></div>
+  <div class="ssec">3.1 — Axiom 1: UIPF Formal Definition</div>
+  <div class="mb"><span class="me">P_UIPF(x,y,z) = P₀ &nbsp; ∀(x,y,z)∈ℝ³ &nbsp; [Cancellation bodies absent]</span><span class="ml">P₀ = Background Universal Pressure Constant | Analogous to cosmological constant Λ | Units: Pascal<br>Deep space: isotropic P₀ everywhere → no net force → Floating State (DEFAULT)</span></div>
+  <div class="ssec">3.2 — Cancellation Function C(B, E, θ)</div>
+  <div class="mb"><span class="me">C(B,E,θ) = κ × |B_earth| × |E_earth| × cos(θ) / (P₀ × A_eff)</span><span class="ml">κ = EM coupling coefficient | θ = angle of incidence (0° = surface = max cancel) | A_eff scales with atomic density<br>C ranges: 0 (no cancel) → 1 (full cancel)</span></div>
+  <div class="tgrid">
+    <div class="tc" onclick="this.classList.toggle('open')"><div class="ttl">θ=0° — Earth Surface <span>+</span></div><div class="td">cos(0°)=1 → maximum cancellation. B_earth strongest at surface. C→max → W = normal weight as experienced.</div></div>
+    <div class="tc" onclick="this.classList.toggle('open')"><div class="ttl">ISS — 400km <span>+</span></div><div class="td">B_earth intensity drastically lower at 400km. C≈0 → UIPF nearly isotropic → astronauts float. Not "microgravity" — cancellation differential near zero.</div></div>
+    <div class="tc" onclick="this.classList.toggle('open')"><div class="ttl">Moon Surface <span>+</span></div><div class="td">Moon ki magnetic field bahut kamzor → C_moon ≈ C_earth/6 → W_moon = W_earth/6. Exactly matches observed lunar gravity. UIPF prediction, not coincidence.</div></div>
+    <div class="tc" onclick="this.classList.toggle('open')"><div class="ttl">Deep Space <span>+</span></div><div class="td">No planetary field → UIPF isotropic from all directions → net force = zero from all sides. TRUE Floating State — universal default.</div></div>
+  </div>
+  <div class="ssec">3.3 — UIPF Weight Equation</div>
+  <div class="mb"><span class="me">W = P₀ × A_eff × [ 1 − C(B, E, θ) ]</span><span class="ml">C=1 → W=0 (Weightless — Full Cancellation) | C=0 → W=max (No shield — Raw UIPF)<br>g = P₀×[1−C]/m → g is Earth's cancellation efficiency, NOT a universal constant</span></div>
+  <div class="ssec">3.4 — G as Derived Constant</div>
+  <div class="mb"><span class="me">G = P₀ × κ × (V_core / ρ_UIPF) × (4π/3)</span><span class="ml">V_core = Earth's active EM core volume | ρ_UIPF = UIPF energy density<br>G is NOT fundamental — it is a derived parameter of Earth's specific cancellation geometry</span></div>
+  <div class="ssec">3.5 — Atomic Quantity Rule</div>
+  <div class="mb"><span class="me">W_total = Σᵢ₌₁ᴺ [ P₀ × σᵢ × (1 − Cᵢ) ]</span><span class="ml">N = total atoms | σᵢ = UIPF cross-section of atom i | Cᵢ = local cancellation at atom i<br>More atoms → more Σσᵢ → more W. First mechanical explanation of mass-weight proportionality.</span></div>
+  <table class="dt"><tr><th>Object</th><th>Atom Network</th><th>Cancellation Surface</th><th>Weight</th></tr>
+  <tr><td><b>Pathhar</b></td><td>Massive, dense</td><td>Large Σσᵢ</td><td>Zyada Vazan</td></tr>
+  <tr><td><b>Feather</b></td><td>Small, scattered</td><td>Small Σσᵢ</td><td>Kam Vazan</td></tr>
+  <tr><td><b>Gas</b></td><td>Freely moving</td><td>Uniform all directions</td><td>Float karta hai</td></tr>
+  <tr><td><b>BH core</b></td><td>Cemented max</td><td>Maximum Σσᵢ</td><td>Extreme effect</td></tr></table>
+</div></div>
+
+<!-- §4 ATOM -->
+<div id="page-atom" class="page"><div class="pw">
+  <div class="sh"><h1>§ 4 — Atom: Complete Electromagnetic Unit</h1><div class="ss">Electron as Primary UIPF Cancellation Interface</div></div>
+  <p class="bt">UPP framework mein atom sirf ek particle nahi — yeh ek <b>complete electromagnetic mechanical unit</b> hai. Har component UIPF ke saath direct physical relationship rakhta hai. Sabse aham: <b>electron</b> hi primary cancellation interface hai — Zameen ki field electrons ke saath couple hoti hai, aur yahi cancellation ka core mechanism hai.</p>
+  <div class="aw"><div class="atl">ANIMATION 3 — Atom: UIPF Pressure Interaction aur Electron Orbital Coupling</div><canvas id="c3" height="340"></canvas><div class="ac">Nucleus center mein hai. Electrons orbital shells mein near-relativistic speed se ghoom rahe hain. UIPF pressure arrows har direction se aate hain — electrons in vectors ke saath directly interact karte hain (coupling lines). Zameen ki EM field electron shells ko "sameti" leti hai — yahi UIPF cancel karne ka actual physical mechanism hai.</div></div>
+  <table class="dt"><tr><th>Particle</th><th>Charge</th><th>Location</th><th>UPP Role</th></tr>
+  <tr><td><b>Proton</b></td><td>Positive (+)</td><td>Nucleus</td><td>EM anchor — positive center, orbital geometry stabilize karta hai</td></tr>
+  <tr><td><b>Neutron</b></td><td>Neutral (0)</td><td>Nucleus</td><td>Mass carrier — nuclear stability. UIPF cross-section σᵢ mein contribution</td></tr>
+  <tr><td><b>Electron</b></td><td><b>Negative (−)</b></td><td>Orbital shells</td><td><b>PRIMARY UIPF Interface.</b> Earth's EM field electron shells ke saath couple hoti hai — cancellation ka core mechanism</td></tr></table>
+  <div class="ssec">Electron Properties</div>
+  <div class="tgrid">
+    <div class="tc" onclick="this.classList.toggle('open')"><div class="ttl">Near-Relativistic Speed <span>+</span></div><div class="td">vₑ ≈ αc/n jahan α=1/137 (fine structure constant). Yeh near-relativistic speed electrons ko UIPF variations ke against gyroscopic stability deti hai.</div></div>
+    <div class="tc" onclick="this.classList.toggle('open')"><div class="ttl">Orbital Energy Levels <span>+</span></div><div class="td">Jab UIPF change hota hai (field decay), electron energy levels shift karte hain — Zeeman effect ki tarah. Atoms ki chemical properties badal sakti hain. Yahi field decay ka biological mechanism hai.</div></div>
+    <div class="tc" onclick="this.classList.toggle('open')"><div class="ttl">EM Coupling <span>+</span></div><div class="td">Electron ka negative charge Zameen ki EM field ke saath couple hota hai. Zameen ki field electrons ko "sameti" leti hai — yahi coupling cancellation ka core mechanism hai.</div></div>
+    <div class="tc" onclick="this.classList.toggle('open')"><div class="ttl">Spin / Chirality <span>+</span></div><div class="td">Har electron ka spin Up ya Down hota hai. Field disturbance → spin patterns disturb → matter properties change. Deep space mein spin coupling Zameen ki field se cut hoti hai.</div></div>
+  </div>
+  <div class="ssec">Atomic Bonding aur UIPF</div>
+  <table class="dt"><tr><th>Bond</th><th>Classical</th><th>UIPF Interpretation</th></tr>
+  <tr><td><b>Ionic</b></td><td>Electron transfer</td><td>UIPF asymmetry drives transfer — differential response</td></tr>
+  <tr><td><b>Covalent</b></td><td>Shared electrons</td><td>Shared cancellation network — uniform distribution = stable</td></tr>
+  <tr><td><b>Metallic</b></td><td>Free electron sea</td><td>Delocalized cancellation field — conductivity ka source</td></tr>
+  <tr><td><b>Van der Waals</b></td><td>Induced dipoles</td><td>UIPF local fluctuations = temporary asymmetry = weak bond</td></tr></table>
+</div></div>
+
+<!-- §5 BLACK HOLE -->
+<div id="page-bh" class="page"><div class="pw">
+  <div class="sh"><h1>§ 5 — Black Hole: Mass Integrator</h1><div class="ss">Singularity Myth Busted — Matter Cements, Not Disappears</div></div>
+  <div class="cb maroon"><div class="cbt">◈ Mass Integration Theorem ◈</div><p>Black Hole mein gira hua atom <b>khatam nahi hota</b> — UIPF ke intense pressure ke tahat <b>"cemented"</b> ho jaata hai. Bilkul jaise reti (sand) ek magnet ke chaaron taraf cement ho jaaye. Har naya atom Black Hole ki total mass aur UIPF influence range ko exponentially barhata hai. Singularity = mathematical infinity = calculation failure, not reality.</p></div>
+  <div class="aw"><div class="atl">ANIMATION 4 — Black Hole: Matter Infall, Cementation aur Relativistic Jets</div><canvas id="c4" height="360"></canvas><div class="ac">Spinning accretion disk se matter infalling ho raha hai (orange arrows). Atoms UIPF intense pressure mein cement ho rahe hain core mein (purple glow). Relativistic jets (blue) = UIPF redirection streams. Mass continuously barhti hai — singularity kabhi nahi banti.</div></div>
+  <div class="mb"><span class="me">M_BH(t) = M_BH(0) + ∫₀ᵗ ṁ_accretion dt</span><span class="ml">Mass grows continuously — never vanishes, never truly infinite in finite time</span></div>
+  <div class="mb"><span class="me">R_influence(M) = R₀ × (M/M₀)^(1/2)</span><span class="ml">Influence radius scales as √M | r_s = 2GM/c² = UIPF pressure threshold, not mysterious boundary</span></div>
+  <div class="mb"><span class="me">ρ_BH = 3c⁶ / (32π × G³ × M²)</span><span class="ml">CRITICAL: ρ_BH DECREASES as M increases — supermassive BHs are LESS dense than stellar ones<br>UIPF: larger mass = wider pressure distribution = lower average density</span></div>
+</div></div>
+
+<!-- §6 CYCLE -->
+<div id="page-cycle" class="page"><div class="pw">
+  <div class="sh"><h1>§ 6 — Universal Mechanical Recycling Cycle</h1><div class="ss">Big Bang → Expansion → Black Hole → New Universe → Infinite Repeat</div></div>
+  <div class="aw"><div class="atl">ANIMATION 5 — Universal UIPF Cycle: Creation, Expansion, Integration, Reset</div><canvas id="c5" height="340"></canvas><div class="ac">UIPF center mein hai — universal driver. Big Bang: maximum UIPF release. Expansion: atoms form. Black Hole: matter cement hota hai. New Universe: threshold breach → new Big Bang. Cycle eternal hai.</div></div>
+  <div class="ssec">Logic A — Origin and End</div>
+  <div class="mb"><span class="me">E_release = M_BH × c²</span><span class="ml">When P_BH > P₀: catastrophic decompression → New Big Bang<br>Mirrors E=mc² in compression-release direction</span></div>
+  <div class="ssec">Logic B — Every Black Hole = New Universe</div>
+  <div class="mb"><span class="me">N_universes(t) = N₀ × e^(Λ_BH × t)</span><span class="ml">Λ_BH = BH formation rate | G_child = G_parent × f(M_BH, P₀_parent)<br>Hamari kainaat bhi kisi parent BH ki offspring ho sakti hai</span></div>
+  <div class="ssec">Logic C — 5-Step Matter Processor</div>
+  <div class="steps">
+    <div class="step"><div class="sn">01</div><div class="sc"><div class="stl">Matter Infall</div><p>Atoms spiral inward. F_infall = P_UIPF × ΔA_radial — same UIPF mechanics as surface weight, enormously amplified.</p></div></div>
+    <div class="step"><div class="sn">02</div><div class="sc"><div class="stl">Atomic Decoupling</div><p>At r &lt; 10×r_s, electron orbital coupling breaks. Atoms lose EM identity as independent units.</p></div></div>
+    <div class="step"><div class="sn">03</div><div class="sc"><div class="stl">Cementation</div><p>Below r_s: M_BH += δm. Matter conserved, restructured — not annihilated.</p></div></div>
+    <div class="step"><div class="sn">04</div><div class="sc"><div class="stl">Threshold Breach</div><p>P_BH &gt; P₀: explosive decompression. E = M_BH × c² releases outward. New Big Bang.</p></div></div>
+    <div class="step"><div class="sn">05</div><div class="sc"><div class="stl">New Universe Birth</div><p>New universe expands with own constants and laws. N_universes grows exponentially.</p></div></div>
+  </div>
+</div></div>
+
+<!-- §7 DARK MATTER -->
+<div id="page-dm" class="page"><div class="pw">
+  <div class="sh"><h1>§ 7 — Dark Matter = UIPF Pressure Field</h1><div class="ss">No Exotic Particles — Just Undetected Pressure Density</div></div>
+  <p class="bt">LUX, XENON1T, PandaX — decades of expensive searching, zero exotic particles found. UIPF ka jawab: <b>Dark Matter koi particle nahi</b> — yeh UIPF pressure field ka woh component hai jo electromagnetic radiation se interact nahi karta magar gravitational pressure differential effects produce karta hai.</p>
+  <div class="mb"><span class="me">ρ_DM(r) = P_UIPF(r) / c²</span><span class="ml">Mirrors E=mc² reversed — pressure field HAS effective mass-energy density<br>No exotic particles needed. Existing UIPF explains all dark matter observations.</span></div>
+  <div class="ssec">Three Testable Predictions</div>
+  <div class="pgrid">
+    <div class="pc"><div class="pn">PREDICTION 01</div><p>DM distribution directly galactic magnetic field maps se positively correlated honi chahiye. Map karo — UIPF predicts strong correlation.</p></div>
+    <div class="pc"><div class="pn">PREDICTION 02</div><p>Stronger galactic magnetic fields → reduced DM effect (higher local cancellation). Testable with current radio telescope arrays.</p></div>
+    <div class="pc"><div class="pn">PREDICTION 03</div><p>Cosmic voids = purest undisturbed UIPF = lowest DM concentration. Already matching observed void properties.</p></div>
+  </div>
+</div></div>
+
+<!-- §8 FIELD DECAY -->
+<div id="page-decay" class="page"><div class="pw">
+  <div class="sh"><h1>§ 8 — Zameen ki Field Decay: 2026 Emergency</h1><div class="ss">Cancellation Shield Kamzor Ho Rahi Hai — Mechanical Global Crisis</div></div>
+  <div class="cb maroon"><div class="cbt">⚠ Mechanical Global Emergency ⚠</div><p>Zameen ki magnetic field ki intensity approximately <b>5% per century</b> ki rate se gir rahi hai. South Atlantic Anomaly (SAA — Brazil/South Africa) mein yeh rate kafi tez hai. Satellite malfunctions aur increased cosmic ray penetration already documented.</p></div>
+  <div class="mb"><span class="me">C(t) = C₀ × e^(−Λ_decay × t) &nbsp;&nbsp; Λ_decay ≈ 5×10⁻⁴ yr⁻¹</span><span class="ml">As C(t) decreases: W_residual increases subtly but cumulatively<br>Biological systems most sensitive — evolved with Zameen's specific cancellation calibration</span></div>
+  <div class="aw"><div class="atl">ANIMATION 6 — Zameen ki Magnetic Field Decay: C(t) Reducing Over Time</div><canvas id="c6" height="280"></canvas><div class="ac">Jab magnetic field (green rings) kamzor hoti hai, UIPF arrows jo pehle blocked the ab surface tak reach karne lagte hain — residual downward pressure barhta hai. Right: C(t) decay curve — exponential decline. SAA region mein yeh process pehle se zyada tez hai.</div></div>
+  <table class="dt"><tr><th>Biological Effect</th><th>Classical</th><th>UIPF Corrected Explanation</th></tr>
+  <tr><td><b>Blood Shift</b></td><td>Low-G fluid redistribution</td><td>UIPF cancellation loss → pressure differential shift → fluids jama upar. Downward residual nahi rahti.</td></tr>
+  <tr><td><b>Bone Density Loss</b></td><td>No weight-bearing stress</td><td>Bone cell remodeling disturb — cancellation asymmetry ke bina directional EM stimulation nahi hoti.</td></tr>
+  <tr><td><b>Muscle Atrophy</b></td><td>Muscles unused</td><td>Atomic network ki baseline EM stimulation khatam — Zameen ki field coupling removed.</td></tr>
+  <tr><td><b>Vision Impairment</b></td><td>Intracranial pressure</td><td>Brain atoms: UIPF uniform → retinal capillary pressure balance disturb. Full mechanism explained.</td></tr></table>
+</div></div>
+
+<!-- §9 ROTATION -->
+<div id="page-rot" class="page"><div class="pw">
+  <div class="sh"><h1>§ 9 — Rotation-Layer Synchronization <span class="nbdg">NEW</span></h1><div class="ss">Zameen ki Rotation Magnetic Field ko "Slices" mein Distribute Karti Hai</div></div>
+  <p class="bt">Zameen ki rotation sirf din aur raat paida nahi karti — yeh magnetic field ko <b>churn (mathna)</b> karti hai. Is churning ki wajah se UIPF ek jhatke mein directly nahi girta — concentric layers mein gradually filtered hota hai. Har layer ek partial UIPF filter ka kaam karti hai.</p>
+  <div class="aw"><div class="atl">ANIMATION 7 — Rotation-Layer Synchronization: Earth ki Rotation UIPF ko Segment Karti Hai</div><canvas id="c7" height="340"></canvas><div class="ac">Earth center mein ghoom rahi hai. Rotation ki wajah se magnetic field concentric segments mein distribute hoti hai. Raw UIPF bahar se aata hai — har layer se guzarta hua filtered hota jaata hai — surface par sirf residual pahunchta hai. Rotation ruk jaye: saare layers collapse — raw P₀ surface par crush kare.</div></div>
+  <div class="mb"><span class="me">Field_segmented(ω,r) = B_earth(r) × [1−cos(ω×t)] / n_layers</span><span class="ml">ω = Earth angular velocity (7.27×10⁻⁵ rad/s) | n_layers = active magnetic segments<br>Gradual UIPF filtering in concentric layers — not sudden crash</span></div>
+  <table class="dt"><tr><th>Rotation State</th><th>Segments</th><th>UIPF Filtering</th><th>Surface Result</th></tr>
+  <tr><td>Normal (current)</td><td>~12–16</td><td>Smooth, gradual</td><td>Normal weight</td></tr>
+  <tr><td>Faster rotation</td><td>More</td><td>More uniform</td><td>Slightly less weight</td></tr>
+  <tr><td>Slower rotation</td><td>Fewer</td><td>Uneven, gaps</td><td>Regional anomalies</td></tr>
+  <tr><td style="color:#8B1A1A"><b>Stops</b></td><td style="color:#8B1A1A"><b>ZERO</b></td><td style="color:#8B1A1A"><b>NO filtering</b></td><td style="color:#8B1A1A"><b>Catastrophic crush</b></td></tr></table>
+  <div class="cb maroon"><div class="cbt">◈ Rotation Stop — Catastrophic Scenario ◈</div>
+  <div class="mb" style="background:rgba(92,10,10,0.05);border-color:rgba(139,26,26,0.35);margin:0.5rem 0"><span class="me" style="color:#8B1A1A">W_collapse = P₀ × A_eff × [1−0] = P₀ × A_eff</span><span class="ml">All segments collapse → C→0 → Full raw UIPF hits surface → all matter crushed</span></div></div>
+</div></div>
+
+<!-- §10 ANOMALIES -->
+<div id="page-anom" class="page"><div class="pw">
+  <div class="sh"><h1>§ 10 — Regional Anomalies & Angle of Momentum <span class="nbdg">NEW</span></h1><div class="ss">Natural Zero-G Prototypes — UIPF Cancellation Differential Points</div></div>
+  <p class="bt">Zameen par har jagah magnetic field ek jaisi nahi hoti. Kuch points par yeh <b>weak</b> hoti hai — wahan UIPF cancellation kamzor hai. In jagahon par Vazan ka angle aur magnitude dono change ho jaate hain.</p>
+  <div class="mb"><span class="me">W_vector = P₀ × A_eff × [1−C(B_local, E_local, θ_local)] × n̂</span><span class="ml">n̂ = local surface normal | B_local weak → C reduced → W_vector magnitude AND direction both shift<br>"Angle of Momentum" = novel UIPF prediction — weight vector direction changes in anomaly regions</span></div>
+  <div class="aw"><div class="atl">ANIMATION 8 — Zameen ki Regional Anomaly Map — UIPF Cancellation Differential</div><canvas id="c8" height="300"></canvas><div class="ac">Red/orange glowing zones = weakest UIPF cancellation (SAA sabse prominent). Green poles = strongest cancellation. Pulsing glow show karta hai ke yeh zones time ke saath shift hote hain. In weak zones mein weight vector ka angle change hota hai — natural Zero-G prototype behaviour.</div></div>
+  <ul class="bl"><li>Paani ke qatron ka girna aam trajectory se mukhtalif — UIPF differential ki wajah se</li><li>Pathhar ka balance (momentum) change hota hai — residual pressure ka angle θ shift ho jaata hai</li><li><b>South Atlantic Anomaly (SAA)</b> — largest natural anomaly, satellite malfunctions documented</li><li>Magnetic north drift — poles shift karte hain, regional cancellation patterns change hote hain</li></ul>
+  <div class="cb green"><div class="cbt">◈ Zero-G Prototype Application ◈</div><p>Anomaly points ki exact field geometry replicate karke artificial Zero-G chambers design ki ja sakti hain. SAA, magnetic drift zones, aur deep ocean floor anomaly points engineering study ke liye ideal locations hain.</p></div>
+</div></div>
+
+<!-- §11 ZERO-G -->
+<div id="page-zg" class="page"><div class="pw">
+  <div class="sh"><h1>§ 11 — Zero-G Chamber Engineering <span class="nbdg">NEW</span></h1><div class="ss">Artificial Floating State — Step-by-Step Design</div></div>
+  <p class="bt">Aapka bataya hua "Room" jahan Zero-G banaya ja sake — uski technical buniyad UIPF framework se direct aati hai. Teen engineering steps hain:</p>
+  <div class="aw"><div class="atl">ANIMATION 9 — Zero-G Chamber: Field Neutralization → UIPF Mirror → Safety Buffer → W=0</div><canvas id="c9" height="320"></canvas><div class="ac">Step 1: Reverse-phase coils (gold rings on walls) Zameen ki local EM field ko cancel karti hain. Step 2: UIPF arrows sab sides se equal ho jaate hain inside — isotropic restored. Step 3: Safety buffer ring raw P₀ impact se protect karti hai. Result: center mein floating object — W = 0.</div></div>
+  <div class="steps">
+    <div class="step"><div class="sn">01</div><div class="sc"><div class="stl">Field Neutralization — Reverse-Phase Coils</div>
+    <div class="mb" style="margin:0.4rem 0;background:rgba(46,74,107,0.05);border-color:rgba(46,74,107,0.2)"><span class="me" style="font-size:0.88rem">B_coil = −B_earth_local &nbsp; (Phase Opposition)</span><span class="ml">B_net inside → 0 | C(B=0,E,θ) → 0 from Earth's component</span></div>
+    <p>Chamber ki deewaron mein Reverse-Phase Coils Zameen ki local EM frequency ko 180° out-of-phase block karengi.</p></div></div>
+    <div class="step"><div class="sn">02</div><div class="sc"><div class="stl">Pressure Equalization — UIPF Mirroring</div>
+    <div class="mb" style="margin:0.4rem 0;background:rgba(46,74,107,0.05);border-color:rgba(46,74,107,0.2)"><span class="me" style="font-size:0.88rem">P_UIPF_inside = P₀ (all directions equal)</span><span class="ml">Isotropic → Net force = 0 → Floating State → W = 0</span></div>
+    <p>Chamber ke andar UIPF ko charon sides se "mirror" karna hoga — equal intensity sab simt.</p></div></div>
+    <div class="step"><div class="sn">03</div><div class="sc"><div class="stl">Safety Buffer — Artificial Magnetosphere</div>
+    <div class="mb" style="margin:0.4rem 0;background:rgba(46,74,107,0.05);border-color:rgba(46,74,107,0.2)"><span class="me" style="font-size:0.88rem">P_safe = P₀×[1−C_art] &lt; P_threshold_bio</span><span class="ml">Calibrated shield — not zero (dangerous), not too high. Like Earth's atmosphere.</span></div>
+    <p>Artificial magnetosphere layer occupant ko P₀ ke raw impact se bachayegi.</p></div></div>
+  </div>
+  <div class="cb green"><div class="cbt">◈ Chamber Equation ◈</div>
+  <div class="mb" style="background:rgba(26,92,42,0.05);border-color:rgba(26,92,42,0.28);margin:0.5rem 0"><span class="me" style="color:var(--green)">W_inside = P₀ × A_eff × [1 − C_chamber]</span><span class="ml">As C_chamber → 1: W_inside → 0. True weightlessness achieved.<br>Natural anomaly points = chambers where C already partially elevated = free Zero-G prototypes</span></div></div>
+</div></div>
+
+<!-- §12 SOLAR SHIELD -->
+<div id="page-solar" class="page"><div class="pw">
+  <div class="sh"><h1>§ 12 — Solar Shield & Deep Space Barrier <span class="nbdg">NEW</span></h1><div class="ss">Heliosphere + Magnetosphere — Double Filter System</div></div>
+  <p class="bt">Hamara poora Solar System ek <b>"Heliosphere"</b> ke andar hai. Suraj ki magnetic field kainaat ke raw P₀ ka ek bada hissa filter kar deta hai. Yeh ek <b>Double Filter System</b> hai.</p>
+  <div class="aw"><div class="atl">ANIMATION 10 — Solar Shield: Heliosphere (Filter 1) + Magnetosphere (Filter 2) — Raw P₀ Journey</div><canvas id="c10" height="360"></canvas><div class="ac">Raw UIPF (P₀) bahar se aata hai — bright intense particles. Heliosphere par pehla filter: ~85-95% block. Filtered pressure andar aata hai — dimmer. Magnetosphere par doosra filter: further reduction. Earth surface par sirf 2-5% raw P₀ pahunchta hai — yahi "weight" hai.</div></div>
+  <div class="mb"><span class="me">P_surface = P₀ × (1−η_helio) × (1−η_mag)</span><span class="ml">η_helio ≈ 0.85–0.95 | η_mag ≈ 0.80–0.90<br>Pressure Jump = P₀/P_surface ≈ 200–1000× | Solar System exit = sudden full P₀ exposure</span></div>
+  <div class="ssec">Filter Efficiency Visualization</div>
+  <div class="fbars">
+    <div class="fbar"><span class="flab">Raw P₀ (outside)</span><div class="ftrack"><div class="ffill" id="fb1" style="width:0%;background:rgba(220,60,60,0.7)"></div></div><span class="fpct">100%</span></div>
+    <div class="fbar"><span class="flab">After Heliosphere</span><div class="ftrack"><div class="ffill" id="fb2" style="width:0%;background:rgba(255,140,50,0.7)"></div></div><span class="fpct">~10%</span></div>
+    <div class="fbar"><span class="flab">After Magnetosphere</span><div class="ftrack"><div class="ffill" id="fb3" style="width:0%;background:rgba(80,190,80,0.7)"></div></div><span class="fpct">~2–5%</span></div>
+    <div class="fbar"><span class="flab">Surface (felt as W)</span><div class="ftrack"><div class="ffill" id="fb4" style="width:0%;background:rgba(200,164,53,0.7)"></div></div><span class="fpct">Residual</span></div>
+  </div>
+  <div class="ssec">Deep Space Triple-Layer Filtration</div>
+  <table class="dt"><tr><th>Layer</th><th>Function</th><th>Equation</th></tr>
+  <tr><td><b>1 — Magnetic Deflection</b></td><td>Raw P₀ waves redirect — outer magnetic shell</td><td>B_outer × μ₀ × j = P₀</td></tr>
+  <tr><td><b>2 — Frequency Matching</b></td><td>Local Vacuum — interior mein UIPF equalize</td><td>P_inside = P₀ (isotropic)</td></tr>
+  <tr><td><b>3 — Atomic Hardening</b></td><td>Structure pichakne se bachana — bonding reinforce</td><td>BIT_mat ≥ BIT_threshold(P₀)</td></tr></table>
+  <div class="cb purple"><div class="cbt">◈ The Absolute Universal Barrier ◈</div><ul class="bl" style="margin:0"><li><b>Solar System se bahar:</b> Heliosphere khatam → raw P₀ exposure → aam metal implode ho sakta hai</li><li><b>Triple filtration required:</b> Magnetic Deflection + Frequency Matching + Atomic Hardening</li><li><b>"Chota Suraj" concept:</b> Vessel apni portable heliosphere (artificial magnetic bubble) generate karegi</li><li><b>Design requirement:</b> Machine Earth-tuned design se nahi chalegi — space-calibrated honi chahiye</li></ul></div>
+</div></div>
+
+<!-- NATIJA -->
+<div id="page-natija" class="page"><div class="pw">
+  <div class="sh"><h1>§ Natija — Conclusion</h1><div class="ss">11 Core Conclusions of UPP Framework Vol. II</div></div>
+  <div class="concl">
+    <div class="ci"><div class="cin">01</div><div class="cit"><b>UIPF is the Cause, Gravity is the Effect:</b> W = P₀×A_eff×[1−C(B,E,θ)] — weight is residual pressure, not pull.</div></div>
+    <div class="ci"><div class="cin">02</div><div class="cit"><b>G is Derived, Not Fundamental:</b> G = P₀×κ×V_core/ρ_UIPF — gravitational constant is Earth's cancellation geometry parameter.</div></div>
+    <div class="ci"><div class="cin">03</div><div class="cit"><b>Floating State is Universal DEFAULT:</b> Weightlessness in space = UIPF equilibrium. Earth is the exception. Open space is the rule.</div></div>
+    <div class="ci"><div class="cin">04</div><div class="cit"><b>Black Holes Integrate, Not Annihilate:</b> M_BH grows continuously. Singularity = mathematical fiction. Black Holes = Universal Matter Processors.</div></div>
+    <div class="ci"><div class="cin">05</div><div class="cit"><b>Every BH = New Universe Seed:</b> N_universes(t) = N₀×e^(Λ_BH×t) — infinite fractal multiverse, mechanically explained.</div></div>
+    <div class="ci"><div class="cin">06</div><div class="cit"><b>Dark Matter = UIPF Pressure Field:</b> ρ_DM = P_UIPF/c² — no exotic particles needed. Three testable predictions provided.</div></div>
+    <div class="ci"><div class="cin">07</div><div class="cit"><b>Field Decay = Mechanical Emergency:</b> C(t) = C₀×e^(−Λ×t) — biological, rotational, sea-level consequences documented.</div></div>
+    <div class="ci"><div class="cin">08</div><div class="cit"><b>Rotation-Layer Synchronization:</b> ω → magnetic segments → gradual UIPF filtering. Rotation stop = catastrophic pressure collapse.</div></div>
+    <div class="ci"><div class="cin">09</div><div class="cit"><b>Double Filter System:</b> Heliosphere + Magnetosphere. P_surface ≈ 2–5% of raw P₀. Solar System exit = triple filtration required.</div></div>
+    <div class="ci"><div class="cin">10</div><div class="cit"><b>Zero-G Chamber Achievable:</b> Reverse-phase coils + UIPF mirror + safety buffer → W_inside → 0.</div></div>
+    <div class="ci"><div class="cin">11</div><div class="cit"><b>Full Cancellation = Future of Humanity:</b> EM habitats, vibrational anchoring, deep space vessels — all achievable once UIPF is fully understood.</div></div>
+  </div>
+  <div style="text-align:center;margin:3rem 0 2rem;padding:2rem;border-top:2px solid var(--maroon);border-bottom:2px solid var(--maroon);">
+    <div style="font-size:0.9rem;color:var(--gold);letter-spacing:0.2em;font-family:'Cinzel',serif;margin-bottom:1.5rem;">◈ ◈ ◈</div>
+    <div style="font-family:'EB Garamond',serif;font-style:italic;font-size:1.4rem;line-height:1.85;color:var(--maroon);max-width:600px;margin:0 auto 1rem;">"Vazan koi pull nahi, yeh sirf kainaat ke pressure ka woh hissa hai jo Zameen ki shield rok nahi pati. Jab hum shield ko samjhein ge, tab hum apni duniya ko dobara design kar saktay hain."</div>
+    <div style="font-family:'Cinzel',serif;font-size:0.9rem;color:var(--maroon2);opacity:0.75;">— Ahad, The Architect &nbsp;|&nbsp; UPP Framework, 2026</div>
+  </div>
+  <div style="font-family:'JetBrains Mono',monospace;font-size:0.62rem;color:rgba(92,10,10,0.35);text-align:center;padding-top:1rem;border-top:1px solid rgba(92,10,10,0.12);letter-spacing:0.1em;">© 2026 AL-ADAL DYNAMICS INSTITUTE &nbsp;|&nbsp; AHAD ARCHITECT RESEARCH SERIES &nbsp;|&nbsp; UPP-2026-002-V4 &nbsp;|&nbsp; ALL RIGHTS RESERVED</div>
+</div></div>
+
+<script>
+
+// ── PAGE NAVIGATION ──
+function go(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('active'));
+  const pg=document.getElementById('page-'+id);
+  if(pg){pg.classList.add('active');window.scrollTo(0,0);}
+  document.querySelectorAll('.nb').forEach(b=>{
+    if(b.getAttribute('onclick')&&b.getAttribute('onclick').includes("'"+id+"'"))b.classList.add('active');
+  });
+  if(id==='solar')setTimeout(animBars,400);
+  startAnim(id);
+}
+
+function animBars(){
+  [['fb1',100,'rgba(220,60,60,0.7)'],['fb2',10,'rgba(255,140,50,0.7)'],['fb3',3,'rgba(80,190,80,0.7)'],['fb4',2,'rgba(200,164,53,0.7)']].forEach(([id,pct,col])=>{
+    const el=document.getElementById(id);
+    if(el){el.style.width=pct+'%';el.style.background=col;}
+  });
+}
+
+const started={};
+function startAnim(pid){
+  const map={intro:'c1',legacy:'c2',atom:'c3',bh:'c4',cycle:'c5',decay:'c6',rot:'c7',anom:'c8',zg:'c9',solar:'c10'};
+  const cid=map[pid];
+  if(cid&&!started[cid]){started[cid]=true;const fn=window['anim_'+cid];if(fn)fn();}
+}
+
+// ── HELPERS ──
+function darr(ctx,x1,y1,x2,y2,col,lw,hs){
+  lw=lw||1.5;hs=hs||7;
+  const ang=Math.atan2(y2-y1,x2-x1);
+  ctx.strokeStyle=col;ctx.lineWidth=lw;
+  const sx=x2-Math.cos(ang)*hs,sy=y2-Math.sin(ang)*hs;
+  ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(sx,sy);ctx.stroke();
+  ctx.fillStyle=col;ctx.beginPath();
+  ctx.moveTo(x2,y2);
+  ctx.lineTo(sx+Math.cos(ang+Math.PI/2)*3.5,sy+Math.sin(ang+Math.PI/2)*3.5);
+  ctx.lineTo(sx+Math.cos(ang-Math.PI/2)*3.5,sy+Math.sin(ang-Math.PI/2)*3.5);
+  ctx.closePath();ctx.fill();
+}
+
+function rrect(ctx,x,y,w,h,r){
+  ctx.beginPath();ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);
+  ctx.arcTo(x+w,y,x+w,y+r,r);ctx.lineTo(x+w,y+h-r);
+  ctx.arcTo(x+w,y+h,x+w-r,y+h,r);ctx.lineTo(x+r,y+h);
+  ctx.arcTo(x,y+h,x,y+h-r,r);ctx.lineTo(x,y+r);
+  ctx.arcTo(x,y,x+r,y,r);ctx.closePath();
+}
+
+function initCanvas(id){
+  const cv=document.getElementById(id);
+  if(!cv)return null;
+  cv.width=cv.offsetWidth||800;
+  return cv;
+}
+
+// ── ANIM 1: Floating vs Earth ──
+window.anim_c1=function(){
+  const cv=initCanvas('c1');if(!cv)return;
+  const ctx=cv.getContext('2d');
+  const W=cv.width,H=cv.height;
+  let t=0;
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    ctx.fillStyle='#06040F';ctx.fillRect(0,0,W,H);
+    const lx=W*0.25,ly=H*0.5,rx=W*0.75,ry=H*0.5;
+    // LEFT arrows
+    for(let d=0;d<8;d++){
+      const ang=d*Math.PI/4,p=Math.sin(t*0.04+d*0.5)*7;
+      const a=0.45+Math.sin(t*0.04+d*0.8)*0.28;
+      darr(ctx,lx+Math.cos(ang)*(78+p),ly+Math.sin(ang)*(78+p),lx+Math.cos(ang)*30,ly+Math.sin(ang)*30,`rgba(74,122,171,${a})`,1.8,7);
+      ctx.fillStyle=`rgba(90,130,200,${a*0.8})`;ctx.font='bold 9px monospace';ctx.textAlign='center';
+      ctx.fillText('UIPF',lx+Math.cos(ang)*95,ly+Math.sin(ang)*95+3);
+    }
+    // object
+    const og=ctx.createRadialGradient(lx-4,ly-4,2,lx,ly,28);
+    og.addColorStop(0,'#E8D080');og.addColorStop(1,'#9A6A10');
+    ctx.beginPath();ctx.arc(lx,ly,28,0,Math.PI*2);ctx.fillStyle=og;ctx.fill();
+    ctx.strokeStyle='#5C0A0A';ctx.lineWidth=2;ctx.stroke();
+    ctx.fillStyle='#3A0808';ctx.font='bold 10px Cinzel,serif';ctx.textAlign='center';
+    ctx.fillText('MASS',lx,ly+3);ctx.font='9px Cinzel,serif';ctx.fillText('OBJECT',lx,ly+14);
+    ctx.fillStyle='#1A8A8A';ctx.font='bold 12px Cinzel,serif';
+    ctx.fillText('Net Force = ZERO',lx,ly+52);
+    ctx.fillStyle='rgba(200,200,200,0.45)';ctx.font='9px sans-serif';
+    ctx.fillText('FLOATING STATE (Deep Space)',lx,ly+66);
+    // divider
+    ctx.strokeStyle='rgba(200,164,53,0.22)';ctx.setLineDash([6,5]);ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(W*0.5,20);ctx.lineTo(W*0.5,H-20);ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle='rgba(200,164,53,0.5)';ctx.font='bold 16px Cinzel,serif';ctx.textAlign='center';
+    ctx.fillText('VS',W*0.5,H/2+6);
+    // RIGHT Earth
+    const p2=ctx.beginPath?null:null;
+    ctx.beginPath();ctx.ellipse(rx,H-60,150,52,0,Math.PI,0);
+    const eg=ctx.createLinearGradient(rx,H-110,rx,H-40);
+    eg.addColorStop(0,'#2A6A2A');eg.addColorStop(1,'#0A2A0A');
+    ctx.fillStyle=eg;ctx.fill();ctx.strokeStyle='#1A4A1A';ctx.lineWidth=1.5;ctx.stroke();
+    ctx.fillStyle='#E8D080';ctx.font='bold 11px Cinzel,serif';ctx.textAlign='center';
+    ctx.fillText('EARTH',rx,H-68);
+    ctx.fillStyle='rgba(255,255,255,0.4)';ctx.font='8px monospace';
+    ctx.fillText('Magnetic + Electric Shield',rx,H-56);
+    // mag arc
+    const ma=0.4+Math.sin(t*0.02)*0.18;
+    ctx.strokeStyle=`rgba(68,200,68,${ma})`;ctx.setLineDash([6,4]);ctx.lineWidth=1.5;
+    ctx.beginPath();ctx.arc(rx,H-60,125,Math.PI,0);ctx.stroke();ctx.setLineDash([]);
+    // active arrows top
+    [[90,88],[65,72],[115,72]].forEach(([deg,r])=>{
+      const ang=deg*Math.PI/180,p3=Math.sin(t*0.04+deg)*5;
+      darr(ctx,rx+Math.cos(ang)*(r+p3),ry+Math.sin(ang)*(r+p3),rx+Math.cos(ang)*32,ry+Math.sin(ang)*32,'rgba(74,122,171,0.8)',1.6,7);
+    });
+    // blocked dashed
+    [270,245,295].forEach(deg=>{
+      const ang=deg*Math.PI/180;
+      ctx.strokeStyle='rgba(74,122,171,0.2)';ctx.setLineDash([3,5]);ctx.lineWidth=1;
+      ctx.beginPath();ctx.moveTo(rx+Math.cos(ang)*72,H-80+Math.sin(ang)*50);
+      ctx.lineTo(rx+Math.cos(ang)*35,H-80+Math.sin(ang)*35);ctx.stroke();ctx.setLineDash([]);
+    });
+    ctx.fillStyle='rgba(200,80,80,0.8)';ctx.font='bold 9px monospace';ctx.textAlign='center';
+    ctx.fillText('X  BLOCKED BY SHIELD  X',rx,ry+40);
+    // residual arrow
+    const rw=2.5+Math.sin(t*0.05)*0.5;
+    darr(ctx,rx,ry-40+Math.sin(t*0.03)*3,rx,ry+22,`rgba(139,26,26,0.9)`,rw,10);
+    ctx.fillStyle='rgba(180,60,60,0.9)';ctx.font='bold 10px Cinzel,serif';ctx.textAlign='left';
+    ctx.fillText('RESIDUAL',rx+8,ry+2);ctx.fillText('= WEIGHT (W)',rx+8,ry+14);
+    // object
+    ctx.beginPath();ctx.arc(rx,ry-58,20,0,Math.PI*2);
+    ctx.fillStyle='#C8A435';ctx.fill();ctx.strokeStyle='#5C0A0A';ctx.lineWidth=2;ctx.stroke();
+    ctx.fillStyle='#3A0808';ctx.font='bold 9px Cinzel,serif';ctx.textAlign='center';
+    ctx.fillText('OBJECT',rx,ry-55);
+    t++;requestAnimationFrame(draw);
+  }
+  draw();
+};
+
+// ── ANIM 2: Newton vs UIPF ──
+window.anim_c2=function(){
+  const cv=initCanvas('c2');if(!cv)return;
+  const ctx=cv.getContext('2d');
+  const W=cv.width,H=cv.height;
+  let t=0;
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    ctx.fillStyle='#FAF6EE';ctx.fillRect(0,0,W,H);
+    const lx=W*0.25,rx=W*0.75,y=H*0.45;
+    // LEFT panel
+    ctx.fillStyle='rgba(92,10,10,0.04)';rrect(ctx,18,18,W*0.46,H-36,4);ctx.fill();
+    ctx.strokeStyle='rgba(92,10,10,0.12)';ctx.lineWidth=1;rrect(ctx,18,18,W*0.46,H-36,4);ctx.stroke();
+    // Earth
+    ctx.beginPath();ctx.ellipse(lx,H-45,55,22,0,0,Math.PI*2);
+    const e1=ctx.createLinearGradient(lx,H-65,lx,H-25);e1.addColorStop(0,'#2A6A2A');e1.addColorStop(1,'#0A2A0A');
+    ctx.fillStyle=e1;ctx.fill();ctx.strokeStyle='#1A4A1A';ctx.lineWidth=1.2;ctx.stroke();
+    ctx.fillStyle='#E8D080';ctx.font='bold 9px Cinzel,serif';ctx.textAlign='center';ctx.fillText('EARTH',lx,H-42);
+    // pull arrows upward from Earth
+    for(let i=-2;i<=2;i++){
+      const px=lx+i*18,a=0.35+Math.sin(t*0.04+i)*0.28;
+      darr(ctx,px,H-68,px,y+22,`rgba(139,26,26,${a})`,1.5,7);
+    }
+    ctx.fillStyle='rgba(139,26,26,0.45)';ctx.font='bold 26px serif';ctx.textAlign='center';
+    ctx.fillText('?',lx,y-8);
+    ctx.fillStyle='rgba(92,10,10,0.55)';ctx.font='bold 9px Cinzel,serif';
+    ctx.fillText('MYSTERIOUS PULL',lx,y+42);ctx.fillText('(No physical cause)',lx,y+54);
+    // object
+    ctx.beginPath();ctx.arc(lx,y-24,16,0,Math.PI*2);ctx.fillStyle='#C8A435';ctx.fill();ctx.strokeStyle='#5C0A0A';ctx.lineWidth=1.5;ctx.stroke();
+    ctx.fillStyle='#8B1A1A';ctx.font='bold 11px Cinzel,serif';ctx.textAlign='center';ctx.fillText('NEWTON MODEL',lx,36);
+    ctx.fillStyle='rgba(92,10,10,0.45)';ctx.font='9px serif';ctx.fillText('"Pull" — no physical cause given',lx,50);
+    // divider
+    ctx.strokeStyle='rgba(92,10,10,0.18)';ctx.setLineDash([5,5]);ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(W*0.5,28);ctx.lineTo(W*0.5,H-28);ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle='rgba(92,10,10,0.38)';ctx.font='bold 14px Cinzel,serif';ctx.textAlign='center';ctx.fillText('VS',W*0.5,H/2+6);
+    // RIGHT panel
+    ctx.fillStyle='rgba(46,74,107,0.04)';rrect(ctx,W*0.54,18,W*0.43,H-36,4);ctx.fill();
+    ctx.strokeStyle='rgba(46,74,107,0.12)';ctx.lineWidth=1;rrect(ctx,W*0.54,18,W*0.43,H-36,4);ctx.stroke();
+    ctx.beginPath();ctx.ellipse(rx,H-45,55,22,0,0,Math.PI*2);
+    const e2=ctx.createLinearGradient(rx,H-65,rx,H-25);e2.addColorStop(0,'#2A6A2A');e2.addColorStop(1,'#0A2A0A');
+    ctx.fillStyle=e2;ctx.fill();ctx.strokeStyle='#1A4A1A';ctx.lineWidth=1.2;ctx.stroke();
+    ctx.fillStyle='#E8D080';ctx.font='bold 9px Cinzel,serif';ctx.textAlign='center';ctx.fillText('EARTH',rx,H-42);
+    // mag arc
+    const ma2=0.4+Math.sin(t*0.02)*0.18;
+    ctx.strokeStyle=`rgba(68,180,68,${ma2})`;ctx.setLineDash([5,4]);ctx.lineWidth=1.2;
+    ctx.beginPath();ctx.arc(rx,H-45,88,Math.PI,0);ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle='rgba(68,180,68,0.6)';ctx.font='8px monospace';ctx.textAlign='center';ctx.fillText('Shield',rx,H-138);
+    // UIPF top arrows
+    [90,65,115].forEach(deg=>{
+      const ang=deg*Math.PI/180,p=Math.sin(t*0.04+deg)*4;
+      darr(ctx,rx+Math.cos(ang)*(78+p),H-100+Math.sin(ang)*(78+p),rx+Math.cos(ang)*28,H-100+Math.sin(ang)*28,'rgba(74,122,171,0.8)',1.5,6);
+    });
+    // blocked bottom dashed
+    [270,250,290].forEach(deg=>{
+      const ang=deg*Math.PI/180;ctx.strokeStyle='rgba(74,122,171,0.18)';ctx.setLineDash([3,5]);ctx.lineWidth=1;
+      ctx.beginPath();ctx.moveTo(rx+Math.cos(ang)*62,H-80+Math.sin(ang)*50);ctx.lineTo(rx+Math.cos(ang)*32,H-80+Math.sin(ang)*32);ctx.stroke();ctx.setLineDash([]);
+    });
+    darr(ctx,rx,y-30+Math.sin(t*0.04)*2,rx,y+20,'rgba(139,26,26,0.9)',3,9);
+    ctx.fillStyle='rgba(139,26,26,0.8)';ctx.font='bold 9px monospace';ctx.textAlign='left';ctx.fillText('RESIDUAL=W',rx+5,y+5);
+    ctx.beginPath();ctx.arc(rx,y-42,16,0,Math.PI*2);ctx.fillStyle='#C8A435';ctx.fill();ctx.strokeStyle='#5C0A0A';ctx.lineWidth=1.5;ctx.stroke();
+    ctx.fillStyle='#2E4A6B';ctx.font='bold 11px Cinzel,serif';ctx.textAlign='center';ctx.fillText('UIPF MODEL',rx,36);
+    ctx.fillStyle='rgba(46,74,107,0.5)';ctx.font='9px serif';ctx.fillText('Pressure cancellation — complete mechanism',rx,50);
+    t++;requestAnimationFrame(draw);
+  }
+  draw();
+};
+
+// ── ANIM 3: ATOM ──
+window.anim_c3=function(){
+  const cv=initCanvas('c3');if(!cv)return;
+  const ctx=cv.getContext('2d');
+  const W=cv.width,H=cv.height;
+  let t=0;
+  const cx=W/2,cy=H/2+8;
+  function draw(){
+    ctx.clearRect(0,0,W,H);ctx.fillStyle='#06040F';ctx.fillRect(0,0,W,H);
+    // UIPF arrows
+    for(let d=0;d<8;d++){
+      const ang=d*Math.PI/4,p=Math.sin(t*0.03+d*0.6)*6,a=0.38+Math.sin(t*0.04+d*0.7)*0.22;
+      darr(ctx,cx+Math.cos(ang)*(122+p),cy+Math.sin(ang)*(122+p),cx+Math.cos(ang)*84,cy+Math.sin(ang)*84,`rgba(80,110,180,${a})`,1.3,7);
+      ctx.fillStyle=`rgba(90,120,190,${a*0.85})`;ctx.font='bold 9px monospace';ctx.textAlign='center';
+      ctx.fillText('UIPF',cx+Math.cos(ang)*138,cy+Math.sin(ang)*138+3);
+    }
+    // orbital shells dashed
+    [70,53,38].forEach((r,i)=>{
+      ctx.strokeStyle=`rgba(200,164,53,${0.32+i*0.06})`;ctx.setLineDash([6,4]);ctx.lineWidth=0.8;
+      ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.stroke();ctx.setLineDash([]);
+    });
+    // electrons
+    [[70,0.022,0],[70,0.022,Math.PI],[53,0.032,1.2],[53,0.032,1.2+Math.PI],[38,0.045,0.5]].forEach(([r,spd,off])=>{
+      const ang=t*spd+off;
+      const ex=cx+Math.cos(ang)*r,ey=cy+Math.sin(ang)*r;
+      // coupling line
+      const bx=cx+Math.cos(ang)*84,by=cy+Math.sin(ang)*84;
+      ctx.strokeStyle='rgba(100,180,200,0.18)';ctx.setLineDash([2,3]);ctx.lineWidth=0.7;
+      ctx.beginPath();ctx.moveTo(ex,ey);ctx.lineTo(bx,by);ctx.stroke();ctx.setLineDash([]);
+      // electron
+      const eg=ctx.createRadialGradient(ex-2,ey-2,1,ex,ey,9);
+      eg.addColorStop(0,'#2AAAAA');eg.addColorStop(1,'#0A4A4A');
+      ctx.beginPath();ctx.arc(ex,ey,9,0,Math.PI*2);ctx.fillStyle=eg;ctx.fill();
+      ctx.strokeStyle='rgba(255,255,255,0.32)';ctx.lineWidth=1;ctx.stroke();
+      ctx.fillStyle='white';ctx.font='bold 8px monospace';ctx.textAlign='center';ctx.fillText('e⁻',ex,ey+3);
+    });
+    // nucleus
+    const ng=ctx.createRadialGradient(cx-6,cy-6,3,cx,cy,26);
+    ng.addColorStop(0,'#8B2A2A');ng.addColorStop(1,'#2A0808');
+    ctx.beginPath();ctx.arc(cx,cy,26,0,Math.PI*2);ctx.fillStyle=ng;ctx.fill();
+    ctx.strokeStyle='rgba(139,26,26,0.8)';ctx.lineWidth=2;ctx.stroke();
+    ctx.fillStyle='white';ctx.font='bold 9px Cinzel,serif';ctx.textAlign='center';ctx.fillText('NUCLEUS',cx,cy+3);
+    ctx.fillStyle='rgba(255,255,255,0.45)';ctx.font='7px monospace';ctx.fillText('p⁺ / n⁰',cx,cy+13);
+    // annotation boxes
+    [[cx+105,cy+105,'Electron-UIPF','Coupling Zone'],[cx-105,cy+105,'Cancellation','Interface'],[cx+110,cy-90,'EM Coupling','(negative charge)']].forEach(([ax,ay,l1,l2])=>{
+      ctx.fillStyle='rgba(26,92,92,0.28)';ctx.strokeStyle='rgba(26,160,160,0.38)';ctx.lineWidth=1;
+      rrect(ctx,ax-52,ay-14,104,28,3);ctx.fill();rrect(ctx,ax-52,ay-14,104,28,3);ctx.stroke();
+      ctx.fillStyle='rgba(70,200,200,0.75)';ctx.font='bold 8px monospace';ctx.textAlign='center';ctx.fillText(l1,ax,ay+1);
+      ctx.fillStyle='rgba(180,220,220,0.55)';ctx.font='7px monospace';ctx.fillText(l2,ax,ay+11);
+    });
+    // legend
+    [[10,'#5C0A0A','Nucleus'],[10+130,'#1A7A7A','Electrons — UIPF Interface'],[10+310,'rgba(200,164,53,0.6)','Orbital Shells'],[10+450,'rgba(80,110,180,0.6)','UIPF Vectors']].forEach(([lx2,col,lbl])=>{
+      ctx.fillStyle=col;ctx.fillRect(lx2,H-22,9,9);
+      ctx.fillStyle='rgba(200,200,200,0.55)';ctx.font='8px monospace';ctx.textAlign='left';ctx.fillText(lbl,lx2+13,H-14);
+    });
+    t++;requestAnimationFrame(draw);
+  }
+  draw();
+};
+
+// ── ANIM 4: BLACK HOLE ──
+window.anim_c4=function(){
+  const cv=initCanvas('c4');if(!cv)return;
+  const ctx=cv.getContext('2d');
+  const W=cv.width,H=cv.height;
+  let t=0;
+  const cx=W/2,cy=H/2;
+  const stars=Array.from({length:60},()=>[Math.random()*W,Math.random()*H,Math.random()*1.2+0.3]);
+  function draw(){
+    ctx.clearRect(0,0,W,H);ctx.fillStyle='#03020A';ctx.fillRect(0,0,W,H);
+    // stars
+    stars.forEach(s=>{
+      if(Math.hypot(s[0]-cx,s[1]-cy)>105){
+        ctx.fillStyle=`rgba(255,255,255,${0.25+Math.sin(t*0.05+s[0])*0.28})`;
+        ctx.beginPath();ctx.arc(s[0],s[1],s[2],0,Math.PI*2);ctx.fill();
+      }
+    });
+    // accretion disk
+    [[165,25,0.22,'#FF6600'],[138,19,0.42,'#FF8800'],[110,14,0.62,'#FFAA00'],[82,10,0.85,'#FFCC44']].forEach(([rx,ry,a,col])=>{
+      const c=ctx.createLinearGradient(0,0,1,0);
+      ctx.strokeStyle=`rgba(${parseInt(col.slice(1,3),16)},${parseInt(col.slice(3,5),16)},0,${a})`;
+      ctx.lineWidth=7-a*3;
+      ctx.beginPath();ctx.ellipse(cx,cy,rx,ry,t*0.006,0,Math.PI*2);ctx.stroke();
+    });
+    // infall streams
+    for(let i=0;i<6;i++){
+      const ang=(i/6)*Math.PI*2+t*0.014;
+      const r=102+Math.sin(t*0.02+i)*14;
+      darr(ctx,cx+Math.cos(ang)*r,cy+Math.sin(ang)*r,cx+Math.cos(ang)*27,cy+Math.sin(ang)*27,'rgba(255,170,60,0.7)',1.2,6);
+    }
+    // glow layers
+    [[58,0.07],[42,0.15],[28,0.27],[18,0.48],[11,0.72]].forEach(([r,a])=>{
+      ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.fillStyle=`rgba(120,0,220,${a})`;ctx.fill();
+    });
+    // core
+    const cg=ctx.createRadialGradient(cx-2,cy-2,1,cx,cy,10);
+    cg.addColorStop(0,'rgba(220,220,255,0.95)');cg.addColorStop(1,'rgba(150,0,255,0.4)');
+    ctx.beginPath();ctx.arc(cx,cy,10,0,Math.PI*2);ctx.fillStyle=cg;ctx.fill();
+    ctx.strokeStyle=`rgba(200,164,53,${0.5+Math.sin(t*0.05)*0.28})`;ctx.lineWidth=1.5;ctx.stroke();
+    // jets
+    const ja=0.58+Math.sin(t*0.04)*0.2;
+    const jl=92+Math.sin(t*0.03)*10;
+    [-1,1].forEach(s=>{
+      ctx.strokeStyle=`rgba(136,180,255,${ja})`;ctx.lineWidth=2.5;
+      ctx.beginPath();ctx.moveTo(cx-4,cy+s*12);ctx.lineTo(cx-1.5,cy+s*jl);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(cx+4,cy+s*12);ctx.lineTo(cx+1.5,cy+s*jl);ctx.stroke();
+      ctx.fillStyle='rgba(160,200,255,0.55)';ctx.font='8px monospace';ctx.textAlign='center';
+      ctx.fillText('Relativistic Jet',cx+34,cy+s*(jl+8));
+    });
+    // label boxes
+    [[cx-W*0.29,cy+22,'Atomic Matter','Infalling+Cementing'],[cx+W*0.3,cy-28,'Compressed','Cemented Mass'],[cx-W*0.29,cy-44,'UIPF Pressure','Intensification']].forEach(([lx,ly,t1,t2])=>{
+      ctx.fillStyle='rgba(30,15,50,0.82)';ctx.strokeStyle='rgba(200,164,53,0.38)';ctx.lineWidth=0.8;
+      rrect(ctx,lx-44,ly-14,88,30,4);ctx.fill();rrect(ctx,lx-44,ly-14,88,30,4);ctx.stroke();
+      ctx.fillStyle='rgba(200,164,53,0.85)';ctx.font='bold 8px monospace';ctx.textAlign='center';ctx.fillText(t1,lx,ly-1);
+      ctx.fillStyle='rgba(200,200,200,0.55)';ctx.font='7px monospace';ctx.fillText(t2,ly,cy);
+      ctx.fillText(t2,lx,ly+10);
+    });
+    ctx.fillStyle='rgba(200,164,53,0.65)';ctx.font='bold 10px Cinzel,serif';ctx.textAlign='left';
+    ctx.fillText('MASS INTEGRATION — Not Destruction',16,20);
+    ctx.textAlign='right';ctx.fillText('NEW UNIVERSE Seed Nucleus',W-16,20);
+    ctx.fillStyle='rgba(180,170,150,0.45)';ctx.font='8px monospace';ctx.textAlign='center';
+    ctx.fillText('Matter does NOT vanish — it CEMENTS. Mass grows continuously. Singularity = fiction.',cx,H-10);
+    t++;requestAnimationFrame(draw);
+  }
+  draw();
+};
+
+// ── ANIM 5: UNIVERSAL CYCLE ──
+window.anim_c5=function(){
+  const cv=initCanvas('c5');if(!cv)return;
+  const ctx=cv.getContext('2d');
+  const W=cv.width,H=cv.height;
+  let t=0;
+  const cx=W/2,cy=H/2,orb=105;
+  const nodes=[
+    {a:-Math.PI/2,label:'BIG BANG',sub:'Max UIPF Release',r:255,g:85,b:0},
+    {a:0,label:'EXPANSION',sub:'Atoms Form',r:51,g:102,b:255},
+    {a:Math.PI/2,label:'BLACK HOLE',sub:'Mass Integration',r:92,g:10,b:10},
+    {a:Math.PI,label:'NEW UNIVERSE',sub:'Nucleus Ignition',r:136,g:68,b:136},
+  ];
+  const stars=Array.from({length:38},()=>[Math.random()*W,Math.random()*H,Math.random()*1.1+0.3]);
+  function draw(){
+    ctx.clearRect(0,0,W,H);ctx.fillStyle='#06040F';ctx.fillRect(0,0,W,H);
+    stars.forEach(s=>{
+      ctx.fillStyle=`rgba(255,255,255,${0.18+Math.sin(t*0.04+s[0])*0.18})`;
+      ctx.beginPath();ctx.arc(s[0],s[1],s[2],0,Math.PI*2);ctx.fill();
+    });
+    // cycle arrows
+    nodes.forEach((n,i)=>{
+      const n2=nodes[(i+1)%4];
+      const nx1=cx+Math.cos(n.a)*orb,ny1=cy+Math.sin(n.a)*orb;
+      const nx2=cx+Math.cos(n2.a)*orb,ny2=cy+Math.sin(n2.a)*orb;
+      const a=0.48+Math.sin(t*0.04+i)*0.28;
+      ctx.strokeStyle=`rgba(200,164,53,${a})`;ctx.lineWidth=1.8;
+      ctx.setLineDash([8,6]);ctx.lineDashOffset=-t*0.5;
+      ctx.beginPath();ctx.moveTo(nx1,ny1);ctx.lineTo(nx2,ny2);ctx.stroke();
+      ctx.setLineDash([]);ctx.lineDashOffset=0;
+      const mx=(nx1+nx2)/2,my=(ny1+ny2)/2,ang=Math.atan2(ny2-ny1,nx2-nx1);
+      ctx.fillStyle=`rgba(200,164,53,${a})`;
+      ctx.beginPath();ctx.moveTo(mx+Math.cos(ang)*8,my+Math.sin(ang)*8);
+      ctx.lineTo(mx+Math.cos(ang+2.5)*5,my+Math.sin(ang+2.5)*5);
+      ctx.lineTo(mx+Math.cos(ang-2.5)*5,my+Math.sin(ang-2.5)*5);ctx.closePath();ctx.fill();
+    });
+    // dashed to center
+    nodes.forEach(n=>{
+      ctx.strokeStyle='rgba(200,164,53,0.1)';ctx.setLineDash([3,4]);ctx.lineWidth=0.8;
+      ctx.beginPath();ctx.moveTo(cx+Math.cos(n.a)*orb,cy+Math.sin(n.a)*orb);ctx.lineTo(cx,cy);ctx.stroke();ctx.setLineDash([]);
+    });
+    // node circles
+    nodes.forEach((n,i)=>{
+      const nx=cx+Math.cos(n.a)*orb,ny=cy+Math.sin(n.a)*orb;
+      const pulse=Math.sin(t*0.04+i)*5;
+      const gc=ctx.createRadialGradient(nx,ny,5,nx,ny,42+pulse);
+      gc.addColorStop(0,`rgba(${n.r},${n.g},${n.b},0.18)`);gc.addColorStop(1,'transparent');
+      ctx.beginPath();ctx.arc(nx,ny,42+pulse,0,Math.PI*2);ctx.fillStyle=gc;ctx.fill();
+      ctx.beginPath();ctx.arc(nx,ny,30,0,Math.PI*2);
+      ctx.fillStyle=`rgba(${n.r},${n.g},${n.b},0.22)`;ctx.fill();
+      ctx.strokeStyle=`rgb(${n.r},${n.g},${n.b})`;ctx.lineWidth=2;ctx.stroke();
+      ctx.fillStyle='white';ctx.font='bold 9px Cinzel,serif';ctx.textAlign='center';ctx.fillText(n.label,nx,ny+3);
+      ctx.fillStyle='rgba(220,210,200,0.5)';ctx.font='7px monospace';ctx.fillText(n.sub,nx,ny+13);
+    });
+    // center UIPF
+    ctx.beginPath();ctx.arc(cx,cy,28,0,Math.PI*2);
+    ctx.fillStyle='rgba(15,12,35,0.92)';ctx.fill();
+    ctx.strokeStyle=`rgba(200,164,53,${0.68+Math.sin(t*0.04)*0.2})`;ctx.lineWidth=1.8;ctx.stroke();
+    ctx.fillStyle='#C8A435';ctx.font='bold 14px Cinzel,serif';ctx.textAlign='center';ctx.fillText('UIPF',cx,cy+4);
+    ctx.fillStyle='rgba(200,164,53,0.38)';ctx.font='7px monospace';ctx.fillText('Universal Driver',cx,cy+14);
+    ctx.fillStyle='rgba(180,170,150,0.38)';ctx.font='8px monospace';ctx.textAlign='center';
+    ctx.fillText('Cycle repeats infinitely — no true beginning, no true end',cx,H-10);
+    t++;requestAnimationFrame(draw);
+  }
+  draw();
+};
+
+// ── ANIM 6: FIELD DECAY ──
+window.anim_c6=function(){
+  const cv=initCanvas('c6');if(!cv)return;
+  const ctx=cv.getContext('2d');
+  const W=cv.width,H=cv.height;
+  let t=0;
+  function draw(){
+    ctx.clearRect(0,0,W,H);ctx.fillStyle='#FAF6EE';ctx.fillRect(0,0,W,H);
+    const decay=(t%600)/600,fs=1-decay*0.85;
+    const ex=W*0.3,ey=H-60;
+    // mag rings fading
+    [108,84,64].forEach((r,i)=>{
+      const a=(0.48-i*0.12)*fs;
+      ctx.strokeStyle=`rgba(40,160,40,${a})`;ctx.setLineDash([5,4]);ctx.lineWidth=1.5-i*0.3;
+      ctx.beginPath();ctx.arc(ex,ey,r,Math.PI,0);ctx.stroke();ctx.setLineDash([]);
+    });
+    // Earth
+    ctx.beginPath();ctx.ellipse(ex,ey,55,22,0,0,Math.PI*2);
+    const eg=ctx.createLinearGradient(ex,ey-22,ex,ey+22);eg.addColorStop(0,'#2A6A2A');eg.addColorStop(1,'#0A2A0A');
+    ctx.fillStyle=eg;ctx.fill();ctx.strokeStyle='#1A4A1A';ctx.lineWidth=1.2;ctx.stroke();
+    ctx.fillStyle='#E8D080';ctx.font='bold 9px Cinzel,serif';ctx.textAlign='center';ctx.fillText('EARTH',ex,ey+3);
+    // top arrows (active)
+    [90,62,118].forEach((deg,i)=>{
+      const ang=deg*Math.PI/180,a=0.6+Math.sin(t*0.04+i)*0.2;
+      darr(ctx,ex+Math.cos(ang)*95,ey+Math.sin(ang)*95,ex+Math.cos(ang)*30,ey+Math.sin(ang)*30,`rgba(74,122,171,${a})`,1.5,6);
+    });
+    // leaking bottom arrows
+    const la=decay*0.75;
+    if(la>0.05){
+      [270,245,295].forEach(deg=>{
+        const ang=deg*Math.PI/180;
+        darr(ctx,ex+Math.cos(ang)*78,ey+Math.sin(ang)*58,ex+Math.cos(ang)*30,ey+Math.sin(ang)*30,`rgba(200,80,80,${la})`,1.4,6);
+      });
+    }
+    // residual arrow (getting bolder)
+    const rw=1.5+decay*2.5;
+    darr(ctx,ex,ey-90+Math.sin(t*0.03)*2,ex,ey-30,`rgba(139,26,26,${0.3+decay*0.65})`,rw,8);
+    ctx.fillStyle=`rgba(139,26,26,${0.3+decay*0.6})`;ctx.font='bold 8px monospace';ctx.textAlign='left';
+    ctx.fillText('W ↑ increasing',ex+6,ey-65);
+    // strength bar
+    ctx.fillStyle='rgba(92,10,10,0.75)';ctx.font='bold 10px Cinzel,serif';ctx.textAlign='center';
+    ctx.fillText('Magnetic Field Strength',ex,42);
+    ctx.fillStyle='rgba(92,10,10,0.12)';ctx.fillRect(ex-68,48,136,14);
+    ctx.fillStyle=`rgba(40,160,40,${fs})`;ctx.fillRect(ex-68,48,136*fs,14);
+    ctx.strokeStyle='rgba(92,10,10,0.25)';ctx.lineWidth=1;ctx.strokeRect(ex-68,48,136,14);
+    ctx.fillStyle='rgba(92,10,10,0.65)';ctx.font='9px monospace';ctx.textAlign='center';
+    ctx.fillText(Math.round(fs*100)+'%',ex,59);
+    ctx.fillStyle='rgba(92,10,10,0.42)';ctx.font='8px monospace';
+    ctx.fillText('Field decay cycle: '+Math.round(decay*100)+'%',ex,76);
+    // RIGHT: C(t) curve
+    const gx=W*0.58,gy=H-30,gw=W*0.37,gh=H-65;
+    ctx.strokeStyle='rgba(92,10,10,0.35)';ctx.lineWidth=1.2;
+    ctx.beginPath();ctx.moveTo(gx,gy);ctx.lineTo(gx,gy-gh);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(gx,gy);ctx.lineTo(gx+gw,gy);ctx.stroke();
+    ctx.fillStyle='rgba(92,10,10,0.55)';ctx.font='8px monospace';ctx.textAlign='center';
+    ctx.fillText('Time →',gx+gw/2,gy+14);
+    ctx.save();ctx.translate(gx-18,gy-gh/2);ctx.rotate(-Math.PI/2);ctx.fillText('C(t)',0,0);ctx.restore();
+    // curve
+    ctx.strokeStyle='rgba(40,140,40,0.68)';ctx.lineWidth=2;ctx.beginPath();
+    for(let x=0;x<=gw;x++){
+      const f=x/gw,c=Math.exp(-1.5*f),py=gy-c*gh;
+      if(x===0)ctx.moveTo(gx+x,py);else ctx.lineTo(gx+x,py);
+    }
+    ctx.stroke();
+    // current marker
+    const cx2=gx+decay*gw,cc=Math.exp(-1.5*decay),cy2=gy-cc*gh;
+    ctx.beginPath();ctx.arc(cx2,cy2,5,0,Math.PI*2);ctx.fillStyle='rgba(200,164,53,0.9)';ctx.fill();
+    ctx.strokeStyle='rgba(200,164,53,0.4)';ctx.setLineDash([3,3]);ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(cx2,gy);ctx.lineTo(cx2,cy2);ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle='rgba(92,10,10,0.65)';ctx.font='bold 9px Cinzel,serif';ctx.textAlign='center';
+    ctx.fillText('C(t) = C₀ × e^(−Λt)',gx+gw/2,gy-gh-12);
+    ctx.fillStyle='rgba(200,164,53,0.8)';ctx.font='8px monospace';
+    ctx.fillText('C ≈ '+cc.toFixed(2),cx2+42,cy2-8);
+    t++;requestAnimationFrame(draw);
+  }
+  draw();
+};
+
+// ── ANIM 7: ROTATION LAYERS ──
+window.anim_c7=function(){
+  const cv=initCanvas('c7');if(!cv)return;
+  const ctx=cv.getContext('2d');
+  const W=cv.width,H=cv.height;
+  let t=0;
+  const cx=W/2,cy=H/2;
+  function draw(){
+    ctx.clearRect(0,0,W,H);ctx.fillStyle='#FAF6EE';ctx.fillRect(0,0,W,H);
+    // raw UIPF from outside
+    for(let d=0;d<8;d++){
+      const ang=d*Math.PI/4,p=Math.sin(t*0.03+d*0.5)*4,a=0.3+Math.sin(t*0.04+d)*0.12;
+      darr(ctx,cx+Math.cos(ang)*(168+p),cy+Math.sin(ang)*(168+p),cx+Math.cos(ang)*140,cy+Math.sin(ang)*140,`rgba(80,100,180,${a})`,1.2,6);
+    }
+    ctx.fillStyle='rgba(80,100,180,0.38)';ctx.font='8px monospace';ctx.textAlign='center';ctx.fillText('RAW P₀',cx,16);
+    // segmented rings
+    const radii=[128,106,86,68,52,38];
+    const alphas=[0.32,0.4,0.48,0.56,0.64,0.72];
+    radii.forEach((r,ri)=>{
+      for(let s=0;s<6;s++){
+        const sa=(s/6)*Math.PI*2+t*0.005*(ri+1),gap=0.1;
+        ctx.strokeStyle=`rgba(50,90,180,${alphas[ri]})`;ctx.lineWidth=7-ri*0.8;
+        ctx.beginPath();ctx.arc(cx,cy,r,sa+gap,(sa+Math.PI*2/6)-gap);ctx.stroke();
+      }
+    });
+    // Earth core rotating
+    const ea=t*0.012;
+    const eg=ctx.createRadialGradient(cx-4,cy-4,3,cx,cy,36);
+    eg.addColorStop(0,'#2A7A2A');eg.addColorStop(1,'#0A2A0A');
+    ctx.beginPath();ctx.arc(cx,cy,36,0,Math.PI*2);ctx.fillStyle=eg;ctx.fill();
+    ctx.strokeStyle='rgba(60,160,60,0.48)';ctx.lineWidth=2;ctx.stroke();
+    // rotation indicator
+    ctx.strokeStyle='rgba(200,164,53,0.65)';ctx.lineWidth=2;ctx.setLineDash([4,3]);
+    ctx.beginPath();ctx.arc(cx,cy,27,ea,ea+Math.PI*1.5);ctx.stroke();ctx.setLineDash([]);
+    const rx2=cx+Math.cos(ea+Math.PI*1.5)*27,ry2=cy+Math.sin(ea+Math.PI*1.5)*27;
+    const rang=ea+Math.PI*1.5+Math.PI/2;
+    ctx.fillStyle='rgba(200,164,53,0.65)';
+    ctx.beginPath();ctx.moveTo(rx2,ry2);ctx.lineTo(rx2+Math.cos(rang-0.4)*7,ry2+Math.sin(rang-0.4)*7);ctx.lineTo(rx2+Math.cos(rang+0.4)*7,ry2+Math.sin(rang+0.4)*7);ctx.closePath();ctx.fill();
+    ctx.fillStyle='#E8D080';ctx.font='bold 10px Cinzel,serif';ctx.textAlign='center';ctx.fillText('EARTH',cx,cy+3);
+    ctx.fillStyle='rgba(255,255,255,0.38)';ctx.font='7px monospace';ctx.fillText('CORE',cx,cy+12);
+    // labels
+    ctx.fillStyle='rgba(50,80,180,0.65)';ctx.font='bold 9px Cinzel,serif';ctx.textAlign='left';
+    ctx.fillText('MAGNETIC SEGMENTS',cx+148,cy-8);
+    ctx.fillStyle='rgba(70,100,200,0.45)';ctx.font='7px monospace';
+    ctx.fillText('6 active layers',cx+148,cy+5);ctx.fillText('Each = 1 UIPF filter',cx+148,cy+16);
+    // filtered output
+    ctx.fillStyle=`rgba(80,160,80,${0.38+Math.sin(t*0.03)*0.12})`;ctx.font='8px monospace';ctx.textAlign='right';
+    ctx.fillText('Multi-layer',cx-150,cy-4);ctx.fillText('filtered P₀',cx-150,cy+8);ctx.fillText('→ surface',cx-150,cy+20);
+    // warning box
+    ctx.fillStyle='rgba(139,26,26,0.07)';ctx.strokeStyle='rgba(139,26,26,0.38)';ctx.lineWidth=1;
+    rrect(ctx,16,H-52,192,38,4);ctx.fill();rrect(ctx,16,H-52,192,38,4);ctx.stroke();
+    ctx.fillStyle='rgba(139,26,26,0.68)';ctx.font='bold 9px Cinzel,serif';ctx.textAlign='center';
+    ctx.fillText('⚠ ROTATION STOP',112,H-35);
+    ctx.fillStyle='rgba(92,10,10,0.45)';ctx.font='7px monospace';
+    ctx.fillText('All layers collapse → raw P₀ → crush',112,H-22);
+    ctx.fillStyle='rgba(92,10,10,0.32)';ctx.font='8px monospace';ctx.textAlign='center';
+    ctx.fillText('Rotation churns field into segments — gradual filtering — not sudden impact',cx,H-6);
+    t++;requestAnimationFrame(draw);
+  }
+  draw();
+};
+
+// ── ANIM 8: ANOMALY MAP ──
+window.anim_c8=function(){
+  const cv=initCanvas('c8');if(!cv)return;
+  const ctx=cv.getContext('2d');
+  const W=cv.width,H=cv.height;
+  let t=0;
+  function draw(){
+    ctx.clearRect(0,0,W,H);ctx.fillStyle='#06040F';ctx.fillRect(0,0,W,H);
+    // Earth oval
+    ctx.strokeStyle='rgba(60,120,60,0.38)';ctx.lineWidth=1.5;
+    ctx.beginPath();ctx.ellipse(W/2,H/2,W*0.46,H*0.43,0,0,Math.PI*2);ctx.stroke();
+    ctx.fillStyle='rgba(26,74,42,0.12)';ctx.fill();
+    // poles
+    [[W/2,30,'N POLE'],[W/2,H-30,'S POLE']].forEach(([px,py,lbl])=>{
+      const g=ctx.createRadialGradient(px,py,2,px,py,22+Math.sin(t*0.03)*3);
+      g.addColorStop(0,'rgba(80,200,80,0.32)');g.addColorStop(1,'transparent');
+      ctx.beginPath();ctx.arc(px,py,22,0,Math.PI*2);ctx.fillStyle=g;ctx.fill();
+      ctx.beginPath();ctx.arc(px,py,14,0,Math.PI*2);ctx.fillStyle='rgba(40,140,40,0.32)';ctx.fill();
+      ctx.strokeStyle='rgba(80,200,80,0.45)';ctx.lineWidth=1.2;ctx.stroke();
+      ctx.fillStyle='rgba(80,200,80,0.75)';ctx.font='bold 8px monospace';ctx.textAlign='center';ctx.fillText(lbl,px,py+3);
+    });
+    // SAA
+    const sp=Math.sin(t*0.04)*12,sx=W*0.38,sy=H*0.66;
+    const sg=ctx.createRadialGradient(sx,sy,5,sx,sy,85+sp);
+    sg.addColorStop(0,'rgba(255,50,50,0.48)');sg.addColorStop(0.5,'rgba(255,80,50,0.18)');sg.addColorStop(1,'transparent');
+    ctx.beginPath();ctx.ellipse(sx,sy,85+sp,50+sp*0.5,0,0,Math.PI*2);ctx.fillStyle=sg;ctx.fill();
+    ctx.strokeStyle=`rgba(255,80,80,${0.38+Math.sin(t*0.04)*0.18})`;ctx.setLineDash([5,4]);ctx.lineWidth=1.5;
+    ctx.beginPath();ctx.ellipse(sx,sy,85,50,0,0,Math.PI*2);ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle='rgba(255,120,120,0.88)';ctx.font='bold 10px Cinzel,serif';ctx.textAlign='center';
+    ctx.fillText('SAA',sx,sy-4);
+    ctx.fillStyle='rgba(255,160,160,0.55)';ctx.font='7px monospace';
+    ctx.fillText('South Atlantic Anomaly',sx,sy+8);ctx.fillText('Cancellation weakest',sx,sy+18);
+    // other weak zones
+    [[W*0.68,H*0.38,'Siberia Zone'],[W*0.22,H*0.35,'N. America Zone']].forEach(([wx,wy,lbl])=>{
+      const wp=Math.sin(t*0.035+wx)*7;
+      const wg=ctx.createRadialGradient(wx,wy,3,wx,wy,50+wp);
+      wg.addColorStop(0,'rgba(255,150,50,0.32)');wg.addColorStop(1,'transparent');
+      ctx.beginPath();ctx.ellipse(wx,wy,50+wp,32+wp*0.5,0,0,Math.PI*2);ctx.fillStyle=wg;ctx.fill();
+      ctx.strokeStyle=`rgba(255,150,50,${0.28+Math.sin(t*0.035+wx)*0.12})`;ctx.setLineDash([4,4]);ctx.lineWidth=1;
+      ctx.beginPath();ctx.ellipse(wx,wy,50,32,0,0,Math.PI*2);ctx.stroke();ctx.setLineDash([]);
+      ctx.fillStyle='rgba(255,180,100,0.75)';ctx.font='bold 8px monospace';ctx.textAlign='center';ctx.fillText(lbl,wx,wy+3);
+    });
+    // weight vector shifting at SAA
+    const as=Math.sin(t*0.02)*0.22,bAs=-Math.PI/2+as;
+    darr(ctx,sx,sy-8,sx+Math.cos(bAs)*42,sy+Math.sin(bAs)*42,'rgba(255,100,100,0.68)',2,7);
+    ctx.fillStyle='rgba(255,100,100,0.55)';ctx.font='7px monospace';ctx.textAlign='center';
+    ctx.fillText('W vector angle shifting',sx+62,sy-28);
+    // legend
+    [['rgba(255,50,50,0.58)','Strongest anomaly (SAA)'],['rgba(255,150,50,0.48)','Moderate weak zones'],['rgba(40,160,40,0.48)','Strong poles']].forEach(([col,lbl],i)=>{
+      const lx=W*0.7,ly=H-55+i*17;
+      ctx.fillStyle=col;ctx.fillRect(lx,ly-8,10,10);
+      ctx.fillStyle='rgba(200,200,200,0.55)';ctx.font='8px monospace';ctx.textAlign='left';ctx.fillText(lbl,lx+14,ly);
+    });
+    ctx.fillStyle='rgba(200,190,170,0.38)';ctx.font='8px monospace';ctx.textAlign='center';
+    ctx.fillText('Pulsing = time-varying anomaly zones. SAA shifts ~km/year. Weight vector angle changes in red zones.',W/2,H-8);
+    t++;requestAnimationFrame(draw);
+  }
+  draw();
+};
+
+// ── ANIM 9: ZERO-G CHAMBER ──
+window.anim_c9=function(){
+  const cv=initCanvas('c9');if(!cv)return;
+  const ctx=cv.getContext('2d');
+  const W=cv.width,H=cv.height;
+  let t=0;
+  const cx=W*0.34,cy=H/2;
+  function draw(){
+    ctx.clearRect(0,0,W,H);ctx.fillStyle='#FAF6EE';ctx.fillRect(0,0,W,H);
+    // outer wall
+    ctx.fillStyle='rgba(18,18,55,0.85)';ctx.strokeStyle='rgba(46,74,107,0.68)';ctx.lineWidth=3;
+    rrect(ctx,cx-80,cy-80,160,160,10);ctx.fill();rrect(ctx,cx-80,cy-80,160,160,10);ctx.stroke();
+    // animated coils
+    for(let i=0;i<6;i++){
+      const cy2=cy-58+i*22,cp=t*0.05+i*0.8,ca=0.48+Math.sin(cp)*0.38;
+      ctx.strokeStyle=`rgba(200,164,53,${ca})`;ctx.lineWidth=1.5;
+      ctx.beginPath();ctx.moveTo(cx-80,cy2);ctx.lineTo(cx-68,cy2);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(cx-68,cy2);ctx.bezierCurveTo(cx-62,cy2-4,cx-56,cy2+4,cx-50,cy2);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(cx+80,cy2);ctx.lineTo(cx+68,cy2);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(cx+68,cy2);ctx.bezierCurveTo(cx+62,cy2-4,cx+56,cy2+4,cx+50,cy2);ctx.stroke();
+    }
+    ctx.fillStyle='rgba(200,164,53,0.55)';ctx.font='7px monospace';ctx.textAlign='center';ctx.fillText('Reverse-Phase EM Coils',cx,cy+95);
+    // safety buffer ring
+    ctx.strokeStyle=`rgba(74,122,171,${0.38+Math.sin(t*0.04)*0.14})`;ctx.setLineDash([4,4]);ctx.lineWidth=1.2;
+    rrect(ctx,cx-60,cy-60,120,120,7);ctx.stroke();ctx.setLineDash([]);
+    // inner zero-G zone
+    ctx.fillStyle='rgba(3,2,10,0.9)';rrect(ctx,cx-44,cy-44,88,88,5);ctx.fill();
+    // isotropic UIPF arrows inside
+    for(let d=0;d<8;d++){
+      const ang=d*Math.PI/4,p=Math.sin(t*0.04+d*0.5)*3,a=0.48+Math.sin(t*0.04+d)*0.28;
+      darr(ctx,cx+Math.cos(ang)*(42+p),cy+Math.sin(ang)*(42+p),cx+Math.cos(ang)*22,cy+Math.sin(ang)*22,`rgba(74,136,255,${a})`,1.2,5);
+    }
+    // floating object (bobbing)
+    const bob=Math.sin(t*0.04)*5;
+    ctx.beginPath();ctx.arc(cx,cy+bob,16,0,Math.PI*2);ctx.fillStyle='rgba(200,164,53,0.72)';ctx.fill();
+    ctx.strokeStyle='rgba(200,164,53,0.9)';ctx.lineWidth=1.5;ctx.stroke();
+    ctx.fillStyle='rgba(30,10,0,0.9)';ctx.font='bold 8px Cinzel,serif';ctx.textAlign='center';ctx.fillText('W = 0',cx,cy+bob+3);
+    ctx.fillStyle='rgba(200,220,255,0.75)';ctx.font='bold 11px Cinzel,serif';ctx.textAlign='center';ctx.fillText('ZERO-G CHAMBER',cx,cy-90);
+    // step cards right
+    const rx2=W*0.62;
+    const stepActive=Math.floor(t/100)%4;
+    [['STEP 1: Field Neutralization','Reverse-Phase Coils block\nZameen ki local EM.\nB_net inside → 0'],
+     ['STEP 2: Pressure Equalization','UIPF mirrored all sides.\nIsotropic → W = 0'],
+     ['STEP 3: Safety Buffer','Artificial magnetosphere\nprotects from raw P₀.'],
+     ['RESULT: True Weightlessness','C_chamber → 1\nW_inside = 0']].forEach((s,i)=>{
+      const sy=28+i*66,active=(stepActive===i);
+      ctx.fillStyle=active?'rgba(200,164,53,0.1)':'rgba(18,18,55,0.65)';
+      ctx.strokeStyle=active?'rgba(200,164,53,0.55)':'rgba(46,74,107,0.42)';ctx.lineWidth=active?1.5:1;
+      rrect(ctx,rx2,sy,W*0.36-12,58,4);ctx.fill();rrect(ctx,rx2,sy,W*0.36-12,58,4);ctx.stroke();
+      ctx.fillStyle=active?'rgba(200,164,53,0.88)':'rgba(200,180,120,0.65)';
+      ctx.font='bold 9px Cinzel,serif';ctx.textAlign='left';ctx.fillText(s[0],rx2+8,sy+15);
+      ctx.fillStyle='rgba(180,180,200,0.6)';ctx.font='7.5px monospace';
+      s[1].split('\n').forEach((line,j)=>ctx.fillText(line,rx2+8,sy+27+j*10));
+    });
+    t++;requestAnimationFrame(draw);
+  }
+  draw();
+};
+
+// ── ANIM 10: SOLAR SHIELD ──
+window.anim_c10=function(){
+  const cv=initCanvas('c10');if(!cv)return;
+  const ctx=cv.getContext('2d');
+  const W=cv.width,H=cv.height;
+  let t=0;
+  const cx=W/2,cy=H/2;
+  const stars=Array.from({length:50},()=>[Math.random()*W,Math.random()*H,Math.random()*1.1+0.3]);
+  // pressure particles
+  const particles=Array.from({length:14},(_,i)=>({baseAng:(i/14)*Math.PI*2,phase:Math.random()}));
+  function draw(){
+    ctx.clearRect(0,0,W,H);ctx.fillStyle='#03020A';ctx.fillRect(0,0,W,H);
+    // stars
+    stars.forEach(s=>{
+      if(Math.hypot(s[0]-cx,s[1]-cy)>262){
+        ctx.fillStyle=`rgba(255,255,255,${0.18+Math.sin(t*0.04+s[0])*0.18})`;
+        ctx.beginPath();ctx.arc(s[0],s[1],s[2],0,Math.PI*2);ctx.fill();
+      }
+    });
+    // particles traveling inward
+    particles.forEach((p,i)=>{
+      const phase=((t*0.007+p.phase)%1);
+      const maxR=W*0.46,r=maxR*(1-phase);
+      const px2=cx+Math.cos(p.baseAng)*r,py2=cy+Math.sin(p.baseAng)*r;
+      let intensity,R,G,B;
+      if(r>W*0.36){intensity=0.78;R=255;G=80;B=60;}
+      else if(r>W*0.2){intensity=0.32;R=255;G=140;B=80;}
+      else if(r>82){intensity=0.12;R=100;G=150;B=255;}
+      else{intensity=0;}
+      if(intensity>0.02){
+        ctx.beginPath();ctx.arc(px2,py2,2+intensity*2,0,Math.PI*2);
+        ctx.fillStyle=`rgba(${R},${G},${B},${intensity})`;ctx.fill();
+      }
+    });
+    // Heliosphere
+    const hp=Math.sin(t*0.02)*5,hr=W*0.43+hp;
+    ctx.strokeStyle=`rgba(255,140,0,${0.28+Math.sin(t*0.02)*0.1})`;ctx.setLineDash([8,5]);ctx.lineWidth=2;
+    ctx.beginPath();ctx.arc(cx,cy,hr,0,Math.PI*2);ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle='rgba(255,140,0,0.55)';ctx.font='bold 10px Cinzel,serif';ctx.textAlign='center';
+    ctx.fillText('HELIOSPHERE — Filter 1',cx,cy-hr-8);
+    ctx.fillStyle='rgba(255,160,80,0.38)';ctx.font='7px monospace';
+    ctx.fillText('Suraj ka Magnetic Bubble — ~90% P₀ blocked',cx,cy-hr+6);
+    // Magnetosphere
+    const mg=98+Math.sin(t*0.025)*4;
+    ctx.strokeStyle=`rgba(68,200,68,${0.38+Math.sin(t*0.025)*0.14})`;ctx.setLineDash([5,4]);ctx.lineWidth=1.8;
+    ctx.beginPath();ctx.arc(cx,cy,mg,0,Math.PI*2);ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle='rgba(80,200,80,0.55)';ctx.font='8px monospace';ctx.textAlign='left';
+    ctx.fillText('Magnetosphere — Filter 2',cx-mg+5,cy+mg+14);
+    // Sun
+    const sgg=ctx.createRadialGradient(115,cy,5,115,cy,50);
+    sgg.addColorStop(0,'#FFE066');sgg.addColorStop(0.5,'#FF9900');sgg.addColorStop(1,'#FF5500');
+    ctx.beginPath();ctx.arc(115,cy,50,0,Math.PI*2);ctx.fillStyle=sgg;ctx.fill();
+    for(let r2=0;r2<8;r2++){
+      const ra=r2*Math.PI/4+t*0.01;
+      ctx.strokeStyle=`rgba(255,200,50,${0.28+Math.sin(t*0.05+r2)*0.18})`;ctx.lineWidth=1.5;
+      ctx.beginPath();ctx.moveTo(115+Math.cos(ra)*54,cy+Math.sin(ra)*54);ctx.lineTo(115+Math.cos(ra)*68,cy+Math.sin(ra)*68);ctx.stroke();
+    }
+    ctx.fillStyle='rgba(30,15,0,0.9)';ctx.font='bold 11px Cinzel,serif';ctx.textAlign='center';ctx.fillText('SUN',115,cy+4);
+    ctx.fillStyle='rgba(30,15,0,0.55)';ctx.font='7px monospace';ctx.fillText('Helio-source',115,cy+14);
+    // Earth
+    const earthG=ctx.createRadialGradient(cx-5,cy-5,3,cx,cy,40);
+    earthG.addColorStop(0,'#2A7A2A');earthG.addColorStop(1,'#0A2A0A');
+    ctx.beginPath();ctx.arc(cx,cy,40,0,Math.PI*2);ctx.fillStyle=earthG;ctx.fill();
+    ctx.strokeStyle='rgba(60,160,60,0.55)';ctx.lineWidth=1.5;ctx.stroke();
+    ctx.fillStyle='#E8D080';ctx.font='bold 11px Cinzel,serif';ctx.textAlign='center';ctx.fillText('ZAMEEN',cx,cy+4);
+    ctx.fillStyle='rgba(255,255,255,0.38)';ctx.font='7px monospace';ctx.fillText('Surface layer',cx,cy+14);
+    // labels right
+    ctx.textAlign='left';
+    [[W-170,cy-115,'rgba(255,120,80,0.68)','Raw P₀ = 100%'],[W-170,cy-95,'rgba(255,160,80,0.58)','After Helio ≈ 10%'],
+     [W-170,cy-75,'rgba(100,200,100,0.58)','After Mag ≈ 2–5%'],[W-170,cy-55,'rgba(200,164,53,0.68)','Surface = Residual W']].forEach(([lx,ly,col,lbl])=>{
+      ctx.fillStyle=col;ctx.font='8px monospace';ctx.fillText(lbl,lx,ly);
+    });
+    ctx.fillStyle='rgba(180,160,140,0.38)';ctx.font='8px monospace';ctx.textAlign='center';
+    ctx.fillText('Particles dim as they pass through each filter — surface receives only residual P₀',cx,H-10);
+    t++;requestAnimationFrame(draw);
+  }
+  draw();
+};
+
+// ── AUTO START ──
+window.addEventListener('load',()=>{setTimeout(()=>window.anim_c1&&window.anim_c1(),200);});
+
+</script>
+</body>
+</html>
