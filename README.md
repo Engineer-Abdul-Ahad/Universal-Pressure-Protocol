@@ -58,5 +58,13 @@ If using this work, please cite as:
 
 ## License
 
+"NOTICE: All access to this repository is being logged. IP addresses and geographical locations of visitors are recorded for security and intellectual property protection."
+
 © 2026 Abdul Ahad (S/O Muhammad Iqbal Ansari). All theoretical rights reserved.
 Published for open scientific evaluation — Safety by Multiplication.
+
+---
+### 🌍 Visitors Geography (Live Tracking)
+[![Free Counting](https://count.getloli.com/get/@Engineer-Abdul-Ahad-UPP?theme=rule34)](https://github.com/Engineer-Abdul-Ahad)
+
+![Flag Counter](https://s11.flagcounter.com/count2/4S5v/bg_FFFFFF/txt_000000/border_CCCCCC/columns_4/maxflags_12/viewers_0/labels_1/pageviews_1/flags_0/percent_0/)
