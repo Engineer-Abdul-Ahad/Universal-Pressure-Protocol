@@ -58,6 +58,17 @@ If using this work, please cite as:
 
 ## License
 
+⚠️ LEGAL NOTICE & COPYRIGHT
+Project Title: Universal Pressure Protocol (UPP) & Atomic Binary Logic (ABL)
+Author: Engineer Abdul Ahad (Sukkur, Pakistan)
+Registered DOI: 10.5281/zenodo.20162197
+🔴 RESTRICTED USE POLICY
+This research is published under the Creative Commons Attribution-NonCommercial-NoDerivs 4.0 International (CC BY-NC-ND 4.0) license.
+NO COMMERCIAL USE: You are strictly prohibited from selling, renting, or profiting from this research or any machines/logic derived from it.
+NO DERIVATIVES: You cannot modify, remix, or transform this research to publish it under a different name.
+ATTRIBUTION REQUIRED: Any scientific mention must credit "Engineer Abdul Ahad" as the original author.
+Any violation of these terms will be treated as Intellectual Property Theft and may lead to legal action.
+
 "NOTICE: All access to this repository is being logged. IP addresses and geographical locations of visitors are recorded for security and intellectual property protection."
 
 © 2026 Abdul Ahad (S/O Muhammad Iqbal Ansari). All theoretical rights reserved.
