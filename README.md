@@ -58,8 +58,8 @@ This is an original unified theoretical framework proposing that:
 
 | File | Description |
 |------|-------------|
-| UPP_ABL_English_Complete.html | Full research paper (English) |
-| AAD_Bridge_Paper_2026.html | Cross-validation bridge paper (Urdu/Roman) |
+| UPP_ABL_English_Complete.html
+| UIPF_Website_English.html|
 
 ---
 
