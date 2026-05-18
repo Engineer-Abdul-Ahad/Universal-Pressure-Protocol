@@ -16,11 +16,11 @@
 
 ​📂 Official Research Files (Download Now):
 
-​[Download: UPP_ABL_English_Complete (3).html]
+​[Download: UPP_ABL_English_Complete.html]
 
 (Contains the 14 master formulas that provide the method to bypass gravity and stabilize matter.)
 
-​[Download: AAD_Bridge_Vol1_English.html]
+​[Download: UIPF_Website_English.html]
 
 (See exactly how classical calculus and my new UPP logic align to disprove General Relativity.)
 ​"Only those who dare to think beyond textbooks should download these files. This is not just a repository; it is the dawn of a new era in Physics."
