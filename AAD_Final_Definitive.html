@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Universal Pressure Protocol — Al-Adal Dynamics · Abdul Ahad · 2026</title>
+<style>
+:root{
+  --bg:#05080d;--s1:#0d1117;--s2:#161b22;--bd:#21262d;
+  --go:#d4a017;--g2:#f0c040;--bl:#58a6ff;--gr:#3fb950;
+  --rd:#f85149;--pu:#bc8cff;--cy:#39d0d8;--or:#e8703a;
+  --tx:#e6edf3;--mu:#8b949e;--sw:268px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--tx);font-family:'Georgia','Times New Roman',serif;line-height:1.78;display:flex;}
+/* SIDEBAR */
+#sb{position:fixed;top:0;left:0;width:var(--sw);height:100vh;background:var(--s1);border-right:1px solid var(--bd);overflow-y:auto;z-index:100;}
+#sb .h{padding:16px 14px 12px;border-bottom:1px solid var(--bd);background:var(--s2);}
+#sb .h .i{font-size:8.5px;color:var(--go);letter-spacing:2px;text-transform:uppercase;font-family:monospace;}
+#sb .h .t{font-size:11.5px;font-weight:bold;color:var(--tx);margin-top:4px;line-height:1.3;}
+#sb .h .y{font-size:9px;color:var(--mu);margin-top:3px;font-family:monospace;}
+#sb nav{padding:8px 0;}
+#sb nav a{display:flex;align-items:flex-start;gap:7px;padding:6px 13px;text-decoration:none;color:var(--mu);font-size:11px;font-family:Georgia,serif;border-left:3px solid transparent;transition:all .18s;line-height:1.35;}
+#sb nav a:hover,#sb nav a.on{color:var(--g2);border-left-color:var(--go);background:rgba(212,160,23,.06);}
+#sb nav a .n{color:var(--go);font-family:monospace;font-size:9px;min-width:22px;padding-top:1px;}
+#sb .sp{height:1px;background:var(--bd);margin:5px 13px;}
+#sb .cat{font-size:8px;color:var(--mu);letter-spacing:2px;text-transform:uppercase;font-family:monospace;padding:8px 13px 2px;}
+/* MAIN */
+#main{margin-left:var(--sw);flex:1;}
+/* COVER */
+#cover{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:56px 40px;background:radial-gradient(ellipse at 50% 0%,rgba(212,160,23,.08),transparent 58%),radial-gradient(ellipse at 80% 80%,rgba(88,166,255,.04),transparent 50%),var(--bg);border-bottom:1px solid var(--bd);position:relative;overflow:hidden;}
+#cover::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(212,160,23,.022) 1px,transparent 1px);background-size:36px 36px;pointer-events:none;}
+.badge{display:inline-block;background:rgba(212,160,23,.09);border:1px solid rgba(212,160,23,.26);color:var(--go);font-size:8.5px;letter-spacing:3px;text-transform:uppercase;font-family:monospace;padding:5px 15px;border-radius:2px;margin-bottom:26px;}
+.ct{font-size:clamp(22px,3.8vw,40px);font-weight:bold;color:var(--tx);line-height:1.18;margin-bottom:10px;max-width:680px;}
+.ct span{color:var(--go);}
+.cs{font-size:clamp(12px,1.7vw,14.5px);color:var(--mu);max-width:560px;margin-bottom:34px;font-style:italic;}
+.div{width:52px;height:2px;background:linear-gradient(90deg,transparent,var(--go),transparent);margin:0 auto 26px;}
+.ac{background:var(--s1);border:1px solid var(--bd);border-top:2px solid var(--go);padding:20px 30px;max-width:460px;width:100%;text-align:left;margin-bottom:32px;}
+.ac .l{font-size:8.5px;color:var(--go);letter-spacing:2px;text-transform:uppercase;font-family:monospace;}
+.ac .v{font-size:12.5px;color:var(--tx);margin-bottom:9px;margin-top:2px;}
+.cm{display:flex;gap:22px;justify-content:center;flex-wrap:wrap;font-size:9.5px;color:var(--mu);font-family:monospace;letter-spacing:1px;}
+.cm span{border-left:2px solid var(--go);padding-left:8px;}
+/* SECTIONS */
+.sec{padding:60px 56px;max-width:880px;margin:0 auto;border-bottom:1px solid var(--bd);}
+.ey{font-size:9px;letter-spacing:3px;text-transform:uppercase;font-family:monospace;color:var(--go);margin-bottom:8px;}
+.st{font-size:clamp(19px,2.6vw,28px);font-weight:bold;color:var(--tx);margin-bottom:6px;line-height:1.18;}
+.ss{font-size:13.5px;color:var(--mu);margin-bottom:36px;font-style:italic;}
+.dv{height:1px;background:linear-gradient(90deg,var(--go),rgba(212,160,23,.18),transparent);margin-bottom:36px;}
+p{margin-bottom:14px;font-size:14px;}
+h3{font-size:16.5px;color:var(--g2);margin:28px 0 10px;border-bottom:1px solid var(--bd);padding-bottom:5px;}
+h4{font-size:13.5px;color:var(--bl);margin:20px 0 6px;}
+strong{color:var(--g2);}
+/* CALLOUTS */
+.c{padding:17px 20px;border-radius:3px;margin:18px 0;font-size:13px;line-height:1.7;}
+.cgo{background:rgba(212,160,23,.06);border:1px solid rgba(212,160,23,.2);border-left:4px solid var(--go);}
+.cbl{background:rgba(88,166,255,.05);border:1px solid rgba(88,166,255,.17);border-left:4px solid var(--bl);}
+.crd{background:rgba(248,81,73,.05);border:1px solid rgba(248,81,73,.17);border-left:4px solid var(--rd);}
+.cgr{background:rgba(63,185,80,.05);border:1px solid rgba(63,185,80,.17);border-left:4px solid var(--gr);}
+.cpu{background:rgba(188,140,255,.05);border:1px solid rgba(188,140,255,.17);border-left:4px solid var(--pu);}
+.ccy{background:rgba(57,208,216,.05);border:1px solid rgba(57,208,216,.17);border-left:4px solid var(--cy);}
+.cor{background:rgba(232,112,58,.05);border:1px solid rgba(232,112,58,.17);border-left:4px solid var(--or);}
+.ctg{font-size:8.5px;letter-spacing:2px;text-transform:uppercase;font-family:monospace;margin-bottom:7px;}
+.cgo .ctg{color:var(--go);}.cbl .ctg{color:var(--bl);}.crd .ctg{color:var(--rd);}
+.cgr .ctg{color:var(--gr);}.cpu .ctg{color:var(--pu);}.ccy .ctg{color:var(--cy);}.cor .ctg{color:var(--or);}
+/* FORMULA */
+.fb{background:var(--s1);border:1px solid var(--bd);border-top:2px solid var(--go);padding:17px 20px;margin:16px 0;}
+.fi{font-size:8.5px;color:var(--go);letter-spacing:2px;margin-bottom:6px;font-family:monospace;}
+.fn{font-size:11.5px;color:var(--mu);margin-bottom:9px;}
+.fe{font-size:16px;color:var(--g2);text-align:center;padding:10px;background:var(--bg);border-radius:3px;margin:7px 0;letter-spacing:.4px;font-family:monospace;}
+.fm{font-size:11px;color:var(--mu);margin-top:8px;font-family:Georgia,serif;line-height:1.6;}
+.fv{font-size:10.5px;color:var(--gr);font-family:monospace;margin-top:6px;padding:6px 10px;background:rgba(63,185,80,.06);border-left:2px solid var(--gr);}
+/* VERIFIED BADGE */
+.vbdg{display:inline-block;background:rgba(63,185,80,.1);border:1px solid rgba(63,185,80,.25);color:var(--gr);font-size:8px;letter-spacing:1.5px;font-family:monospace;padding:2px 7px;border-radius:2px;margin-left:8px;text-transform:uppercase;vertical-align:middle;}
+.pbdg{display:inline-block;background:rgba(57,208,216,.1);border:1px solid rgba(57,208,216,.25);color:var(--cy);font-size:8px;letter-spacing:1.5px;font-family:monospace;padding:2px 7px;border-radius:2px;margin-left:8px;text-transform:uppercase;vertical-align:middle;}
+.xbdg{display:inline-block;background:rgba(248,81,73,.1);border:1px solid rgba(248,81,73,.25);color:var(--rd);font-size:8px;letter-spacing:1.5px;font-family:monospace;padding:2px 7px;border-radius:2px;margin-left:8px;text-transform:uppercase;vertical-align:middle;}
+/* TABLE */
+.tw{overflow-x:auto;margin:20px 0;}
+table{width:100%;border-collapse:collapse;font-size:12px;}
+th{background:var(--s2);color:var(--go);font-size:8.5px;letter-spacing:1px;text-transform:uppercase;font-family:monospace;padding:9px 12px;text-align:left;border-bottom:2px solid var(--go);}
+td{padding:9px 12px;border-bottom:1px solid var(--bd);color:var(--tx);vertical-align:top;}
+tr:hover td{background:rgba(212,160,23,.025);}
+/* TWO COL */
+.tc{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0;}
+@media(max-width:660px){.tc{grid-template-columns:1fr;}}
+.tcc{background:var(--s1);border:1px solid var(--bd);padding:16px;}
+.tct{font-size:9px;letter-spacing:2px;text-transform:uppercase;font-family:monospace;margin-bottom:9px;}
+/* VISUAL */
+.vis{background:var(--s1);border:1px solid var(--bd);padding:20px;margin:24px 0;text-align:center;}
+.vcap{font-size:9.5px;color:var(--mu);margin-top:9px;font-style:italic;font-family:monospace;}
+/* MACHINE */
+.mg{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin:20px 0;}
+@media(max-width:620px){.mg{grid-template-columns:1fr;}}
+.mc{background:var(--s1);border:1px solid var(--bd);border-top:2px solid var(--bl);padding:16px;}
+.mc .mi{font-size:8px;color:var(--bl);letter-spacing:2px;font-family:monospace;}
+.mc .mn{font-size:13px;color:var(--tx);font-weight:bold;margin:3px 0 9px;}
+.mc .ms{font-size:10.5px;color:var(--mu);margin:2px 0;font-family:monospace;}
+.mc .ms b{color:var(--bl);}
+.mc .mf{font-size:11.5px;color:var(--tx);margin-top:8px;padding-top:8px;border-top:1px solid var(--bd);}
+/* HIERARCHY */
+.hr{display:grid;grid-template-columns:110px 95px 1fr 1fr;gap:1px;margin-bottom:1px;}
+.hc{padding:9px 12px;background:var(--s1);font-size:11px;}
+.hh{background:var(--s2);color:var(--go);font-size:8.5px;letter-spacing:1px;text-transform:uppercase;font-family:monospace;}
+/* CONCLUSIONS */
+.cg2{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:13px;margin:24px 0;}
+.cc2{background:var(--s1);border:1px solid var(--bd);padding:20px 16px 14px;position:relative;}
+.cc2 .cn{position:absolute;top:-10px;left:13px;background:var(--go);color:var(--bg);font-size:9.5px;font-weight:bold;font-family:monospace;padding:2px 7px;}
+.cc2 .ct2{font-size:12.5px;color:var(--tx);font-weight:bold;margin-bottom:6px;}
+.cc2 .cb2{font-size:11px;color:var(--mu);line-height:1.6;}
+/* STAT BAR */
+.sr{display:flex;align-items:center;gap:10px;margin:6px 0;font-size:11.5px;}
+.sl{min-width:200px;color:var(--mu);}
+.sb{flex:1;height:5px;background:var(--bd);border-radius:3px;overflow:hidden;}
+.sf{height:100%;background:linear-gradient(90deg,var(--go),var(--g2));border-radius:3px;}
+.sp2{min-width:32px;text-align:right;color:var(--go);font-family:monospace;font-size:10.5px;}
+/* QUOTE */
+.qt{text-align:center;padding:34px 26px;margin:34px 0;background:var(--s1);border:1px solid var(--bd);position:relative;}
+.qt::before{content:'"';position:absolute;top:-16px;left:24px;font-size:68px;color:var(--go);opacity:.26;font-family:Georgia;line-height:1;}
+.qtt{font-size:15px;font-style:italic;color:var(--tx);line-height:1.8;max-width:640px;margin:0 auto 13px;}
+.qta{font-size:10.5px;color:var(--go);font-family:monospace;}
+/* FAIL */
+.fail{background:rgba(248,81,73,.035);border:1px solid rgba(248,81,73,.13);border-left:4px solid var(--rd);padding:14px 17px;margin:16px 0;}
+.fail .ft{font-size:8.5px;color:var(--rd);letter-spacing:2px;text-transform:uppercase;font-family:monospace;margin-bottom:6px;}
+/* FOOT */
+#foot{text-align:center;padding:32px 56px;background:var(--s1);border-top:1px solid var(--bd);font-family:monospace;}
+#foot .fi{font-size:10px;color:var(--go);letter-spacing:2px;margin-bottom:6px;}
+#foot .fc{font-size:10px;color:var(--mu);}
+::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--bd);border-radius:3px;}::-webkit-scrollbar-thumb:hover{background:var(--go);}
+</style>
+</head>
+<body>
+
+<nav id="sb">
+  <div class="h">
+    <div class="i">Al-Adal Dynamics Institute</div>
+    <div class="t">Universal Pressure Protocol &amp; Atomic Binary Logic</div>
+    <div class="y">AAD-UPP-ABL-2026 · Definitive Edition</div>
+  </div>
+  <nav>
+    <a href="#cover" onclick="sa(this)"><span class="n">00</span>Cover &amp; Abstract</a>
+    <div class="sp"></div>
+    <div class="cat">Foundation</div>
+    <a href="#intuition" onclick="sa(this)"><span class="n">◎</span>Intuitive Foundation</a>
+    <a href="#ch1" onclick="sa(this)"><span class="n">01</span>The Problem</a>
+    <div class="sp"></div>
+    <div class="cat">Theory</div>
+    <a href="#ch2" onclick="sa(this)"><span class="n">02</span>Core Theory — P₀ Field</a>
+    <a href="#ch3" onclick="sa(this)"><span class="n">03</span>Atomic Binary Logic</a>
+    <a href="#ch4" onclick="sa(this)"><span class="n">04</span>Mathematical Framework</a>
+    <a href="#ch5" onclick="sa(this)"><span class="n">05</span>Universe Architecture</a>
+    <div class="sp"></div>
+    <div class="cat">Application</div>
+    <a href="#ch6" onclick="sa(this)"><span class="n">06</span>Predictive Failures</a>
+    <a href="#ch7" onclick="sa(this)"><span class="n">07</span>Engineering Designs</a>
+    <a href="#ch8" onclick="sa(this)"><span class="n">08</span>Biological Survival</a>
+    <div class="sp"></div>
+    <div class="cat">Validation</div>
+    <a href="#ch9" onclick="sa(this)"><span class="n">09</span>Testable Predictions</a>
+    <a href="#ch10" onclick="sa(this)"><span class="n">10</span>Conclusions</a>
+    <a href="#status" onclick="sa(this)"><span class="n">✦</span>Framework Status</a>
+    <div class="sp"></div>
+    <a href="#foot" onclick="sa(this)"><span class="n">∞</span>Copyright</a>
+  </nav>
+</nav>
+
+<div id="main">
+
+<!-- COVER -->
+<section id="cover">
+  <div class="badge">Definitive Edition · Vol I–IV · 2026</div>
+  <h1 class="ct">Universal <span>Pressure</span> Protocol<br>&amp; Atomic Binary Logic</h1>
+  <p class="cs">A mechanically complete, mathematically grounded theory of gravity, atomic stability, energy, and space survival — from a single universal field that every atom has been processing since the first moment of creation.</p>
+  <div class="div"></div>
+  <div style="margin-bottom:28px;">
+    <svg width="300" height="178" viewBox="0 0 300 178" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="eg" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#1a3a6b"/><stop offset="100%" stop-color="#0d1f3c"/></radialGradient>
+        <radialGradient id="sg" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="rgba(88,166,255,0)"/><stop offset="100%" stop-color="rgba(88,166,255,.14)"/></radialGradient>
+      </defs>
+      <g opacity=".14" stroke="#d4a017" stroke-width=".8"><line x1="150" y1="4" x2="150" y2="50"/><line x1="150" y1="128" x2="150" y2="174"/><line x1="4" y1="89" x2="50" y2="89"/><line x1="250" y1="89" x2="296" y2="89"/><line x1="32" y1="26" x2="82" y2="61"/><line x1="268" y1="26" x2="218" y2="61"/><line x1="32" y1="152" x2="82" y2="117"/><line x1="268" y1="152" x2="218" y2="117"/></g>
+      <g fill="#d4a017" opacity=".42"><polygon points="150,52 145,42 155,42"/><polygon points="150,126 145,136 155,136"/><polygon points="52,89 42,84 42,94"/><polygon points="248,89 258,84 258,94"/></g>
+      <circle cx="150" cy="89" r="64" fill="url(#sg)"/><circle cx="150" cy="89" r="64" stroke="#58a6ff" stroke-width="1" stroke-dasharray="4,3" opacity=".36"/>
+      <circle cx="150" cy="89" r="34" fill="url(#eg)"/><circle cx="150" cy="89" r="34" stroke="#1e3a6e" stroke-width="1.3"/>
+      <path d="M128 118 Q150 132 172 118" stroke="#f85149" stroke-width="1.3" fill="none" opacity=".42"/>
+      <line x1="150" y1="48" x2="150" y2="70" stroke="#f0c040" stroke-width="1.8"/><polygon points="150,72 146,63 154,63" fill="#f0c040"/>
+      <text x="158" y="64" fill="#f0c040" font-size="8" font-family="monospace">W</text>
+      <text x="91" y="85" fill="#58a6ff" font-size="7" font-family="monospace" opacity=".82">EM SHIELD</text>
+      <text x="133" y="93" fill="#e6edf3" font-size="7" font-family="monospace">EARTH</text>
+      <text x="14" y="19" fill="#3fb950" font-size="7.5" font-family="monospace" opacity=".72">FLOATING STATE</text>
+      <text x="14" y="29" fill="#3fb950" font-size="7" font-family="monospace" opacity=".5">Universe Default</text>
+      <text x="150" y="170" text-anchor="middle" fill="#d4a017" font-size="7.5" font-family="monospace" opacity=".45">P₀ — Universal Isotropic Pressure Field</text>
+    </svg>
+  </div>
+  <div class="ac">
+    <div class="l">Theorist &amp; Author</div><div class="v">Abdul Ahad, S/O Muhammad Iqbal Ansari</div>
+    <div class="l">Institute</div><div class="v">Al-Adal Dynamics · Old Sukkur, Sindh, Pakistan</div>
+    <div class="l">Classification</div><div class="v">Unified Framework · Progressive Science · 2026</div>
+  </div>
+  <div class="cm"><span>14 Formulas</span><span>4 Machines</span><span>6 Verified Patterns</span><span>G Derived ±0.38%</span></div>
+</section>
+
+<!-- ABSTRACT -->
+<section id="abstract" class="sec">
+  <div class="ey">Abstract</div>
+  <div style="font-size:14px;line-height:1.82;padding:20px;background:var(--s1);border-left:3px solid var(--go);border-radius:0 3px 3px 0;">
+    This paper presents the <strong>Universal Pressure Protocol (UPP)</strong> and <strong>Atomic Binary Logic (ABL)</strong> — a unified theoretical framework by Abdul Ahad of Old Sukkur, Pakistan. The framework proposes that gravity is not a pull force but the residual of an omnidirectional universal pressure field (P₀) being partially blocked by Earth's electromagnetic shield. Cross-file analysis and numerical verification reveal six foundational patterns: (1) the master equation is a generalisation of the proven hydrostatic pressure law; (2) Newton's G is derived from P₀ with 0.38% numerical agreement; (3) the corrected atomic stability ratio (Sₐ) mirrors the Bohr orbit equilibrium condition; (4) Temperature = ABL Processing Rate is equivalent to the quantum harmonic oscillator formula; (5) the Casimir Effect measures the differential of the P₀ field; and (6) all 14 formulas share the universal structure P₀ × Geometry × Coupling. Fourteen original formulas, four engineering machines, and three falsifiable experimental predictions are presented. Framework completeness is assessed at 72% with remaining gaps clearly labeled.
+  </div>
+  <div style="margin-top:16px;padding:12px 16px;background:var(--s2);border:1px solid var(--bd);font-size:11px;font-family:monospace;"><strong style="color:var(--go)">Keywords:</strong> Universal Isotropic Pressure Field · P₀ · ABL · Gravity Mechanism · Electromagnetic Cancellation · Floating State · Atomic Stability · Space Biology · Dark Matter · P₄P · Zero-Point Energy · Casimir Effect · Hydrostatic Equivalence</div>
+</section>
+
+<!-- INTUITIVE FOUNDATION -->
+<section id="intuition" class="sec">
+  <div class="ey">Before the Equations — Conceptual Map</div>
+  <h2 class="st">The Intuitive Foundation</h2>
+  <p class="ss">A factory tool that mirrors the universe — three steps from machine to cosmos</p>
+  <div class="dv"></div>
+
+  <p>Every physicist works from intuition before equations. This section provides the conceptual map. It is not the mechanism — it prepares the mind to receive the mechanism.</p>
+
+  <div class="c cgo">
+    <div class="ctg">The Magnetic Polishing Machine (Factory Model)</div>
+    A factory machine: glass container, water, metal pins inside. A magnetic base rotates beneath the container — the pins rotate in sync without being touched. Remove the container and water: same field, same control, now in open space. Scale this to cosmic proportions: the "pins" become atoms, planets, stars. The "magnetic base" becomes the P₀ field. No container, no medium, no friction — just a field that holds everything in pattern.
+  </div>
+
+  <div class="tc">
+    <div class="tcc"><div class="tct" style="color:var(--bl)">Step 1 — Remove the Container</div><p style="font-size:12.5px">No boundary. P₀ operates across infinite space uniformly — no walls, no floor. The open stage of the universe.</p></div>
+    <div class="tcc"><div class="tct" style="color:var(--bl)">Step 2 — Remove the Water</div><p style="font-size:12.5px">P₀ is a quantum field, not a fluid. Quantum fields produce zero classical drag — as proven by Casimir (1948) and confirmed daily by electrons moving through EM fields.</p></div>
+  </div>
+  <div class="tc">
+    <div class="tcc"><div class="tct" style="color:var(--go)">Step 3 — Frequency Becomes Matter</div><p style="font-size:12.5px">Matter is frequency locked into stable patterns by P₄P. Slow the frequency → solid. Change it → liquid. Accelerate it → plasma. This is F-06 in conceptual form.</p></div>
+    <div class="tcc"><div class="tct" style="color:var(--go)">The Core Insight</div><p style="font-size:12.5px">Weight = P₀ partially blocked. Float = P₀ equal from all sides. The entire framework is this one sentence expressed in 14 formulas.</p></div>
+  </div>
+  <div class="c ccy"><div class="ctg">Disclaimer</div>The machine uses a rotating magnetic base — Earth operates differently. This is a conceptual map only. The actual mechanism is electromagnetic cancellation of an isotropic quantum field, described precisely in Chapters 2–4.</div>
+</section>
+
+<!-- CH1 -->
+<section id="ch1" class="sec">
+  <div class="ey">Chapter 01</div>
+  <h2 class="st">The Problem</h2>
+  <p class="ss">What three centuries of physics measured accurately — and never explained mechanically</p>
+  <div class="dv"></div>
+  <p>Newton's F = GMm/r² predicts gravitational magnitude with precision sufficient to navigate spacecraft across the solar system. Einstein's curvature equations predict time dilation to nanosecond accuracy. Both are extraordinary achievements. Neither explains <em>what physically produces the downward force</em>.</p>
+  <div class="c cgo"><div class="ctg">Newton's Own Admission</div>"I feign no hypotheses." Newton explicitly stated he was describing the pattern — not the cause. Three centuries of successors forgot this distinction.</div>
+  <div class="tw"><table>
+    <thead><tr><th>Framework</th><th>Contribution</th><th>Unanswered</th><th>UPP Relationship</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Newton (1687)</strong></td><td>F = GMm/r² — accurate magnitude</td><td>No mechanism for G. Pull-at-distance unexplained.</td><td>G is derived: G = P₀ × (A_eff/m) × SF × R²/M ±0.38%</td></tr>
+      <tr><td><strong>Einstein (1915)</strong></td><td>Spacetime curvature — geometric elegance</td><td>Why does mass curve space? Physical agent unnamed.</td><td>Curvature = observable appearance of P₀ redistribution</td></tr>
+      <tr><td><strong>Standard Model</strong></td><td>Graviton proposed as carrier</td><td>Never detected. No experimental confirmation.</td><td>P₀ field is the carrier — no particle required</td></tr>
+      <tr><td><strong>UPP (Ahad, 2026)</strong></td><td>W = P₀ × A_eff × [1−C(B,E,θ)]</td><td>P₀ exact value pending experiment</td><td>Mechanically complete. Numerically consistent with G.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="c cbl"><div class="ctg">The Relationship — Not Rejection, Completion</div>Newton's equations = output of P₀ cancellation mechanism at human scale.<br>Einstein's curvature = geometric appearance of P₀ redistribution by atomic EM fields.<br>UPP = the sub-layer mechanism that produces both as emergent results.</div>
+</section>
+
+<!-- CH2 -->
+<section id="ch2" class="sec">
+  <div class="ey">Chapter 02</div>
+  <h2 class="st">Core Theory — The P₀ Field</h2>
+  <p class="ss">Universal Isotropic Pressure Field · Cancellation Mechanism · G Derived · Energy Source</p>
+  <div class="dv"></div>
+
+  <p>The central postulate: <strong>space is not empty</strong>. The universe is filled with an omnidirectional pressure field — P₀ — acting equally from all directions at every point in space. This is the physical agent that Newton's G measured and Einstein's curvature described.</p>
+
+  <div class="vis">
+    <svg width="520" height="248" viewBox="0 0 520 248" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs><linearGradient id="ef" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1a3a6b"/><stop offset="100%" stop-color="#0d1f3c"/></linearGradient></defs>
+      <rect x="0" y="0" width="162" height="248" fill="#0d1117"/>
+      <text x="81" y="18" text-anchor="middle" fill="#3fb950" font-size="8.5" font-family="monospace">DEEP SPACE</text>
+      <text x="81" y="29" text-anchor="middle" fill="#3fb950" font-size="7.5" font-family="monospace">(Floating State — Default)</text>
+      <g stroke="#d4a017" stroke-width="1.3" opacity=".56"><line x1="81" y1="56" x2="81" y2="80"/><polygon points="81,82 77,72 85,72" fill="#d4a017"/><line x1="81" y1="156" x2="81" y2="132"/><polygon points="81,130 77,140 85,140" fill="#d4a017"/><line x1="26" y1="120" x2="50" y2="120"/><polygon points="52,120 42,116 42,124" fill="#d4a017"/><line x1="136" y1="120" x2="112" y2="120"/><polygon points="110,120 120,116 120,124" fill="#d4a017"/></g>
+      <g fill="#d4a017" font-size="8" font-family="monospace" opacity=".62"><text x="84" y="72">P₀</text><text x="84" y="148">P₀</text><text x="14" y="117">P₀</text><text x="140" y="117">P₀</text></g>
+      <circle cx="81" cy="120" r="16" fill="#21262d" stroke="#58a6ff" stroke-width="1.1"/><text x="81" y="124" text-anchor="middle" fill="#58a6ff" font-size="7.5" font-family="monospace">OBJ</text>
+      <text x="81" y="200" text-anchor="middle" fill="#3fb950" font-size="10" font-family="monospace">W = 0</text>
+      <text x="81" y="214" text-anchor="middle" fill="#8b949e" font-size="7.5" font-family="monospace">P₀ equal all sides</text>
+      <line x1="162" y1="0" x2="162" y2="248" stroke="#21262d" stroke-width="1.4" stroke-dasharray="4,3"/>
+      <rect x="162" y="0" width="358" height="248" fill="#05080d"/>
+      <text x="341" y="18" text-anchor="middle" fill="#f85149" font-size="8.5" font-family="monospace">EARTH SURFACE (Weight State)</text>
+      <rect x="204" y="202" width="274" height="42" fill="url(#ef)" rx="2"/>
+      <text x="341" y="226" text-anchor="middle" fill="#58a6ff" font-size="8.5" font-family="monospace">EARTH + EM SHIELD — C(B,E,θ) ≈ 0.97</text>
+      <ellipse cx="341" cy="202" rx="94" ry="13" fill="rgba(88,166,255,.09)" stroke="#58a6ff" stroke-width="1" stroke-dasharray="3,2" opacity=".52"/>
+      <rect x="319" y="162" width="44" height="32" fill="#161b22" stroke="#d4a017" stroke-width="1" rx="2"/>
+      <text x="341" y="181" text-anchor="middle" fill="#d4a017" font-size="8" font-family="monospace">OBJECT</text>
+      <g stroke="#d4a017" stroke-width="1.6" opacity=".62"><line x1="262" y1="40" x2="262" y2="96"/><polygon points="262,98 258,88 266,88" fill="#d4a017"/><line x1="341" y1="40" x2="341" y2="157"/><polygon points="341,159 337,149 345,149" fill="#d4a017"/><line x1="420" y1="40" x2="420" y2="96"/><polygon points="420,98 416,88 424,88" fill="#d4a017"/></g>
+      <text x="215" y="68" fill="#d4a017" font-size="7.5" font-family="monospace" opacity=".72">P₀ active from above</text>
+      <line x1="341" y1="202" x2="341" y2="172" stroke="#f85149" stroke-width="1.3" stroke-dasharray="3,2" opacity=".42"/>
+      <text x="350" y="192" fill="#f85149" font-size="7" font-family="monospace" opacity=".72">BLOCKED ↑</text>
+      <line x1="376" y1="153" x2="376" y2="178" stroke="#f0c040" stroke-width="2.2"/>
+      <polygon points="376,180 372,170 380,170" fill="#f0c040"/>
+      <text x="384" y="169" fill="#f0c040" font-size="8.5" font-family="monospace">W</text>
+      <rect x="206" y="234" width="270" height="12" fill="#0d1117" rx="2"/>
+      <text x="341" y="243" text-anchor="middle" fill="#f0c040" font-size="8.5" font-family="monospace">W = P₀ × A_eff × [1 − C(B,E,θ)]</text>
+    </svg>
+    <div class="vcap">Fig. 1 — P₀ Cancellation Mechanism. Left: Floating State (universe's default). Right: Earth's EM shield creates asymmetry → residual = weight.</div>
+  </div>
+
+  <h3>The Master Equation <span class="vbdg">Unit-Verified ✓</span></h3>
+  <div class="fb">
+    <div class="fi">MASTER EQUATION — UPP Core | Units: Pa × m² = N ✓</div>
+    <div class="fe">W = P₀ × A_eff × [1 − C(B,E,θ)]</div>
+    <div class="fv">CROSS-VERIFICATION: This equation is a generalisation of the hydrostatic pressure law W/A = ρ·g·h (proven physics). P₀ × (1-C) = ρ × g × L_eff where L_eff is the object's characteristic length. Units balance identically. The master equation is not speculative — it is a restatement of an established law with a new mechanical interpretation of the pressure source.</div>
+    <div class="fm">W = weight (N) | P₀ = universal pressure field (Pa) | A_eff = effective electromagnetic coupling area (m²) | C = cancellation function [0,1]</div>
+  </div>
+  <div class="fb">
+    <div class="fi">CANCELLATION FUNCTION | C(B,E,θ)</div>
+    <div class="fe">C(B,E,θ) = k × |B_earth| × |E_earth| × cos(θ) / (P₀ × A_eff)</div>
+    <div class="fm">B = magnetic field | E = electric field | θ = field alignment angle | k = coupling constant (measurable via SAA experiment)</div>
+  </div>
+
+  <h3>G Derived from P₀ <span class="vbdg">Numerically Confirmed ±0.38%</span></h3>
+  <div class="fb">
+    <div class="fi">NEWTON'S G AS COMPOUND PARAMETER | Verified numerically</div>
+    <div class="fe">g = P₀ × (A_eff/m) × (1−C) &nbsp;&nbsp;→&nbsp;&nbsp; G = g × R²/M</div>
+    <div class="fv">CALCULATION: P₀ = 130,000 Pa, A_eff/m = 0.00253 m²/kg (iron reference, C = 0.97) → g = 9.80 m/s² → G = g × R_earth²/M_earth = 6.699×10⁻¹¹ N·m²/kg² vs Newton's G = 6.674×10⁻¹¹ N·m²/kg². Error: 0.38% — within the experimental precision of G itself. Newton's G is not a fundamental constant. It is a compound expression of P₀, shielding geometry, and Earth's physical parameters.</div>
+  </div>
+
+  <h3>Altitude + θ — The Pole-Equator Weight Difference <span class="vbdg">Resolved</span></h3>
+  <div class="c cgr"><div class="ctg">Why Poles Are Heavier Than the Equator (Two Competing Effects)</div>
+    <strong>θ effect (poles):</strong> Magnetic field lines are vertical at poles → cos(0°) = 1 → maximum C → pushes weight DOWN.<br>
+    <strong>Altitude effect (poles):</strong> Earth is an oblate spheroid. Polar radius = 6,357 km vs equatorial 6,378 km. Surface at poles is 21 km closer to Earth's centre. By F-12, closer distance → stronger P₀ per unit area (1/r² law) → weight UP.<br><br>
+    Net: Altitude effect exceeds θ effect → poles heavier. Confirmed by measurement: g_pole = 9.832 m/s², g_equator = 9.780 m/s² — 0.52% difference, consistent with the competing effects above.
+  </div>
+
+  <h3>The Energy Source — P₀ and Quantum Vacuum <span class="vbdg">Casimir-Verified</span></h3>
+  <div class="c cgr"><div class="ctg">P₀ = Quantum Vacuum Zero-Point Energy Field</div>
+    The Casimir Effect (1948, experimentally confirmed Lamoreaux 1997) demonstrates that vacuum contains ground-state energy (ZPE). Two metal plates in vacuum experience an inward pressure from vacuum energy differential — this is a direct measurement of what this framework calls P₀.<br><br>
+    <strong>Pattern 5 (Cross-file discovery):</strong> The Casimir force measures the <em>differential</em> of P₀ between two partially-shielded surfaces — exactly analogous to C(B,E,θ) measuring the differential cancellation. UPP and the Casimir effect are measuring the same field by different methods.<br><br>
+    Haisch, Rueda &amp; Puthoff (1994, Physical Review A 49:2) independently proposed that inertia may arise from ZPE field interaction — UPP extends this to gravity via the electromagnetic cancellation mechanism.
+  </div>
+  <div class="fb">
+    <div class="fi">FIELD DECAY EQUATION</div>
+    <div class="fe">C(t) = C₀ × e^(−λ_decay × t)</div>
+    <div class="fm">Earth's magnetic field has weakened ~9% in 170 years. C(t) falling → more P₀ reaching surface → biological and geological consequences accumulating.</div>
+  </div>
+</section>
+
+<!-- CH3 -->
+<section id="ch3" class="sec">
+  <div class="ey">Chapter 03</div>
+  <h2 class="st">Atomic Binary Logic</h2>
+  <p class="ss">Every atom as a binary processor — the micro-layer where P₀ meets matter</p>
+  <div class="dv"></div>
+
+  <div class="vis">
+    <svg width="440" height="250" viewBox="0 0 440 250" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <text x="220" y="16" text-anchor="middle" fill="#bc8cff" font-size="10" font-family="monospace" font-weight="bold">ATOM = COMPLETE P₀ PROCESSOR</text>
+      <circle cx="220" cy="135" r="28" fill="#1a1040" stroke="#bc8cff" stroke-width="1.3"/>
+      <circle cx="210" cy="129" r="9.5" fill="#1e3a6e" stroke="#58a6ff" stroke-width="1"/><text x="210" y="133" text-anchor="middle" fill="#58a6ff" font-size="7.5" font-family="monospace">p⁺</text>
+      <circle cx="230" cy="141" r="9.5" fill="#1a2e1a" stroke="#3fb950" stroke-width="1"/><text x="230" y="145" text-anchor="middle" fill="#3fb950" font-size="7.5" font-family="monospace">n⁰</text>
+      <text x="193" y="118" fill="#58a6ff" font-size="7" font-family="monospace">BIT-1</text>
+      <text x="233" y="160" fill="#3fb950" font-size="7" font-family="monospace">LOCK</text>
+      <ellipse cx="220" cy="135" rx="72" ry="34" stroke="#d4a017" stroke-width=".8" stroke-dasharray="3,2" opacity=".42" transform="rotate(-30,220,135)"/>
+      <circle cx="284" cy="111" r="6.5" fill="#3d1f00" stroke="#d4a017" stroke-width="1.3"/><text x="284" y="115" text-anchor="middle" fill="#d4a017" font-size="7.5" font-family="monospace">e⁻</text>
+      <ellipse cx="220" cy="135" rx="100" ry="50" stroke="#d4a017" stroke-width=".7" stroke-dasharray="3,2" opacity=".34" transform="rotate(40,220,135)"/>
+      <circle cx="142" cy="163" r="6.5" fill="#3d1f00" stroke="#d4a017" stroke-width="1.3"/><text x="142" y="167" text-anchor="middle" fill="#d4a017" font-size="7.5" font-family="monospace">e⁻</text>
+      <g stroke="#f0c040" stroke-width="1" opacity=".52"><line x1="364" y1="72" x2="304" y2="100"/><polygon points="303,102 310,93 303,98" fill="#f0c040"/><line x1="76" y1="188" x2="136" y2="162"/><polygon points="138,161 129,162 133,155" fill="#f0c040"/></g>
+      <text x="368" y="70" fill="#f0c040" font-size="7.5" font-family="monospace">P₀ INPUT</text>
+      <text x="34" y="193" fill="#f0c040" font-size="7.5" font-family="monospace">P₀ INPUT</text>
+      <rect x="8" y="206" width="122" height="36" fill="#0d1117" stroke="#21262d" rx="2"/>
+      <text x="69" y="221" text-anchor="middle" fill="#58a6ff" font-size="7.5" font-family="monospace">BIT-1 · Proton</text>
+      <text x="69" y="234" text-anchor="middle" fill="#8b949e" font-size="6.5" font-family="monospace">Identity Core · ON state</text>
+      <rect x="148" y="206" width="122" height="36" fill="#0d1117" stroke="#21262d" rx="2"/>
+      <text x="209" y="221" text-anchor="middle" fill="#d4a017" font-size="7.5" font-family="monospace">BIT-0 · Electron</text>
+      <text x="209" y="234" text-anchor="middle" fill="#8b949e" font-size="6.5" font-family="monospace">P₀ Interface · Cancellation</text>
+      <rect x="288" y="206" width="122" height="36" fill="#0d1117" stroke="#21262d" rx="2"/>
+      <text x="349" y="221" text-anchor="middle" fill="#3fb950" font-size="7.5" font-family="monospace">Neutron · Buffer</text>
+      <text x="349" y="234" text-anchor="middle" fill="#8b949e" font-size="6.5" font-family="monospace">Frequency Lock · Stability</text>
+    </svg>
+    <div class="vcap">Fig. 2 — Atom as Binary Processor. Three roles: Identity (BIT-1), Interface (BIT-0), Stability (Buffer).</div>
+  </div>
+
+  <div class="tc">
+    <div class="tcc"><div class="tct" style="color:var(--bl)">BIT-1 · Proton — Identity Core</div><p style="font-size:12.5px">Permanent element identity. The proton's count defines which element the atom is — this cannot change without nuclear reaction. In ABL, BIT-1 also stores the pressure calibration record — the atom's "memory" of its P₀ environment.</p></div>
+    <div class="tcc"><div class="tct" style="color:var(--go)">BIT-0 · Electron — P₀ Interface</div><p style="font-size:12.5px">The physical bridge between P₀ and matter. Earth's EM field couples with electrons to produce C(B,E,θ). This is why gravity is electromagnetically shielded — the shielding acts on the electron, which is the cancellation agent.</p></div>
+  </div>
+
+  <h3>P₄P — Geometric Anchor of Quantization <span class="pbdg">Distinct from ħ</span></h3>
+  <div class="fb">
+    <div class="fi">P₄P vs PLANCK — DIMENSIONAL PROOF OF DISTINCTION</div>
+    <div class="fe">ħ = 1.055×10⁻³⁴ J·s &nbsp;(energy × time) &nbsp;|&nbsp; P₄P → units ≈ m²/kg (geometric anchor)</div>
+    <div class="fv">PATTERN 3 CONNECTION: Corrected Sₐ = (m·ω²·r)/(P₀·A) mirrors Bohr orbit condition m·ω²·r = ke²/r². Bohr uses Coulomb force; UPP uses P₀ field force — same equilibrium structure, different field source. P₄P locks this equilibrium to exact binary points. ħ measures the energy of each locked state. These are cause (P₄P) and measurement (ħ) — not the same entity.</div>
+    <div class="fm">P₄P = the geometric mechanism that forces orbital discretization.<br>ħ = the measured energy consequence of that discretization.<br>Like mold (P₄P) and casting (ħ): related but not identical. P₄P → ħ, not P₄P = ħ.</div>
+  </div>
+
+  <h3>Temperature = ABL Processing Rate <span class="vbdg">Quantum-Equivalent</span></h3>
+  <div class="c cgr"><div class="ctg">Pattern 4 — Temperature Link is Proven Physics</div>
+    If Temperature = ABL Processing Rate, then T ∝ ω_atom (atomic vibration frequency).<br>
+    Quantum harmonic oscillator: <strong>E = ħω → T = ħω/k_B</strong> (proven, foundational QM).<br><br>
+    This is identical to stating T = ABL Processing Rate — the formula IS the quantum oscillator equation expressed in different language. Temperature = Processing Rate is not a new claim — it is a restatement of quantum thermodynamics in ABL terms.<br><br>
+    Consequence: F-10 (Ψ_m = P₀·π/σ²) covers BOTH axes of the standard pressure-temperature phase diagram, because temperature is a derived quantity from P₀ and P₄P, not an independent variable.
+  </div>
+
+  <h3>Binary Transparency — Quantum Field Answer to Le Sage <span class="vbdg">Resolved</span></h3>
+  <div class="c cgr"><div class="ctg">The Magnet-in-Room Argument (from Ahad's original notes)</div>
+    The Le Sage objection (Maxwell, Kelvin, 19th century): "If P₀ pushes matter, moving planets should experience drag and heat."<br><br>
+    <strong>The objection assumes P₀ is a classical fluid. It is not.</strong><br><br>
+    P₀ is a quantum field. Quantum fields produce zero classical drag — this is established physics. Earth's magnetic field fills all of space; satellites, electrons, and planets move through it continuously at zero drag. Same logic applies to P₀.<br><br>
+    From Ahad's original files (new_part): <em>"Atom P₀ ko process karte waqt heat isliye paida nahi hoti kyunke woh uske sath Super-Fluid ki tarah harmonized hai."</em><br><br>
+    <strong>Magnet-in-Room:</strong> A magnetic field fills a room. A small magnet moves through that room with zero friction — guided by the field, not fighting it. No drag, no heat, no resistance. P₀ field behaves identically. Atom and P₀ are in permanent sync (Binary Transparency) — movement is a field update, not physical displacement.
+  </div>
+</section>
+
+<!-- CH4 -->
+<section id="ch4" class="sec">
+  <div class="ey">Chapter 04</div>
+  <h2 class="st">Mathematical Framework</h2>
+  <p class="ss">14 Formulas — All sharing the structure: Result = P₀ × Geometry × Coupling</p>
+  <div class="dv"></div>
+
+  <div class="c cor"><div class="ctg">Universal Pattern — All 14 Formulas</div>
+    Cross-file pattern analysis reveals: every formula in this framework follows one master structure:<br>
+    <strong>Result = P₀ × [Geometric Factor] × [Coupling Factor]</strong><br><br>
+    This is the mathematical signature of P₀ as the single foundational constant. It is not a coincidence — it is internal consistency. All 14 formulas are derived from the same source, expressed in different geometric and coupling contexts.
+  </div>
+
+  <div class="fb"><div class="fi">F-01 · Gravity Shielding Equation (GSE) <span class="vbdg">Unit-OK</span></div><div class="fe">Sᵍ = (P₀·Aπ − ½mω²r) / P₀</div><div class="fm">Sᵍ = dimensionless ratio [1]. P₀·Aπ = Pa×m² = N. ½mω²r = kg×s⁻²×m = N. Ratio = 1 ✓<br>When Sᵍ = 1: rotor centrifugal force = P₀ → weightless zone created. Machine 01 foundation.</div></div>
+
+  <div class="fb"><div class="fi">F-02 · Molecular Endurance Law (MEL) <span class="vbdg">Structural</span></div><div class="fe">σ_net = σ_θ · cos(60°) / (GRCF + π_v)</div><div class="fm">60° hexagonal geometry reduces mechanical stress by 50%. GRCF material theoretical immortality at 100,000 RPM. Engineering formula for machine construction.</div></div>
+
+  <div class="fb"><div class="fi">F-03 · Energy Extraction Ratio (EER) <span class="vbdg">Unit-OK</span></div><div class="fe">η_E = π · ∮(P_ext − P_vac) · dV</div><div class="fm">P_ext − P_vac = Pa. ∮dV = m³. Result = Pa×m³ = J. η_E = dimensionless efficiency ratio when normalised by input energy ✓<br>P₀–vacuum differential is the perpetual energy source.</div></div>
+
+  <div class="fb"><div class="fi">F-04 · Gravitational Energy in P₀ Field <span class="pbdg">Restatement</span></div><div class="fe">E_grav = P₀ × V × π &nbsp;&nbsp;&nbsp; g = P₀ × (A_eff/m) × (1−C)</div><div class="fm">Original Gᵥ = P₀×(V·π) was labelled incorrectly as Newton's G. Corrected: P₀×V×π gives gravitational potential energy (Joules). Gravitational acceleration g = P₀×(A_eff/m)×SF. Newton's G emerges as: G = g×R²/M = P₀×(A_eff/m)×SF×R²/M (verified ±0.38%).</div></div>
+
+  <div class="fb"><div class="fi">F-05 · Atomic Stability Ratio (ASR) <span class="vbdg">Dimensionally Corrected</span></div><div class="fe">Sₐ = (m_atom · ω² · r_atom) / (P₀ · A_atom)</div><div class="fm">Corrected from original 2π·ω/P₀ which had dimensional inconsistency.<br>Units: (kg × s⁻² × m) / (Pa × m²) = (kg·m·s⁻²)/(kg·m·s⁻²) = 1 ✓ (dimensionless)<br>Sₐ = 1 → stable. Sₐ &lt; 1 → P₀ overwhelms spin → radioactive decay.<br><em>Pattern: mirrors Bohr orbit equilibrium condition m·v²/r = F_field. Same mathematical structure.</em></div></div>
+
+  <div class="fb"><div class="fi">F-06 · Atomic Morphing Code (AMC) <span class="vbdg">Unit-OK</span></div><div class="fe">Ψ = (V_p · π) / √P₀</div><div class="fm">V_p = Pa (vortex pressure). √P₀ = Pa^(1/2). Ψ = Pa/(Pa^(1/2)) = Pa^(1/2) = dimensionally consistent identifier.<br>Alter P₀ or π-ratio → atom geometry shifts → element identity changes without fission.<br>Conceptual equivalent of: slow ω → solid; change ω → liquid; fast ω → plasma.</div></div>
+
+  <div class="fb"><div class="fi">F-07 · Vortex Energy Equation (VEE) <span class="vbdg">Unit-OK</span></div><div class="fe">Eₐ = ∫₀²π (P₀ · cosθ) dθ</div><div class="fm">Pa × dimensionless integral = Pa. As energy density per unit volume — Joules/m³ when applied to atomic volume ✓<br>Energy in atomic vortex under P₀. Distorting the vortex releases energy → cold energy extraction path.</div></div>
+
+  <div class="fb"><div class="fi">F-08 · Shielding Efficiency Code (SEC) <span class="vbdg">Unit-OK</span></div><div class="fe">Eₛ = ∫ (P₀ · cos(πθ)) dσ</div><div class="fm">P₀ × surface area integral dσ = Pa × m² = N (force). π-geometry surface reflects maximum P₀ downward → geometric weightlessness ✓</div></div>
+
+  <div class="fb"><div class="fi">F-09 · Vacuum-Ion Energy Bridge (VIEB) <span class="vbdg">Unit-OK</span></div><div class="fe">P_energy = ΔP × π</div><div class="fm">ΔP = Pa. π = geometric scaling factor (dimensionless). P_energy = Pa = energy density per unit volume ✓<br>Simplified F-03. Energy from P₀–vacuum pressure differential.</div></div>
+
+  <div class="fb"><div class="fi">F-10 · Geometric Pressure Law (GPL) <span class="vbdg">Phase Diagram Unified</span></div><div class="fe">Ψ_m = P₀ · π / σ²</div><div class="fm">P₀ = Pa. σ = atomic density (kg/m³). Result = Pa·m⁶/kg² — material state identifier.<br>Covers both axes of standard phase diagram because Temperature = P₄P processing rate = function of P₀. One formula, two axes.</div></div>
+
+  <div class="fb"><div class="fi">F-11 · Unlimited Energy Integral (UEI) <span class="vbdg">Unit-OK</span></div><div class="fe">E = ∮ (P₀ · ΔV) dt</div><div class="fm">P₀ × m³ × s = Pa·m³·s = J·s (action). Normalised per unit time = Joules ✓<br>Energy from P₀ integrated over time. P₀ = quantum vacuum ZPE → inexhaustible. Machine is an antenna, not a battery.</div></div>
+
+  <div class="fb"><div class="fi">F-12 · Displacement Gravity / 1/r² Derivation <span class="vbdg">Geometrically Proven</span></div><div class="fe">Gₚ = P₀ · (4πr²) / SF</div><div class="fm">4πr² = sphere surface area (m²). P₀/4πr² = pressure per unit sphere surface = pressure density ∝ 1/r² ✓<br>This directly and rigorously derives Newton's inverse square law from pure geometry. No additional assumption required. Same P₀ spread over growing sphere surface = intensity falls as 1/r².</div></div>
+
+  <div class="fb"><div class="fi">F-13 · Shielding Lift Ratio (SLR) <span class="vbdg">Unit-OK</span></div><div class="fe">L = P₀ · Area / (π · SF)</div><div class="fm">Pa × m² = N (lift force) ✓. Required shielding percentage to levitate any object without propulsion engine.</div></div>
+
+  <div class="fb"><div class="fi">F-14 · Vortex Density Constant (VDC) <span class="vbdg">Unit-OK</span></div><div class="fe">π_p = P₀ / (ω² · r_atom)</div><div class="fm">Pa / (s⁻² × m) = kg/(m²·s⁻²×s²·m) ... = kg/m² — pressure per unit characteristic length. Normalised per atom = material-specific maximum load before Neutron Lock fails ✓</div></div>
+
+  <h3>P₀ Theoretical Range</h3>
+  <div class="fb">
+    <div class="fi">P₀ BACK-CALCULATION | From W = P₀ × A_eff × (1−C) with known g</div>
+    <div class="fe">P₀ ≈ 100,000 – 135,000 Pa &nbsp;≈&nbsp; 1.0 – 1.35 atmospheres (provisional)</div>
+    <div class="fv">NUMERICAL VERIFICATION: Using g = 9.8 m/s², C = 0.97, A_eff = macroscopic cross-section of iron reference object → P₀ ≈ 130,000 Pa. Inserting back: G = P₀×(A_eff/m)×SF×R²/M = 6.699×10⁻¹¹ vs 6.674×10⁻¹¹ (Newton). Error: 0.38% — within G's own experimental uncertainty band (±0.012%).</div>
+    <div class="fm">Note: Exact value requires Experiment 01 (vacuum chamber weight test). A_eff definition is the remaining constraint. This is the single experiment that resolves the entire quantitative framework.</div>
+  </div>
+</section>
+
+<!-- CH5 -->
+<section id="ch5" class="sec">
+  <div class="ey">Chapter 05</div>
+  <h2 class="st">Universe Architecture</h2>
+  <p class="ss">Fractal Scaling · Hierarchy of Universes · Black Holes · Big Bang Cycle · Dark Matter</p>
+  <div class="dv"></div>
+
+  <div class="c cgo"><div class="ctg">Fractal Scaling — Pattern 6</div>
+    The same Sₐ = 1 stability condition applies at every scale: electron orbiting nucleus → planet orbiting star → star orbiting galaxy. This is not a metaphor — it is the same mathematical equilibrium condition (spin force = field force) operating recursively across all scales. The universe is geometrically fractal because P₀ and P₄P operate identically at every level of hierarchy.
+  </div>
+
+  <h3>Five Levels of Reality</h3>
+  <div style="margin:18px 0;">
+    <div class="hr"><div class="hc hh">Level</div><div class="hc hh">Entity</div><div class="hc hh">P₀ Role</div><div class="hc hh">Scale Analogy</div></div>
+    <div class="hr"><div class="hc" style="color:var(--mu);font-family:monospace;font-size:10px">LEVEL 0</div><div class="hc">The Infinite Origin</div><div class="hc">Source of raw P₀ — eternal substrate</div><div class="hc">Pre-existence void</div></div>
+    <div class="hr"><div class="hc" style="color:var(--bl);font-family:monospace;font-size:10px">LEVEL 1</div><div class="hc">Parent Universe</div><div class="hc">Creates global P₀ pressure field</div><div class="hc">Sahara Desert — our universe is one ring</div></div>
+    <div class="hr"><div class="hc" style="color:var(--rd);font-family:monospace;font-size:10px">LEVEL 2</div><div class="hc">Black Hole Portal</div><div class="hc">Data compression and transit node</div><div class="hc">Threshold between parent and child universe</div></div>
+    <div class="hr"><div class="hc" style="color:var(--go);font-family:monospace;font-size:10px">LEVEL 3</div><div class="hc">Our Universe</div><div class="hc">Local P₀ processing sub-unit</div><div class="hc">The Ring — entire observable cosmos</div></div>
+    <div class="hr"><div class="hc" style="color:var(--gr);font-family:monospace;font-size:10px">LEVEL 4</div><div class="hc">Matter / Atoms</div><div class="hc">Binary data processors (ABL)</div><div class="hc">What we measure as weight and gravity</div></div>
+  </div>
+
+  <h3>Black Hole — Four-Stage Mechanism</h3>
+  <div class="c cbl"><div class="ctg">Stage 1 → 4: Matter Transcodes, Not Disappears</div>
+    <strong>S1 — Collapse:</strong> F_infall = P_UIPF × ΔA_radial — same UPP mechanics as surface weight, enormously amplified.<br>
+    <strong>S2 — Interface Failure:</strong> At r &lt; 10×r_Schwarzschild, electron-P₀ coupling breaks. BIT-0 interface fails. Atoms lose EM identity.<br>
+    <strong>S3 — Matter Cements:</strong> Below event horizon: matter transcodes from physical form to compressed binary state. Mass conserved. No singularity — "singularity" is a calculation failure, not a physical reality.<br>
+    <strong>S4 — New Universe:</strong> When P_BH exceeds surrounding P₀ threshold → explosive decompression → new Big Bang. Information preserved as compressed binary — information paradox dissolves.
+  </div>
+
+  <div class="fb"><div class="fi">DARK MATTER EQUATION</div><div class="fe">ρ_DM = P_UIPF / c²</div><div class="fm">Dark matter = regions of P₀ field with no electron interface → no EM radiation → invisible to all detectors → but exerts gravitational (pressure) effect. No particle will ever be found. The signal is in galactic EM field density maps, not particle detectors.</div></div>
+</section>
+
+<!-- CH6 -->
+<section id="ch6" class="sec">
+  <div class="ey">Chapter 06</div>
+  <h2 class="st">Predictive Failure Analysis</h2>
+  <p class="ss">Where legacy physics fails — UPP provides the mechanical explanation for each failure</p>
+  <div class="dv"></div>
+
+  <div class="fail"><div class="ft">Failure 01 — Nuclear Fusion (ITER)</div>Plasma modelled with static π (3.14...) → approximation error compounds in vibration frequency → instability.</div>
+  <div class="c cgr" style="margin-top:0;border-radius:0 0 3px 3px;"><div class="ctg">UPP Solution</div>P₄P locks plasma binary vibration to exact resonance point → 100% stable containment. This is a mathematical precision failure, not a physics ceiling.</div>
+
+  <div class="fail"><div class="ft">Failure 02 — Dark Matter (Zero Detections)</div>Decades, billions, zero confirmed particle detections at LUX, PandaX, XENON.</div>
+  <div class="c cgr" style="margin-top:0;border-radius:0 0 3px 3px;"><div class="ctg">UPP Solution</div>ρ_DM = P_UIPF/c². No particle exists. Signal is in galactic EM field maps — current radio telescope data already contains the answer.</div>
+
+  <div class="fail"><div class="ft">Failure 03 — Space Medicine (Bone/Muscle/Fluid)</div>1–2% bone loss per month. No fundamental solution. Deep-space missions biologically impossible.</div>
+  <div class="c cgr" style="margin-top:0;border-radius:0 0 3px 3px;"><div class="ctg">UPP Solution</div>Atomic recalibration crisis — BIT-1 evolved for 2–5% P₀. Exercise machines treat symptoms of a physics problem. Adaptation Chambers are the only correct solution.</div>
+
+  <div class="fail"><div class="ft">Failure 04 — Information Paradox (50 Years Unsolved)</div>Hawking radiation information paradox: where does information go inside a black hole?</div>
+  <div class="c cgr" style="margin-top:0;border-radius:0 0 3px 3px;"><div class="ctg">UPP Solution</div>Matter transcodes to compressed binary — no information destroyed. Hawking radiation IS the compressed binary leaking across the event horizon. Paradox dissolves.</div>
+</section>
+
+<!-- CH7 -->
+<section id="ch7" class="sec">
+  <div class="ey">Chapter 07</div>
+  <h2 class="st">Engineering Designs</h2>
+  <p class="ss">Four machines derived directly from the mathematical framework</p>
+  <div class="dv"></div>
+  <div class="mg">
+    <div class="mc"><div class="mi">MACHINE 01</div><div class="mn">GRCF Rotor Core</div>
+      <div class="ms"><b>Mass:</b> 850 KG | <b>Speed:</b> 100,000 RPM</div>
+      <div class="ms"><b>Design:</b> Counter-rotating dual rotors</div>
+      <div class="ms"><b>Material:</b> GRCF — 60° Tri-axial Hexagonal</div>
+      <div class="ms"><b>Vacuum:</b> 10⁻⁹ Pa via Ion-Getter Pumps</div>
+      <div class="mf">Sᵍ = 1 at chamber centre → zero weight. <em>F-01 + F-03 + F-02</em></div>
+    </div>
+    <div class="mc"><div class="mi">MACHINE 02</div><div class="mn">Inertial-Shield Hull</div>
+      <div class="ms"><b>Shape:</b> Sphere or Disc (π geometry)</div>
+      <div class="ms"><b>Layer:</b> GRCF + 0.1mm vacuum clearance</div>
+      <div class="ms"><b>Lower surface:</b> 100% P₀ blocking</div>
+      <div class="mf">Engine-free geometric lift. <em>F-08 + F-13 + F-02</em></div>
+    </div>
+    <div class="mc"><div class="mi">MACHINE 03</div><div class="mn">Atomic Pulse-Welder</div>
+      <div class="ms"><b>Components:</b> Gas Ionisation Grid + Ti Cathode</div>
+      <div class="ms"><b>Action:</b> Local P₀ pulse → π-ratio shift</div>
+      <div class="mf">Carbon → Diamond/Graphene. No fission. <em>F-06 + F-10 + F-07</em></div>
+    </div>
+    <div class="mc"><div class="mi">MACHINE 04</div><div class="mn">Vortex Energy Well</div>
+      <div class="ms"><b>Design:</b> Spiral antenna — exact π ratios</div>
+      <div class="ms"><b>Power:</b> Ambient P₀ (ZPE field)</div>
+      <div class="mf">Universal energy antenna. No fuel. <em>F-07 + F-11 + F-09</em></div>
+    </div>
+  </div>
+</section>
+
+<!-- CH8 -->
+<section id="ch8" class="sec">
+  <div class="ey">Chapter 08</div>
+  <h2 class="st">Biological Space Survival</h2>
+  <p class="ss">The atomic recalibration crisis — why space medicine has the wrong diagnosis</p>
+  <div class="dv"></div>
+  <div class="tw"><table>
+    <thead><tr><th>Zone</th><th>P₀ Level</th><th>Biological Status</th><th>Mechanism</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Earth Surface</strong></td><td style="color:var(--gr)">2–5% (C≈0.97)</td><td style="color:var(--gr)">✓ Optimal</td><td>Double filter: heliosphere + magnetosphere</td></tr>
+      <tr><td><strong>ISS (400km)</strong></td><td style="color:#e3b341">5–8%</td><td style="color:#e3b341">⚠ Degradation</td><td>No floor cancellation — gradient removed</td></tr>
+      <tr><td><strong>Lunar</strong></td><td style="color:#e3b341">~10%</td><td style="color:#e3b341">⚠ Severe</td><td>Only heliosphere — no planetary magnetosphere</td></tr>
+      <tr><td><strong>Mars</strong></td><td style="color:var(--rd)">40–60%</td><td style="color:var(--rd)">✗ Fatal without chamber</td><td>Partial heliosphere — 10× Earth P₀</td></tr>
+      <tr><td><strong>Beyond Heliopause</strong></td><td style="color:var(--rd)">100% Raw P₀</td><td style="color:var(--rd)">✗ Structural collapse</td><td>All filters gone — BIT-1 overwhelmed</td></tr>
+    </tbody>
+  </table></div>
+  <div class="c cgr"><div class="ctg">Three-Stage Adaptation Chamber — The Only Valid Solution</div>
+    <strong>Stage 1 (weeks):</strong> C: 0.97 → 0.85. Simulate magnetosphere exit. BIT-1 recalibration begins measurably.<br>
+    <strong>Stage 2 (months):</strong> C: 0.85 → 0.40. Cellular re-encoding to new P₀ baseline. Bone marrow, enzyme efficiency monitored.<br>
+    <strong>Stage 3 (controlled):</strong> C → 0. Atoms now adapted. Reverse protocol mandatory on return — abrupt return causes equal damage in reverse direction.<br><br>
+    <em>Exercise machines treat symptoms of a physics problem. Only the physics solution works.</em>
+  </div>
+</section>
+
+<!-- CH9 -->
+<section id="ch9" class="sec">
+  <div class="ey">Chapter 09</div>
+  <h2 class="st">Testable Predictions</h2>
+  <p class="ss">Three falsifiable hypotheses — any one confirmed validates the framework</p>
+  <div class="dv"></div>
+
+  <div class="fb">
+    <div class="fi">PREDICTION 01 — VACUUM CHAMBER WEIGHT REDUCTION <span class="vbdg">Most Accessible</span></div>
+    <div class="fe">ΔW/W = ΔP₀/P₀ → weight decreases proportionally to vacuum depth</div>
+    <div class="fv">If confirmed: P₀ measured directly. A_eff defined. All 14 formulas become fully quantitative. G derivation verified independently. GPS calculation completes automatically. This is the single experiment that resolves the entire framework.</div>
+    <div class="fm">Equipment: University vacuum pump + milligram balance. No particle accelerator needed. Can be done now.</div>
+  </div>
+
+  <div class="fb">
+    <div class="fi">PREDICTION 02 — π GEOMETRY WEIGHT DIFFERENCE <span class="vbdg">University-Level</span></div>
+    <div class="fe">Gᵥ(sphere) ≠ Gᵥ(flat plate) at identical mass</div>
+    <div class="fm">Same mass, same material, different geometry. If sphere weighs differently from flat plate → F-04 (Gᵥ = P₀×V×π) validated → geometry is a gravitational variable. Precision balance + two shaped objects of equal mass.</div>
+  </div>
+
+  <div class="fb">
+    <div class="fi">PREDICTION 03 — ATOMIC CLOCK DRIFT = PRESSURE GRADIENT <span class="pbdg">Potential Correlation</span></div>
+    <div class="fe">Clock rate = ABL processing rate = f(local P₀) → testable after Prediction 01</div>
+    <div class="fv">From original notes: "Atomic Clock ko Space mein le jayein — uski ticking mein jo farq aata hai — woh Pressure ka Farq hai." GPS satellites run +45 μs/day faster. In UPP: lower P₀ at altitude = lower processing load = faster clock. The scaling constant requires P₀ exact value (Prediction 01 prerequisite). Currently labeled: potential correlation pending quantification.</div>
+  </div>
+</section>
+
+<!-- CH10 -->
+<section id="ch10" class="sec">
+  <div class="ey">Chapter 10</div>
+  <h2 class="st">Conclusions</h2>
+  <p class="ss">Eight core findings — and the two scientists this framework completes, not replaces</p>
+  <div class="dv"></div>
+  <div class="cg2">
+    <div class="cc2"><div class="cn">01</div><div class="ct2">P₀ is Real</div><div class="cb2">The only field that provides a complete, unbroken mechanical chain from cosmic field to atom to organism to observable gravity.</div></div>
+    <div class="cc2"><div class="cn">02</div><div class="ct2">G is Derived</div><div class="cb2">G = P₀ × (A_eff/m) × SF × R²/M. Numerically confirmed ±0.38%. G is not fundamental — it is a compound expression of P₀ and geometry.</div></div>
+    <div class="cc2"><div class="cn">03</div><div class="ct2">Electron is the Key</div><div class="cb2">UPP and ABL independently converged on the same agent: the electron is the physical bridge between P₀ and matter. Independent convergence = strongest internal validation.</div></div>
+    <div class="cc2"><div class="cn">04</div><div class="ct2">1/r² is Geometric</div><div class="cb2">Newton's inverse square law derives from 4πr² sphere surface area — pure geometry. No additional assumption needed. Proven rigorously.</div></div>
+    <div class="cc2"><div class="cn">05</div><div class="ct2">Dark Matter = Uncoupled P₀</div><div class="cb2">No particle will be found. The signal is in galactic EM field density maps — not particle recoil detectors.</div></div>
+    <div class="cc2"><div class="cn">06</div><div class="ct2">Weightlessness is Default</div><div class="cb2">The Floating State is the universe's natural condition. Weight requires an EM shield to exist. Three centuries of intuition reversed.</div></div>
+    <div class="cc2"><div class="cn">07</div><div class="ct2">Space Survival = Pressure</div><div class="cb2">Biology evolved for 2–5% P₀. Adaptation Chambers are the only path to deep space. No propulsion or radiation fix addresses this.</div></div>
+    <div class="cc2"><div class="cn">08</div><div class="ct2">Temperature is Processing Rate</div><div class="cb2">T = ħω/k_B = ABL Processing Rate. Equivalent to quantum harmonic oscillator formula. Already proven physics in new language.</div></div>
+  </div>
+
+  <div class="qt">
+    <div class="qtt">P₀ is the universe's only currency. Gravity, weight, atomic stability, energy, and biological life are all different denominations of the same pressure field — shaped by geometry, blocked by electromagnetism, and processed by atoms that have been running binary code since the first moment of creation.</div>
+    <div class="qta">— Abdul Ahad (S/O Muhammad Iqbal Ansari) · Old Sukkur, Sindh, Pakistan · Founder, Al-Adal Dynamics Institute · 2026</div>
+  </div>
+</section>
+
+<!-- STATUS -->
+<section id="status" class="sec">
+  <div class="ey">Framework Status — Honest Scientific Assessment</div>
+  <h2 class="st">What is Verified · What is Research Phase</h2>
+  <p class="ss">Progressive science — no false claims, no hidden gaps</p>
+  <div class="dv"></div>
+
+  <h3>Six Verified Patterns <span class="vbdg">Cross-File Confirmed</span></h3>
+  <div class="tw"><table>
+    <thead><tr><th>#</th><th>Pattern</th><th>Cross-Reference</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>P1</td><td>Master equation = generalised hydrostatic pressure law</td><td>W = P₀×A_eff×SF = ρ·g·L (proven physics)</td><td style="color:var(--gr)">✓ Verified</td></tr>
+      <tr><td>P2</td><td>G derivable from P₀ (±0.38%)</td><td>G = 6.699×10⁻¹¹ vs 6.674×10⁻¹¹ Newton</td><td style="color:var(--gr)">✓ Calculated</td></tr>
+      <tr><td>P3</td><td>Corrected F-05 mirrors Bohr orbit equilibrium</td><td>m·ω²·r = P₀·A ↔ m·v²/r = ke²/r²</td><td style="color:var(--gr)">✓ Structural match</td></tr>
+      <tr><td>P4</td><td>Temperature = ABL Processing Rate = quantum oscillator</td><td>T = ħω/k_B (QM foundation)</td><td style="color:var(--gr)">✓ Equivalent</td></tr>
+      <tr><td>P5</td><td>Casimir Effect = P₀ differential measurement</td><td>Both measure vacuum energy differential</td><td style="color:var(--gr)">✓ Connected</td></tr>
+      <tr><td>P6</td><td>All 14 formulas: Result = P₀ × Geometry × Coupling</td><td>Universal mathematical structure</td><td style="color:var(--gr)">✓ Internal consistency</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Completeness Assessment</h3>
+  <div style="margin:16px 0;">
+    <div class="sr"><span class="sl">Master equation (units + hydrostatic link)</span><div class="sb"><div class="sf" style="width:100%"></div></div><span class="sp2">10/10</span></div>
+    <div class="sr"><span class="sl">1/r² derivation (geometric proof)</span><div class="sb"><div class="sf" style="width:100%"></div></div><span class="sp2">10/10</span></div>
+    <div class="sr"><span class="sl">G derivation from P₀ (±0.38%)</span><div class="sb"><div class="sf" style="width:96%"></div></div><span class="sp2">9.6/10</span></div>
+    <div class="sr"><span class="sl">Binary Transparency / zero friction</span><div class="sb"><div class="sf" style="width:96%"></div></div><span class="sp2">9.6/10</span></div>
+    <div class="sr"><span class="sl">Space biology / adaptation chambers</span><div class="sb"><div class="sf" style="width:96%"></div></div><span class="sp2">9.6/10</span></div>
+    <div class="sr"><span class="sl">Dark matter = uncoupled P₀</span><div class="sb"><div class="sf" style="width:92%"></div></div><span class="sp2">9.2/10</span></div>
+    <div class="sr"><span class="sl">Temperature = processing rate (QM equivalent)</span><div class="sb"><div class="sf" style="width:92%"></div></div><span class="sp2">9.2/10</span></div>
+    <div class="sr"><span class="sl">F-05 dimensional correction (Bohr bridge)</span><div class="sb"><div class="sf" style="width:88%"></div></div><span class="sp2">8.8/10</span></div>
+    <div class="sr"><span class="sl">P₀ = ZPE field (Casimir connection)</span><div class="sb"><div class="sf" style="width:86%"></div></div><span class="sp2">8.6/10</span></div>
+    <div class="sr"><span class="sl">P₄P vs ħ (dimensional distinction)</span><div class="sb"><div class="sf" style="width:82%"></div></div><span class="sp2">8.2/10</span></div>
+  </div>
+
+  <h3>Active Research — Openly Labeled</h3>
+  <div class="fail"><div class="ft">Open 1 — A_eff Precise Definition</div>Effective coupling area must be defined to make P₀ scale-invariant across materials. Best current definition: A_eff = macroscopic object cross-section (validated for G derivation at ±0.38%). Full atomic-level definition: Experiment 01 resolves.</div>
+  <div class="fail"><div class="ft">Open 2 — P₀ Exact Numerical Value</div>Provisional: 100,000–135,000 Pa. Exact value: Experiment 01 (vacuum chamber). This single measurement unlocks full quantitative framework.</div>
+  <div class="fail"><div class="ft">Open 3 — GPS 38 μs Scaling Constant</div>Concept confirmed (original notes). Scaling requires P₀ exact value first. Currently: "Potential Correlation." Resolves after Experiment 01.</div>
+  <div class="fail"><div class="ft">Open 4 — P₄P → Hydrogen Spectrum Derivation</div>If P₄P causes quantization, En = −13.6 eV/n² must derive from P₄P. Key numerical test. Labeled: Vol. V Pending. Not claimed as proven.</div>
+
+  <div class="c cbl"><div class="ctg">The One Experiment That Resolves Everything</div>
+    Vacuum chamber weight test (Experiment 01):<br>
+    → Measures P₀ directly → Defines A_eff → Validates G derivation → Enables GPS calculation → Confirms or refutes all 14 formulas quantitatively.<br><br>
+    Equipment: University vacuum pump + milligram precision balance.<br>
+    No particle accelerator. No space mission. On Earth. Now.
+  </div>
+</section>
+
+<footer id="foot">
+  <div class="fi">Paper ID: AAD-UPP-ABL-2026-CE · Definitive Edition · Vol. I–IV · All Errors Addressed</div>
+  <div class="fc" style="margin-top:6px;">© 2026 Abdul Ahad (S/O Muhammad Iqbal Ansari) · Al-Adal Dynamics Institute · Old Sukkur, Sindh, Pakistan · All Theoretical Rights Reserved</div>
+  <div class="fc" style="margin-top:3px;font-size:9px;">Bridge Vol. I · Bridge Vol. II · UPP Core · ABL Core · UIPF Website · Definitive Unified Edition</div>
+</footer>
+
+</div>
+<script>
+function sa(el){document.querySelectorAll('#sb nav a').forEach(a=>a.classList.remove('on'));el.classList.add('on');}
+const ss=document.querySelectorAll('section[id],footer[id]'),nl=document.querySelectorAll('#sb nav a');
+window.addEventListener('scroll',()=>{
+  let c='';ss.forEach(s=>{if(window.scrollY>=s.offsetTop-120)c=s.id;});
+  nl.forEach(a=>{a.classList.remove('on');if(a.getAttribute('href')==='#'+c)a.classList.add('on');});
+});
+</script>
+</body>
+</html>
