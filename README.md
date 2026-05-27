@@ -3,7 +3,7 @@
 **Author:** Abdul Ahad (S/O Muhammad Iqbal Ansari)  
 **Institute:** Al-Adal Dynamics · Old Sukkur, Sindh, Pakistan  
 **Year:** 2026  
-**DOI:** [10.5281/zenodo.20162197](https://doi.org/10.5281/zenodo.20162197)  
+**DOI:** [10.5281/zenodo.20162197]([(https://doi.org/10.5281/zenodo.20419634))  
 **Status:** Progressive Framework · 72% Verified · Active Research
 
 ---
@@ -170,7 +170,7 @@ You are welcome to reach out. The goal is falsification-or-confirmation — not 
 **Attribution required:** Cite as "Abdul Ahad (S/O Muhammad Iqbal Ansari), Al-Adal Dynamics Institute, 2026."
 
 © 2026 Abdul Ahad (S/O Muhammad Iqbal Ansari) · All Theoretical Rights Reserved  
-DOI: 10.5281/zenodo.20162197
+DOI: 10.5281/zenodo.20419634
 
 
 # Universal Pressure Protocol (UPP) & Atomic Binary Logic (ABL)
