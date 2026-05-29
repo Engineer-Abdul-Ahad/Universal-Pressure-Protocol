@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UPP Engineering Manual — Al-Adal Dynamics · 2026</title>
+<style>
+:root{
+  --bg:#05080d;--s1:#0d1117;--s2:#161b22;--bd:#21262d;
+  --go:#d4a017;--g2:#f0c040;--bl:#58a6ff;--gr:#3fb950;
+  --rd:#f85149;--pu:#bc8cff;--or:#e8703a;--cy:#39d0d8;
+  --tx:#e6edf3;--mu:#8b949e;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--tx);font-family:'Georgia',serif;line-height:1.75;}
+/* NAV */
+.topnav{position:sticky;top:0;z-index:50;background:var(--s2);border-bottom:1px solid var(--bd);padding:0 40px;display:flex;align-items:center;gap:0;overflow-x:auto;}
+.topnav a{display:block;padding:13px 16px;text-decoration:none;color:var(--mu);font-size:11px;font-family:monospace;letter-spacing:.5px;border-bottom:2px solid transparent;white-space:nowrap;transition:all .18s;}
+.topnav a:hover{color:var(--go);border-bottom-color:var(--go);}
+.topnav .logo{color:var(--go);font-weight:bold;font-size:12px;padding-right:24px;border-right:1px solid var(--bd);margin-right:8px;}
+/* HERO */
+.hero{padding:72px 56px 56px;max-width:960px;margin:0 auto;border-bottom:1px solid var(--bd);}
+.htag{font-size:9px;letter-spacing:3px;text-transform:uppercase;font-family:monospace;color:var(--go);margin-bottom:12px;}
+.htitle{font-size:clamp(26px,4vw,42px);font-weight:bold;color:var(--tx);line-height:1.15;margin-bottom:12px;}
+.htitle span{color:var(--go);}
+.hsub{font-size:15px;color:var(--mu);max-width:680px;line-height:1.7;margin-bottom:36px;}
+.hgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+@media(max-width:720px){.hgrid{grid-template-columns:repeat(2,1fr);}}
+.hcard{background:var(--s1);border:1px solid var(--bd);border-top:2px solid var(--go);padding:18px;cursor:pointer;transition:border-color .18s;}
+.hcard:hover{border-color:var(--g2);}
+.hcard .hcn{font-size:9px;color:var(--go);letter-spacing:2px;font-family:monospace;margin-bottom:6px;}
+.hcard .hct{font-size:13px;color:var(--tx);font-weight:bold;line-height:1.3;margin-bottom:6px;}
+.hcard .hcp{font-size:11px;color:var(--mu);}
+.hcard .hcs{display:inline-block;margin-top:8px;font-size:9px;font-family:monospace;padding:2px 7px;border-radius:2px;}
+.exp-badge{background:rgba(63,185,80,.1);border:1px solid rgba(63,185,80,.25);color:var(--gr);}
+.adv-badge{background:rgba(88,166,255,.1);border:1px solid rgba(88,166,255,.25);color:var(--bl);}
+/* MACHINE SECTIONS */
+.msec{padding:64px 56px;max-width:960px;margin:0 auto;border-bottom:2px solid var(--bd);}
+.mhead{display:flex;align-items:flex-start;gap:20px;margin-bottom:40px;padding-bottom:24px;border-bottom:1px solid var(--bd);}
+.mnum{font-size:52px;font-weight:bold;color:rgba(212,160,23,.12);font-family:monospace;line-height:1;min-width:72px;}
+.mtitles .mey{font-size:9px;color:var(--go);letter-spacing:3px;text-transform:uppercase;font-family:monospace;margin-bottom:6px;}
+.mtitles .mt{font-size:clamp(20px,2.6vw,28px);font-weight:bold;color:var(--tx);margin-bottom:4px;}
+.mtitles .ms{font-size:13.5px;color:var(--mu);font-style:italic;}
+/* SPEC GRID */
+.sgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;margin:24px 0;background:var(--bd);}
+.scard{background:var(--s1);padding:14px 16px;}
+.slabel{font-size:8.5px;color:var(--go);letter-spacing:2px;text-transform:uppercase;font-family:monospace;margin-bottom:4px;}
+.sval{font-size:13px;color:var(--tx);font-weight:bold;}
+.ssub{font-size:10px;color:var(--mu);margin-top:2px;}
+/* STEPS */
+.steps{margin:28px 0;}
+.step{display:flex;gap:20px;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--bd);}
+.step:last-child{border-bottom:none;}
+.stepn{min-width:40px;height:40px;background:var(--go);color:var(--bg);font-weight:bold;font-family:monospace;font-size:14px;display:flex;align-items:center;justify-content:center;border-radius:2px;flex-shrink:0;margin-top:2px;}
+.stepc .stitle{font-size:14.5px;color:var(--g2);font-weight:bold;margin-bottom:6px;}
+.stepc p{font-size:13px;color:var(--tx);margin-bottom:6px;}
+.stepc .note{font-size:11.5px;color:var(--mu);font-family:monospace;padding:8px 12px;background:var(--s2);border-left:3px solid var(--go);margin-top:8px;}
+/* MATERIALS TABLE */
+.mtbl{width:100%;border-collapse:collapse;font-size:12.5px;margin:20px 0;}
+.mtbl th{background:var(--s2);color:var(--go);font-size:8.5px;letter-spacing:1px;text-transform:uppercase;font-family:monospace;padding:9px 13px;text-align:left;border-bottom:2px solid var(--go);}
+.mtbl td{padding:9px 13px;border-bottom:1px solid var(--bd);vertical-align:top;}
+.mtbl tr:hover td{background:rgba(212,160,23,.025);}
+/* VISUAL */
+.vis{background:var(--s1);border:1px solid var(--bd);padding:24px;margin:28px 0;text-align:center;}
+.vcap{font-size:10px;color:var(--mu);margin-top:10px;font-style:italic;font-family:monospace;}
+/* CALLOUT */
+.warn{background:rgba(248,81,73,.05);border:1px solid rgba(248,81,73,.2);border-left:4px solid var(--rd);padding:14px 18px;margin:18px 0;font-size:13px;}
+.warn .wt{font-size:8.5px;color:var(--rd);letter-spacing:2px;text-transform:uppercase;font-family:monospace;margin-bottom:6px;}
+.tip{background:rgba(63,185,80,.05);border:1px solid rgba(63,185,80,.18);border-left:4px solid var(--gr);padding:14px 18px;margin:18px 0;font-size:13px;}
+.tip .tt{font-size:8.5px;color:var(--gr);letter-spacing:2px;text-transform:uppercase;font-family:monospace;margin-bottom:6px;}
+.info{background:rgba(88,166,255,.05);border:1px solid rgba(88,166,255,.18);border-left:4px solid var(--bl);padding:14px 18px;margin:18px 0;font-size:13px;}
+.info .it{font-size:8.5px;color:var(--bl);letter-spacing:2px;text-transform:uppercase;font-family:monospace;margin-bottom:6px;}
+/* PHASE */
+.phase{background:var(--s2);border:1px solid var(--bd);padding:16px 20px;margin:12px 0;}
+.phase .pt{font-size:9px;color:var(--pu);letter-spacing:2px;text-transform:uppercase;font-family:monospace;margin-bottom:8px;}
+h3{font-size:16px;color:var(--g2);margin:28px 0 10px;border-bottom:1px solid var(--bd);padding-bottom:5px;}
+h4{font-size:13.5px;color:var(--bl);margin:18px 0 6px;}
+p{font-size:13.5px;margin-bottom:12px;}
+strong{color:var(--g2);}
+.tc{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0;}
+@media(max-width:640px){.tc{grid-template-columns:1fr;}}
+.tcc{background:var(--s1);border:1px solid var(--bd);padding:16px;}
+.tct{font-size:9px;letter-spacing:2px;text-transform:uppercase;font-family:monospace;margin-bottom:8px;}
+/* FORMULA */
+.fb{background:var(--s1);border:1px solid var(--bd);border-top:2px solid var(--go);padding:16px 20px;margin:16px 0;font-family:monospace;}
+.fi{font-size:8.5px;color:var(--go);letter-spacing:2px;margin-bottom:6px;}
+.fe{font-size:16px;color:var(--g2);text-align:center;padding:10px;background:var(--bg);border-radius:3px;margin:6px 0;}
+/* FOOTER */
+footer{text-align:center;padding:40px;background:var(--s1);border-top:1px solid var(--bd);font-family:monospace;font-size:10px;color:var(--mu);}
+::-webkit-scrollbar{height:4px;width:4px;}::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--bd);}::-webkit-scrollbar-thumb:hover{background:var(--go);}
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <span class="logo">Al-Adal Dynamics</span>
+  <a href="#m1">Machine 01 — GRCF Rotor</a>
+  <a href="#m2">Machine 02 — Shield Hull</a>
+  <a href="#m3">Machine 03 — Pulse Welder</a>
+  <a href="#m4">Machine 04 — Vortex Well</a>
+  <a href="#experiment">Experiment Protocol</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="htag">UPP Engineering Manual · Al-Adal Dynamics Institute · 2026</div>
+  <h1 class="htitle">Construction Guide —<br><span>Four UPP Machines</span></h1>
+  <p class="hsub">Complete step-by-step engineering documentation for all four machines described in the Universal Pressure Protocol framework. Each section covers materials, component specifications, assembly sequence, and testing protocol.</p>
+
+  <div class="hgrid">
+    <a href="#m1" style="text-decoration:none;">
+      <div class="hcard">
+        <div class="hcn">Machine 01</div>
+        <div class="hct">GRCF Rotor Core</div>
+        <div class="hcp">Zero-G Chamber · Primary levitation platform</div>
+        <div class="hcs exp-badge">START HERE — Experiment Machine</div>
+      </div>
+    </a>
+    <a href="#m2" style="text-decoration:none;">
+      <div class="hcard">
+        <div class="hcn">Machine 02</div>
+        <div class="hct">Inertial-Shield Hull</div>
+        <div class="hcp">π-geometry craft · Engine-free lift</div>
+        <div class="hcs adv-badge">Advanced · After M01</div>
+      </div>
+    </a>
+    <a href="#m3" style="text-decoration:none;">
+      <div class="hcard">
+        <div class="hcn">Machine 03</div>
+        <div class="hct">Atomic Pulse-Welder</div>
+        <div class="hcp">Carbon → Diamond · Material alchemy</div>
+        <div class="hcs adv-badge">Advanced · Precision Build</div>
+      </div>
+    </a>
+    <a href="#m4" style="text-decoration:none;">
+      <div class="hcard">
+        <div class="hcn">Machine 04</div>
+        <div class="hct">Vortex Energy Well</div>
+        <div class="hcp">Spiral antenna · Ambient P₀ power</div>
+        <div class="hcs adv-badge">Advanced · Post-M01</div>
+      </div>
+    </a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ MACHINE 01 ═══════════════════════════════════ -->
+<section id="m1" class="msec">
+  <div class="mhead">
+    <div class="mnum">01</div>
+    <div class="mtitles">
+      <div class="mey">Machine 01 · Build This First · Primary Experiment Platform</div>
+      <div class="mt">GRCF Rotor Core — Zero-G Chamber</div>
+      <div class="ms">Counter-rotating magnetic levitation system that creates a weightless zone at centre by displacing P₀</div>
+    </div>
+  </div>
+
+  <div class="tip">
+    <div class="tt">Why Build This First</div>
+    This is the experiment machine. When the object inside reaches zero weight, P₀ is directly measured. That single measurement unlocks all 14 formulas quantitatively and validates the entire framework.
+  </div>
+
+  <!-- SPECS -->
+  <div class="sgrid">
+    <div class="scard"><div class="slabel">Total Mass</div><div class="sval">850 KG</div><div class="ssub">Dual rotor assembly</div></div>
+    <div class="scard"><div class="slabel">Target Speed</div><div class="sval">100,000 RPM</div><div class="ssub">Per rotor disc</div></div>
+    <div class="scard"><div class="slabel">Rotation Mode</div><div class="sval">Counter-rotating</div><div class="ssub">Upper + Lower cancel torque</div></div>
+    <div class="scard"><div class="slabel">Bearing Type</div><div class="sval">Active Magnetic</div><div class="ssub">Zero mechanical contact</div></div>
+    <div class="scard"><div class="slabel">Vacuum Target</div><div class="sval">10⁻⁹ Pa</div><div class="ssub">Ultra-High Vacuum (UHV)</div></div>
+    <div class="scard"><div class="slabel">Clearance</div><div class="sval">0.1 mm</div><div class="ssub">Rotor–wall gap</div></div>
+    <div class="scard"><div class="slabel">Rotor Material</div><div class="sval">GRCF</div><div class="ssub">Graphene-Reinforced Carbon Fibre</div></div>
+    <div class="scard"><div class="slabel">Formula Base</div><div class="sval">F-01 + F-03 + F-02</div><div class="ssub">GSE + EER + MEL</div></div>
+  </div>
+
+  <!-- DIAGRAM -->
+  <div class="vis">
+    <svg width="560" height="380" viewBox="0 0 560 380" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Outer shell -->
+      <rect x="80" y="30" width="400" height="320" fill="#0d1117" stroke="#21262d" stroke-width="2" rx="8"/>
+      <text x="280" y="22" text-anchor="middle" fill="#8b949e" font-size="9" font-family="monospace">GRCF ROTOR CORE — CROSS-SECTION VIEW</text>
+
+      <!-- GRCF shell label -->
+      <rect x="80" y="30" width="12" height="320" fill="#1a1040" stroke="#bc8cff" stroke-width="1" rx="2"/>
+      <rect x="468" y="30" width="12" height="320" fill="#1a1040" stroke="#bc8cff" stroke-width="1" rx="2"/>
+      <text x="50" y="195" fill="#bc8cff" font-size="8" font-family="monospace" transform="rotate(-90,50,195)">GRCF SHELL (F-02)</text>
+
+      <!-- Vacuum chamber -->
+      <rect x="100" y="50" width="360" height="280" fill="#060a0f" stroke="#58a6ff" stroke-width="1" stroke-dasharray="4,2" rx="4"/>
+      <text x="280" y="66" text-anchor="middle" fill="#58a6ff" font-size="8" font-family="monospace">ULTRA-HIGH VACUUM CHAMBER — 10⁻⁹ Pa</text>
+
+      <!-- UPPER ROTOR -->
+      <rect x="140" y="80" width="240" height="44" fill="#1a0e00" stroke="#d4a017" stroke-width="1.5" rx="4"/>
+      <text x="280" y="98" text-anchor="middle" fill="#d4a017" font-size="9" font-family="monospace">UPPER ROTOR DISC</text>
+      <text x="280" y="112" text-anchor="middle" fill="#8b949e" font-size="8" font-family="monospace">425 KG · GRCF · Clockwise ↻</text>
+      <!-- Rotation arrows upper -->
+      <path d="M160 102 Q200 88 240 102" stroke="#d4a017" stroke-width="1.2" fill="none" stroke-dasharray="3,2" opacity="0.6"/>
+      <polygon points="242,102 234,97 234,107" fill="#d4a017" opacity="0.6"/>
+
+      <!-- Active magnetic bearing indicators upper -->
+      <circle cx="140" cy="102" r="8" fill="#1a1040" stroke="#bc8cff" stroke-width="1.2"/>
+      <text x="140" y="106" text-anchor="middle" fill="#bc8cff" font-size="6" font-family="monospace">AMB</text>
+      <circle cx="420" cy="102" r="8" fill="#1a1040" stroke="#bc8cff" stroke-width="1.2"/>
+      <text x="420" y="106" text-anchor="middle" fill="#bc8cff" font-size="6" font-family="monospace">AMB</text>
+
+      <!-- Zero-G Zone -->
+      <ellipse cx="280" cy="190" rx="100" ry="60" fill="rgba(63,185,80,0.06)" stroke="#3fb950" stroke-width="1.2" stroke-dasharray="4,2"/>
+      <text x="280" y="184" text-anchor="middle" fill="#3fb950" font-size="10" font-family="monospace">ZERO-G ZONE</text>
+      <text x="280" y="198" text-anchor="middle" fill="#3fb950" font-size="8" font-family="monospace">Sᵍ = 1 · W = 0</text>
+
+      <!-- Test object -->
+      <rect x="256" y="176" width="48" height="28" fill="#161b22" stroke="#f0c040" stroke-width="1.2" rx="2"/>
+      <text x="280" y="194" text-anchor="middle" fill="#f0c040" font-size="8" font-family="monospace">TEST OBJ</text>
+
+      <!-- P₀ displacement arrows -->
+      <g stroke="#d4a017" stroke-width="1" opacity="0.4" stroke-dasharray="2,3">
+        <line x1="120" y1="190" x2="175" y2="190"/>
+        <line x1="440" y1="190" x2="385" y2="190"/>
+      </g>
+      <text x="108" y="187" fill="#d4a017" font-size="7.5" font-family="monospace" opacity="0.5">P₀ ←</text>
+      <text x="444" y="187" fill="#d4a017" font-size="7.5" font-family="monospace" opacity="0.5">→ P₀</text>
+
+      <!-- LOWER ROTOR -->
+      <rect x="140" y="256" width="240" height="44" fill="#1a0e00" stroke="#f0c040" stroke-width="1.5" rx="4"/>
+      <text x="280" y="274" text-anchor="middle" fill="#f0c040" font-size="9" font-family="monospace">LOWER ROTOR DISC</text>
+      <text x="280" y="288" text-anchor="middle" fill="#8b949e" font-size="8" font-family="monospace">425 KG · GRCF · Counter-Clockwise ↺</text>
+      <!-- Rotation arrows lower (opposite) -->
+      <path d="M320 278 Q360 264 380 278" stroke="#f0c040" stroke-width="1.2" fill="none" stroke-dasharray="3,2" opacity="0.6"/>
+      <polygon points="180,278 188,273 188,283" fill="#f0c040" opacity="0.6"/>
+
+      <!-- AMB lower -->
+      <circle cx="140" cy="278" r="8" fill="#1a1040" stroke="#bc8cff" stroke-width="1.2"/>
+      <text x="140" y="282" text-anchor="middle" fill="#bc8cff" font-size="6" font-family="monospace">AMB</text>
+      <circle cx="420" cy="278" r="8" fill="#1a1040" stroke="#bc8cff" stroke-width="1.2"/>
+      <text x="420" y="282" text-anchor="middle" fill="#bc8cff" font-size="6" font-family="monospace">AMB</text>
+
+      <!-- Ion getter pumps -->
+      <rect x="460" y="120" width="20" height="40" fill="#1a1040" stroke="#39d0d8" stroke-width="1" rx="2"/>
+      <text x="490" y="136" fill="#39d0d8" font-size="7" font-family="monospace">Ion</text>
+      <text x="490" y="147" fill="#39d0d8" font-size="7" font-family="monospace">Pump</text>
+      <rect x="460" y="220" width="20" height="40" fill="#1a1040" stroke="#39d0d8" stroke-width="1" rx="2"/>
+      <text x="490" y="236" fill="#39d0d8" font-size="7" font-family="monospace">Ion</text>
+      <text x="490" y="247" fill="#39d0d8" font-size="7" font-family="monospace">Pump</text>
+
+      <!-- Precision balance sensor -->
+      <rect x="108" y="180" width="14" height="20" fill="#1e3a6e" stroke="#58a6ff" stroke-width="1" rx="1"/>
+      <text x="86" y="175" fill="#58a6ff" font-size="7" font-family="monospace">Weight</text>
+      <text x="86" y="185" fill="#58a6ff" font-size="7" font-family="monospace">Sensor</text>
+      <text x="86" y="195" fill="#58a6ff" font-size="7" font-family="monospace">(μg res.)</text>
+
+      <!-- Drive shaft -->
+      <line x1="280" y1="124" x2="280" y2="130" stroke="#8b949e" stroke-width="3"/>
+      <line x1="280" y1="250" x2="280" y2="256" stroke="#8b949e" stroke-width="3"/>
+      <text x="284" y="142" fill="#8b949e" font-size="7" font-family="monospace">0.1mm</text>
+      <text x="284" y="150" fill="#8b949e" font-size="7" font-family="monospace">gap</text>
+
+      <!-- Formula label -->
+      <rect x="108" y="320" width="344" height="20" fill="#0d1117" rx="2"/>
+      <text x="280" y="333" text-anchor="middle" fill="#f0c040" font-size="9" font-family="monospace">F-01: Sᵍ = (P₀·Aπ − ½mω²r) / P₀ → Sᵍ = 1 → W = 0</text>
+    </svg>
+    <div class="vcap">Fig. M01 — GRCF Rotor Core Cross-Section. Two counter-rotating 425 kg discs create P₀ displacement at centre. AMB = Active Magnetic Bearings. Zero-G Zone forms when Sᵍ = 1.</div>
+  </div>
+
+  <h3>Materials Required</h3>
+  <table class="mtbl">
+    <thead><tr><th>Component</th><th>Material / Spec</th><th>Quantity</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Rotor Discs (×2)</strong></td><td>GRCF — Graphene-Reinforced Carbon Fibre, Tri-axial Hexagonal Weave at 60°</td><td>425 kg each</td><td>Primary P₀ displacement element. Must withstand 100,000 RPM centrifugal stress.</td></tr>
+      <tr><td><strong>Active Magnetic Bearings</strong></td><td>High-temperature superconducting electromagnets, real-time PID control loop</td><td>4 sets (2 per rotor)</td><td>Zero mechanical contact — no friction at high RPM</td></tr>
+      <tr><td><strong>Vacuum Chamber Shell</strong></td><td>316L Stainless Steel or Titanium Grade 5, weld-sealed, outgassed</td><td>1 unit</td><td>Contain 10⁻⁹ Pa environment</td></tr>
+      <tr><td><strong>Ion-Getter Pumps</strong></td><td>Varian/Agilent-grade UHV ion pumps, 20 L/s minimum</td><td>2 units</td><td>Maintain ultra-high vacuum. Remove residual gas molecules.</td></tr>
+      <tr><td><strong>Turbomolecular Pump</strong></td><td>Pfeiffer or Edwards — for initial pump-down to 10⁻⁶ Pa before ion pumps take over</td><td>1 unit</td><td>Pre-pump stage</td></tr>
+      <tr><td><strong>Precision Weight Sensor</strong></td><td>Microbalance — 0.001 mg resolution minimum (e.g., Mettler Toledo XPE)</td><td>1 unit</td><td>Measure test object weight inside vacuum chamber</td></tr>
+      <tr><td><strong>Motor Drive System</strong></td><td>High-frequency inverter, 3-phase, synchronised dual-drive for counter-rotation</td><td>2 units</td><td>Spin rotors to target RPM independently</td></tr>
+      <tr><td><strong>RPM Monitoring</strong></td><td>Laser tachometer + vibration sensors (accelerometers)</td><td>Per rotor</td><td>Real-time speed and balance monitoring</td></tr>
+      <tr><td><strong>Structural Frame</strong></td><td>A36 Structural Steel or 6061 Aluminium (vibration-dampened base)</td><td>1 unit</td><td>Support 850 kg assembly</td></tr>
+      <tr><td><strong>Control System</strong></td><td>PLC or FPGA-based real-time controller, safety interlock relay</td><td>1 unit</td><td>AMB control, RPM regulation, emergency shutdown</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Step-by-Step Construction</h3>
+  <div class="steps">
+    <div class="step">
+      <div class="stepn">1</div>
+      <div class="stepc">
+        <div class="stitle">Design and Commission GRCF Rotor Discs</div>
+        <p>Contract a composite materials manufacturer to produce two GRCF discs in Tri-axial Hexagonal Weave at exactly 60° fibre orientation. Disc geometry: spherical disc shape, not flat plate — π-geometry (F-08). Each disc: 425 kg, diameter approximately 800–900 mm for structural balance.</p>
+        <div class="note">60° hex weave is critical. F-02 (MEL) shows this geometry reduces stress by cos(60°) = 50%. Standard 0°/90° carbon fibre will fail at high RPM. Specify this orientation explicitly to manufacturer.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="stepn">2</div>
+      <div class="stepc">
+        <div class="stitle">Build the Vacuum Chamber Shell</div>
+        <p>Fabricate a cylindrical stainless steel or titanium vacuum vessel large enough to house both rotors with 0.1 mm clearance on all sides. All welds must be TIG-welded, tested with helium leak detector. Achieve 10⁻⁶ Pa with turbomolecular pump before proceeding.</p>
+        <div class="note">0.1 mm rotor-to-wall clearance is the critical tolerance. Below this: catastrophic mechanical failure. Above 2 mm: P₀ displacement effect significantly reduced. Design precision machining for this gap.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="stepn">3</div>
+      <div class="stepc">
+        <div class="stitle">Install Active Magnetic Bearing System</div>
+        <p>Mount AMB coil assemblies at four quadrants per rotor (total 8 bearing positions). Connect all AMBs to real-time PID control loop — response time must be under 1 millisecond to prevent rotor contact with walls at high RPM. Use position sensors (eddy current or capacitive) for real-time rotor location feedback.</p>
+        <div class="note">AMB failure = rotor crashes into chamber wall at 100,000 RPM = catastrophic destruction. Triple-redundant power supply for AMB controllers is mandatory safety requirement.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="stepn">4</div>
+      <div class="stepc">
+        <div class="stitle">Mount Drive Shafts and Motor Coupling</div>
+        <p>Upper rotor: driven clockwise. Lower rotor: driven counter-clockwise at identical RPM. This cancels net torque on the frame (Newton's 3rd Law — reaction force neutralised). Magnetic coupling preferred over direct shaft to maintain vacuum integrity — no rotating seal needed.</p>
+        <div class="note">Both rotors MUST reach identical RPM simultaneously. Speed imbalance creates lateral force on the chamber structure. Synchronised dual-inverter drive with real-time RPM feedback is required.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="stepn">5</div>
+      <div class="stepc">
+        <div class="stitle">Install Ion-Getter Pumps and Achieve UHV</div>
+        <p>Mount two ion-getter pumps on opposite sides of the chamber. First: pump down to 10⁻⁶ Pa using turbomolecular pump. Then: bake the entire chamber at 150°C for 24 hours to desorb surface gases. After cooling: switch to ion-getter pumps. Target: 10⁻⁹ Pa. Verify with ion gauge.</p>
+        <div class="note">Vacuum baking is mandatory. Without it, outgassing from chamber walls will prevent reaching 10⁻⁹ Pa. All internal components must be vacuum-compatible — no organic materials, no standard lubricants.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="stepn">6</div>
+      <div class="stepc">
+        <div class="stitle">Install Test Object and Precision Weight Sensor</div>
+        <p>Suspend a π-geometry test object (sphere preferred) at the exact geometric centre of the chamber using thin tungsten wire connected to the microbalance sensor. The object must be electrically isolated and magnetically neutral. Initial mass: 10–50 grams for sensitivity. Record baseline weight at zero RPM.</p>
+        <div class="note">Test object must be a sphere (π-geometry). F-04 predicts sphere weight will differ from flat plate at identical mass. This simultaneously validates both F-01 (Sᵍ) and F-04 (Gᵥ).</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="stepn">7</div>
+      <div class="stepc">
+        <div class="stitle">Spin-Up Protocol — Incremental RPM Testing</div>
+        <p>Begin at 1,000 RPM. Record weight. Increase by 5,000 RPM increments. Record weight at each level. Plot weight vs RPM graph. If UPP is correct: weight decreases as RPM increases (F-01: as ω increases, centrifugal contribution increases, P₀ displacement grows). Continue to target RPM or until measurable weight change confirmed.</p>
+        <div class="note">Do NOT jump to 100,000 RPM immediately. Vibration analysis must confirm rotor balance at each increment. Any imbalance detected = emergency stop. Rotor failure at high RPM is catastrophic.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="stepn">8</div>
+      <div class="stepc">
+        <div class="stitle">Record Results — P₀ Measurement</div>
+        <p>When weight W reaches measurable reduction: use F-01 to back-calculate P₀. Record at multiple RPM levels to build a W vs ω curve. If curve follows F-01 prediction (Sᵍ = (P₀·Aπ − ½mω²r)/P₀), then P₀ is directly determined. This is the primary experimental result of the entire UPP framework.</p>
+        <div class="note">Expected P₀ range based on framework calculations: 100,000–135,000 Pa (approximately 1–1.35 atm). Vacuum chamber alone (zero RPM) may also show weight reduction proportional to vacuum depth — this is a simpler preliminary test.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="warn">
+    <div class="wt">Safety — Non-Negotiable</div>
+    100,000 RPM with 850 kg rotors stores enormous kinetic energy. Rotor failure at speed = explosion equivalent. Entire machine must be inside a blast-proof enclosure. Remote operation only. No personnel within 20 metres during high-RPM operation. Pressure relief venting, emergency magnetic brake, and automated RPM limiting are mandatory safety systems.
+  </div>
+
+  <div class="fb">
+    <div class="fi">Governing Formula — F-01</div>
+    <div class="fe">Sᵍ = (P₀·Aπ − ½mω²r) / P₀ = 1 → W = 0</div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ MACHINE 02 ═══════════════════════════════════ -->
+<section id="m2" class="msec">
+  <div class="mhead">
+    <div class="mnum">02</div>
+    <div class="mtitles">
+      <div class="mey">Machine 02 · Build After M01 Validates P₀</div>
+      <div class="mt">Inertial-Shield Hull</div>
+      <div class="ms">π-geometry craft using geometric P₀ deflection for engine-free lift</div>
+    </div>
+  </div>
+
+  <div class="info">
+    <div class="it">Prerequisite</div>
+    Machine 01 must first confirm P₀ numerical value. M02 lift calculations depend on exact P₀. Without this number, shielding area cannot be calculated from F-13.
+  </div>
+
+  <div class="sgrid">
+    <div class="scard"><div class="slabel">Shape</div><div class="sval">Sphere or Disc</div><div class="ssub">π-geometry mandatory</div></div>
+    <div class="scard"><div class="slabel">Layer Structure</div><div class="sval">3 Layers</div><div class="ssub">GRCF + Vacuum + Shielding</div></div>
+    <div class="scard"><div class="slabel">Lower Surface</div><div class="sval">P₀ Reflector</div><div class="ssub">100% downward P₀ block</div></div>
+    <div class="scard"><div class="slabel">Upper Surface</div><div class="sval">P₀ Transparent</div><div class="ssub">Allows P₀ from above</div></div>
+    <div class="scard"><div class="slabel">Propulsion</div><div class="sval">None Required</div><div class="ssub">P₀ asymmetry = lift</div></div>
+    <div class="scard"><div class="slabel">Formula Base</div><div class="sval">F-08 + F-13 + F-02</div><div class="ssub">SEC + SLR + MEL</div></div>
+  </div>
+
+  <div class="vis">
+    <svg width="500" height="300" viewBox="0 0 500 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <text x="250" y="18" text-anchor="middle" fill="#8b949e" font-size="9" font-family="monospace">INERTIAL-SHIELD HULL — WORKING PRINCIPLE</text>
+      <!-- P0 arrows from all directions -->
+      <g stroke="#d4a017" stroke-width="1.3" opacity="0.5">
+        <line x1="250" y1="40" x2="250" y2="90"/><polygon points="250,92 246,82 254,82" fill="#d4a017"/>
+        <line x1="100" y1="155" x2="155" y2="155"/><polygon points="157,155 147,151 147,159" fill="#d4a017"/>
+        <line x1="400" y1="155" x2="345" y2="155"/><polygon points="343,155 353,151 353,159" fill="#d4a017"/>
+        <line x1="160" y1="62" x2="195" y2="95"/><polygon points="196,97 188,89 196,90" fill="#d4a017"/>
+        <line x1="340" y1="62" x2="305" y2="95"/><polygon points="303,97 304,89 312,90" fill="#d4a017"/>
+      </g>
+      <text x="248" y="55" fill="#d4a017" font-size="8" font-family="monospace" opacity="0.6">P₀ ↓</text>
+      <text x="64" y="152" fill="#d4a017" font-size="8" font-family="monospace" opacity="0.6">P₀ →</text>
+      <text x="410" y="152" fill="#d4a017" font-size="8" font-family="monospace" opacity="0.6">← P₀</text>
+      <!-- Hull - disc shape -->
+      <ellipse cx="250" cy="155" rx="140" ry="50" fill="#0d1117" stroke="#d4a017" stroke-width="2"/>
+      <!-- Upper surface label -->
+      <text x="250" y="118" text-anchor="middle" fill="#58a6ff" font-size="8" font-family="monospace">UPPER: P₀ TRANSPARENT</text>
+      <text x="250" y="129" text-anchor="middle" fill="#58a6ff" font-size="7" font-family="monospace">(P₀ passes through freely from above)</text>
+      <!-- Hull layers -->
+      <ellipse cx="250" cy="155" rx="140" ry="50" fill="none" stroke="#bc8cff" stroke-width="1" stroke-dasharray="3,2" opacity="0.5"/>
+      <ellipse cx="250" cy="155" rx="128" ry="44" fill="#161b22" stroke="#21262d" stroke-width="1"/>
+      <text x="250" y="152" text-anchor="middle" fill="#8b949e" font-size="8" font-family="monospace">GRCF Structure Layer</text>
+      <text x="250" y="162" text-anchor="middle" fill="#8b949e" font-size="7" font-family="monospace">Vacuum Gap · P₀ Reflector Base</text>
+      <!-- Lower surface block -->
+      <ellipse cx="250" cy="200" rx="140" ry="20" fill="rgba(248,81,73,0.12)" stroke="#f85149" stroke-width="1.5"/>
+      <text x="250" y="200" text-anchor="middle" fill="#f85149" font-size="8" font-family="monospace">LOWER SURFACE: P₀ BLOCKER — 100%</text>
+      <!-- P0 blocked below -->
+      <g stroke="#f85149" stroke-width="1" opacity="0.4" stroke-dasharray="2,3">
+        <line x1="200" y1="220" x2="200" y2="250"/>
+        <line x1="250" y1="220" x2="250" y2="250"/>
+        <line x1="300" y1="220" x2="300" y2="250"/>
+      </g>
+      <text x="250" y="268" text-anchor="middle" fill="#f85149" font-size="8" font-family="monospace">P₀ from below: BLOCKED ✗</text>
+      <!-- Lift arrow -->
+      <line x1="430" y1="200" x2="430" y2="130" stroke="#3fb950" stroke-width="2.5"/>
+      <polygon points="430,128 425,140 435,140" fill="#3fb950"/>
+      <text x="440" y="165" fill="#3fb950" font-size="8" font-family="monospace">LIFT</text>
+      <!-- Formula -->
+      <rect x="80" y="276" width="340" height="16" fill="#0d1117" rx="2"/>
+      <text x="250" y="287" text-anchor="middle" fill="#f0c040" font-size="8.5" font-family="monospace">F-13: L = P₀ · Area / (π · SF) → Engine-free levitation</text>
+    </svg>
+    <div class="vcap">Fig. M02 — Inertial-Shield Hull working principle. P₀ acts from above (upper surface transparent) but is blocked from below (lower surface = P₀ reflector). Net upward force = Lift.</div>
+  </div>
+
+  <h3>Construction Steps</h3>
+  <div class="steps">
+    <div class="step">
+      <div class="stepn">1</div>
+      <div class="stepc">
+        <div class="stitle">Calculate Required Shielding Area</div>
+        <p>Using F-13: L = P₀ × Area / (π × SF). With P₀ from Machine 01 experiment, and known craft mass (m), calculate minimum lower-surface blocking area needed to produce L = mg. This gives the exact geometry required.</p>
+        <div class="note">This is why Machine 01 must come first — P₀ exact value is required for this calculation.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="stepn">2</div>
+      <div class="stepc">
+        <div class="stitle">Fabricate GRCF Disc/Sphere Hull</div>
+        <p>Construct disc or sphere shape from GRCF (same 60° hex weave as Machine 01). Shape must be true π-geometry — a perfect disc or sphere. No angular edges. The π relationship between circumference and diameter is what enables F-08 shielding efficiency.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="stepn">3</div>
+      <div class="stepc">
+        <div class="stitle">Apply Lower Surface P₀ Blocking Layer</div>
+        <p>The lower surface must block P₀ completely. Based on UPP theory, Earth's own EM field achieves ~97% blocking. To exceed this: apply a high-permeability electromagnetic coating (mu-metal or superconducting film) to the lower hemisphere. Superconducting layer at liquid nitrogen temperature is the current best candidate for near-100% shielding.</p>
+        <div class="note">This is the experimental unknown — what material most effectively blocks P₀? Machine 01 enables testing: place different materials in the zero-G zone and measure which produces maximum additional weight reduction.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="stepn">4</div>
+      <div class="stepc">
+        <div class="stitle">Upper Surface — Maintain P₀ Transparency</div>
+        <p>Upper hemisphere must allow P₀ to pass through freely. No EM-blocking coating. Use P₀-neutral materials only — standard GRCF is acceptable. The asymmetry (blocked below, open above) creates the net upward pressure differential = lift.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ MACHINE 03 ═══════════════════════════════════ -->
+<section id="m3" class="msec">
+  <div class="mhead">
+    <div class="mnum">03</div>
+    <div class="mtitles">
+      <div class="mey">Machine 03 · Advanced Build · Precision Engineering Required</div>
+      <div class="mt">Atomic Pulse-Welder</div>
+      <div class="ms">Carbon → Diamond/Graphene transformation without nuclear fission via local P₀ pulse</div>
+    </div>
+  </div>
+
+  <div class="sgrid">
+    <div class="scard"><div class="slabel">Input Material</div><div class="sval">Carbon</div><div class="ssub">Graphite or amorphous</div></div>
+    <div class="scard"><div class="slabel">Output Material</div><div class="sval">Diamond / Graphene</div><div class="ssub">Controlled by π-ratio applied</div></div>
+    <div class="scard"><div class="slabel">Mechanism</div><div class="sval">Local P₀ Pulse</div><div class="ssub">Forces atom π-ratio to shift</div></div>
+    <div class="scard"><div class="slabel">Key Component</div><div class="sval">Gas Ionisation Grid</div><div class="ssub">Focuses kinetic energy</div></div>
+    <div class="scard"><div class="slabel">Cathode</div><div class="sval">Titanium</div><div class="ssub">High-energy electron emitter</div></div>
+    <div class="scard"><div class="slabel">Formula Base</div><div class="sval">F-06 + F-10 + F-07</div><div class="ssub">AMC + GPL + VEE</div></div>
+  </div>
+
+  <div class="vis">
+    <svg width="480" height="260" viewBox="0 0 480 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <text x="240" y="18" text-anchor="middle" fill="#8b949e" font-size="9" font-family="monospace">ATOMIC PULSE-WELDER — SCHEMATIC</text>
+      <!-- Titanium cathode -->
+      <rect x="40" y="60" width="80" height="60" fill="#1a1040" stroke="#bc8cff" stroke-width="1.5" rx="4"/>
+      <text x="80" y="86" text-anchor="middle" fill="#bc8cff" font-size="9" font-family="monospace">Ti</text>
+      <text x="80" y="98" text-anchor="middle" fill="#bc8cff" font-size="8" font-family="monospace">Cathode</text>
+      <text x="80" y="110" text-anchor="middle" fill="#8b949e" font-size="7" font-family="monospace">−HV</text>
+      <!-- Electron beam -->
+      <line x1="120" y1="90" x2="180" y2="90" stroke="#58a6ff" stroke-width="1.5"/>
+      <polygon points="182,90 174,86 174,94" fill="#58a6ff"/>
+      <text x="148" y="82" fill="#58a6ff" font-size="7" font-family="monospace">e⁻ beam</text>
+      <!-- Gas ionisation grid -->
+      <rect x="180" y="50" width="60" height="100" fill="#1e3a6e" stroke="#58a6ff" stroke-width="1.5" rx="3"/>
+      <text x="210" y="86" text-anchor="middle" fill="#58a6ff" font-size="8" font-family="monospace">Gas</text>
+      <text x="210" y="98" text-anchor="middle" fill="#58a6ff" font-size="8" font-family="monospace">Ion.</text>
+      <text x="210" y="110" text-anchor="middle" fill="#58a6ff" font-size="8" font-family="monospace">Grid</text>
+      <!-- Grid lines (ionisation) -->
+      <g stroke="#58a6ff" stroke-width="0.5" opacity="0.4">
+        <line x1="186" y1="60" x2="186" y2="148"/><line x1="194" y1="60" x2="194" y2="148"/>
+        <line x1="202" y1="60" x2="202" y2="148"/><line x1="210" y1="60" x2="210" y2="148"/>
+        <line x1="218" y1="60" x2="218" y2="148"/><line x1="226" y1="60" x2="226" y2="148"/>
+        <line x1="234" y1="60" x2="234" y2="148"/>
+      </g>
+      <!-- Focused beam -->
+      <path d="M240 90 L300 120 L300 60 L240 90" stroke="#f0c040" stroke-width="1.2" fill="rgba(240,192,64,0.06)"/>
+      <text x="270" y="78" fill="#f0c040" font-size="7" font-family="monospace">Focus</text>
+      <text x="270" y="88" fill="#f0c040" font-size="7" font-family="monospace">Point</text>
+      <!-- Target chamber -->
+      <rect x="300" y="50" width="120" height="100" fill="#0d1117" stroke="#3fb950" stroke-width="1.5" rx="4"/>
+      <text x="360" y="76" text-anchor="middle" fill="#3fb950" font-size="8" font-family="monospace">Target</text>
+      <text x="360" y="88" text-anchor="middle" fill="#3fb950" font-size="8" font-family="monospace">Chamber</text>
+      <!-- Carbon atom -->
+      <circle cx="340" cy="115" r="10" fill="#1a2e1a" stroke="#3fb950" stroke-width="1.2"/>
+      <text x="340" y="119" text-anchor="middle" fill="#3fb950" font-size="8" font-family="monospace">C</text>
+      <!-- Pulse arrow -->
+      <line x1="300" y1="90" x2="328" y2="108" stroke="#f0c040" stroke-width="1.5"/>
+      <polygon points="330,109 322,105 324,114" fill="#f0c040"/>
+      <!-- Transformation -->
+      <line x1="350" y1="115" x2="390" y2="115" stroke="#d4a017" stroke-width="1.5"/>
+      <polygon points="392,115 384,111 384,119" fill="#d4a017"/>
+      <!-- Diamond output -->
+      <polygon points="410,95 430,115 410,135 390,115" fill="rgba(57,208,216,0.1)" stroke="#39d0d8" stroke-width="1.5"/>
+      <text x="410" y="119" text-anchor="middle" fill="#39d0d8" font-size="8" font-family="monospace">◇</text>
+      <text x="410" y="148" text-anchor="middle" fill="#39d0d8" font-size="8" font-family="monospace">Diamond</text>
+      <!-- Formula -->
+      <rect x="40" y="178" width="400" height="30" fill="#0d1117" rx="2"/>
+      <text x="240" y="191" text-anchor="middle" fill="#f0c040" font-size="8" font-family="monospace">F-06: Ψ = (V_p · π) / √P₀ — Shift π-ratio → Carbon changes crystal structure</text>
+      <text x="240" y="202" text-anchor="middle" fill="#8b949e" font-size="7.5" font-family="monospace">No nuclear fission. No breaking proton/neutron count. Only orbital geometry shifts.</text>
+      <!-- Control system -->
+      <rect x="40" y="180" width="0" height="0"/>
+      <rect x="100" y="172" width="0" height="0"/>
+      <text x="240" y="228" text-anchor="middle" fill="#8b949e" font-size="8" font-family="monospace">Pulse timing controls output: short pulse → Graphene · longer pulse → Diamond</text>
+    </svg>
+    <div class="vcap">Fig. M03 — Atomic Pulse-Welder schematic. Titanium cathode emits electron beam → gas ionisation grid focuses it to single point → local P₀ pulse forces carbon's π-ratio to shift → crystal structure changes.</div>
+  </div>
+
+  <h3>Construction Steps</h3>
+  <div class="steps">
+    <div class="step">
+      <div class="stepn">1</div>
+      <div class="stepc">
+        <div class="stitle">Titanium Cathode Assembly</div>
+        <p>Fabricate high-purity titanium cathode (99.9% Ti). Mount inside insulated high-vacuum housing. Connect to negative high-voltage supply (−50 kV to −200 kV range). Titanium is chosen for its high melting point and clean electron emission characteristics.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="stepn">2</div>
+      <div class="stepc">
+        <div class="stitle">Gas Ionisation Grid</div>
+        <p>Construct multi-element electrostatic focusing lens (Einzel lens design) from precision-machined tungsten or molybdenum grids. Introduce trace noble gas (argon or xenon) for ionisation assist. The grid geometry focuses the electron beam to a sub-micron focal point at the target.</p>
+        <div class="note">Focal point precision is critical. Larger focal area = diffuse energy = insufficient P₀ pulse strength to overcome atomic π-ratio lock.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="stepn">3</div>
+      <div class="stepc">
+        <div class="stitle">Target Chamber</div>
+        <p>Vacuum chamber holding carbon sample at focus point. Chamber must maintain 10⁻⁶ Pa minimum to prevent atmospheric interference. Mount precision X-Y-Z stage for target positioning. Carbon sample mounted on temperature-controlled substrate.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="stepn">4</div>
+      <div class="stepc">
+        <div class="stitle">Pulse Control Electronics</div>
+        <p>Build nanosecond-precision pulse generator. Pulse duration controls output crystal structure: short pulses (nanoseconds) → graphene formation. Longer pulses (microseconds) → diamond cubic structure. Vary pulse energy and duration systematically while analysing output with Raman spectroscopy.</p>
+        <div class="note">Raman spectroscopy is the definitive method to confirm diamond vs graphene formation. The characteristic peaks are unambiguous: diamond at 1332 cm⁻¹, graphene at 2D peak ~2700 cm⁻¹.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ MACHINE 04 ═══════════════════════════════════ -->
+<section id="m4" class="msec">
+  <div class="mhead">
+    <div class="mnum">04</div>
+    <div class="mtitles">
+      <div class="mey">Machine 04 · Resonance Antenna · P₀ Field Coupling</div>
+      <div class="mt">Vortex Energy Well</div>
+      <div class="ms">Spiral antenna tuned to atomic vortex frequency — draws ambient P₀ as usable energy</div>
+    </div>
+  </div>
+
+  <div class="sgrid">
+    <div class="scard"><div class="slabel">Type</div><div class="sval">Spiral Antenna</div><div class="ssub">Variable pitch resonator</div></div>
+    <div class="scard"><div class="slabel">Key Parameter</div><div class="sval">π decimal ratios</div><div class="ssub">Exact geometric proportions</div></div>
+    <div class="scard"><div class="slabel">Target Frequency</div><div class="sval">Atomic vortex freq.</div><div class="ssub">Derived from F-07 + P₀</div></div>
+    <div class="scard"><div class="slabel">Energy Source</div><div class="sval">Ambient P₀ field</div><div class="ssub">Zero-point energy coupling</div></div>
+    <div class="scard"><div class="slabel">Fuel Required</div><div class="sval">None</div><div class="ssub">P₀ = inexhaustible</div></div>
+    <div class="scard"><div class="slabel">Formula Base</div><div class="sval">F-07 + F-11 + F-09</div><div class="ssub">VEE + UEI + VIEB</div></div>
+  </div>
+
+  <div class="vis">
+    <svg width="460" height="260" viewBox="0 0 460 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <text x="230" y="18" text-anchor="middle" fill="#8b949e" font-size="9" font-family="monospace">VORTEX ENERGY WELL — SPIRAL ANTENNA</text>
+      <!-- Spiral -->
+      <circle cx="180" cy="140" r="92" fill="none" stroke="#d4a017" stroke-width="0.6" stroke-dasharray="2,4" opacity="0.2"/>
+      <circle cx="180" cy="140" r="76" fill="none" stroke="#d4a017" stroke-width="0.8" stroke-dasharray="2,3" opacity="0.3"/>
+      <circle cx="180" cy="140" r="60" fill="none" stroke="#d4a017" stroke-width="1" stroke-dasharray="2,3" opacity="0.4"/>
+      <circle cx="180" cy="140" r="44" fill="none" stroke="#d4a017" stroke-width="1.2" stroke-dasharray="2,2" opacity="0.55"/>
+      <circle cx="180" cy="140" r="28" fill="none" stroke="#d4a017" stroke-width="1.4" opacity="0.7"/>
+      <circle cx="180" cy="140" r="12" fill="#d4a017" opacity="0.3"/>
+      <circle cx="180" cy="140" r="5" fill="#d4a017"/>
+      <!-- Spiral line suggestion -->
+      <path d="M180 48 Q272 48 272 140 Q272 232 180 232 Q88 232 88 140 Q88 80 140 56" stroke="#d4a017" stroke-width="1.5" fill="none" opacity="0.6"/>
+      <!-- Energy flow arrows -->
+      <g stroke="#3fb950" stroke-width="1" opacity="0.5">
+        <line x1="80" y1="80" x2="110" y2="110"/><polygon points="112,112 103,105 109,104" fill="#3fb950"/>
+        <line x1="280" y1="80" x2="250" y2="110"/><polygon points="248,112 257,105 251,104" fill="#3fb950"/>
+        <line x1="80" y1="200" x2="110" y2="172"/><polygon points="112,170 105,179 104,170" fill="#3fb950"/>
+        <line x1="280" y1="200" x2="250" y2="172"/><polygon points="248,170 255,179 256,170" fill="#3fb950"/>
+      </g>
+      <text x="52" y="76" fill="#3fb950" font-size="7.5" font-family="monospace" opacity="0.6">P₀ in</text>
+      <text x="286" y="76" fill="#3fb950" font-size="7.5" font-family="monospace" opacity="0.6">P₀ in</text>
+      <!-- Output -->
+      <line x1="320" y1="140" x2="400" y2="140" stroke="#f0c040" stroke-width="2"/>
+      <polygon points="402,140 392,135 392,145" fill="#f0c040"/>
+      <text x="340" y="132" fill="#f0c040" font-size="8.5" font-family="monospace">ENERGY</text>
+      <text x="340" y="144" fill="#f0c040" font-size="8.5" font-family="monospace">OUTPUT</text>
+      <!-- π ratio label -->
+      <text x="180" y="178" text-anchor="middle" fill="#bc8cff" font-size="8" font-family="monospace">Pitch ratio = π</text>
+      <text x="180" y="190" text-anchor="middle" fill="#8b949e" font-size="7" font-family="monospace">Each ring r = r₀ × πⁿ</text>
+      <!-- Formula -->
+      <rect x="30" y="236" width="400" height="16" fill="#0d1117" rx="2"/>
+      <text x="230" y="247" text-anchor="middle" fill="#f0c040" font-size="8.5" font-family="monospace">F-11: E = ∮(P₀ · ΔV) dt — P₀ field = inexhaustible source</text>
+    </svg>
+    <div class="vcap">Fig. M04 — Vortex Energy Well. Spiral geometry uses exact π ratios between rings. When tuned to atomic vortex frequency, coherent P₀ flow converts to usable electrical energy.</div>
+  </div>
+
+  <h3>Construction Steps</h3>
+  <div class="steps">
+    <div class="step">
+      <div class="stepn">1</div>
+      <div class="stepc">
+        <div class="stitle">Calculate Target Frequency from F-07</div>
+        <p>F-07: Eₐ = ∫₀²π (P₀·cosθ)dθ gives atomic vortex energy. The target resonant frequency of the antenna must match atomic orbital frequency (approximately 10¹⁵ Hz for electron orbitals, adjustable via geometry scaling).</p>
+        <div class="note">This is the key unknown requiring Machine 01 data first. Once P₀ exact value is known, target frequency can be derived precisely.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="stepn">2</div>
+      <div class="stepc">
+        <div class="stitle">Construct Archimedean Spiral with π-Ratio Pitch</div>
+        <p>Wind a copper or superconducting coil in an Archimedean spiral where the radial increment per turn = r₀ × π. So if first turn radius = 1 cm, second = π cm, third = π² cm, and so on. This geometric relationship resonates with atomic orbital geometry.</p>
+        <div class="note">Standard antennas use λ/4 or λ/2 ratios. This design uses π ratios — a deliberate difference based on atomic geometry from F-07. Both can be built and compared experimentally.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="stepn">3</div>
+      <div class="stepc">
+        <div class="stitle">Mount on Vibration-Free Platform with Faraday Shield</div>
+        <p>Mount antenna on vibration-isolated platform to prevent mechanical noise contaminating signal. Surround with partial Faraday cage (open top to allow field input, shielded sides to direct output to measurement circuit). Connect output to sensitive energy harvesting circuit.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="stepn">4</div>
+      <div class="stepc">
+        <div class="stitle">Frequency Sweep and Resonance Detection</div>
+        <p>Using a network analyser or impedance analyser, sweep across frequency ranges. Detect resonance peaks — these correspond to P₀ coupling points. The strongest resonance = target operating frequency for maximum energy extraction.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIMENT PROTOCOL -->
+<section id="experiment" class="msec">
+  <div class="mhead">
+    <div class="mnum">◉</div>
+    <div class="mtitles">
+      <div class="mey">Primary Experiment — Simplified Version (Do This First)</div>
+      <div class="mt">Vacuum Chamber Weight Test</div>
+      <div class="ms">Confirm W = P₀ × A_eff × (1−C) — the simplest version before building Machine 01</div>
+    </div>
+  </div>
+
+  <div class="tip">
+    <div class="tt">This Experiment Costs Under $5,000</div>
+    You do not need Machine 01 to start. A simple vacuum chamber + precision balance already tests the master equation. If weight decreases proportionally with vacuum depth — P₀ is confirmed and measured.
+  </div>
+
+  <div class="sgrid">
+    <div class="scard"><div class="slabel">Equipment</div><div class="sval">Vacuum Chamber</div><div class="ssub">University-grade, 10⁻⁵ Pa minimum</div></div>
+    <div class="scard"><div class="slabel">Sensor</div><div class="sval">Microbalance</div><div class="ssub">0.001 mg resolution</div></div>
+    <div class="scard"><div class="slabel">Test Object</div><div class="sval">Sphere (iron)</div><div class="ssub">π-geometry, 10–50 grams</div></div>
+    <div class="scard"><div class="slabel">Target</div><div class="sval">ΔW vs vacuum</div><div class="ssub">Plot weight at each pressure level</div></div>
+    <div class="scard"><div class="slabel">Predicted result</div><div class="sval">W decreases</div><div class="ssub">Proportional to vacuum depth</div></div>
+    <div class="scard"><div class="slabel">P₀ from result</div><div class="sval">Back-calculate</div><div class="ssub">P₀ = W₀/(A_eff × SF)</div></div>
+  </div>
+
+  <h3>Experiment Protocol</h3>
+  <div class="steps">
+    <div class="step">
+      <div class="stepn">A</div>
+      <div class="stepc">
+        <div class="stitle">Preparation</div>
+        <p>Take a precision iron sphere (10–50 grams). Measure its exact cross-sectional area: A = π × r². Weigh at atmospheric pressure — record as W₀ (baseline weight). This is your reference point.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="stepn">B</div>
+      <div class="stepc">
+        <div class="stitle">Place in Vacuum Chamber</div>
+        <p>Suspend sphere inside vacuum chamber on microbalance sensor. Re-verify weight at atmospheric pressure inside chamber = W₀. Seal chamber.</p>
+        <div class="note">Suspension method: thin tungsten wire attached to balance. Object must not touch chamber walls. Electrostatic charge on object = distortion — ground the sphere before insertion.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="stepn">C</div>
+      <div class="stepc">
+        <div class="stitle">Vacuum Progression — Record at Each Level</div>
+        <p>Begin pumping. Record weight at: 10⁵ Pa (atm) → 10⁴ Pa → 10³ Pa → 10² Pa → 10 Pa → 1 Pa → 0.1 Pa → 10⁻² Pa → 10⁻³ Pa → continue as far as equipment allows. Plot W vs pressure graph after each reading.</p>
+        <div class="note">Standard atmospheric pressure buoyancy is already known and can be subtracted. The UPP effect (if real) should show weight change BEYOND what buoyancy correction predicts.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="stepn">D</div>
+      <div class="stepc">
+        <div class="stitle">Analyse Results</div>
+        <p><strong>If W decreases proportionally with pressure removed:</strong> This confirms W = P₀ × A_eff × (1−C). Back-calculate P₀ = W₀ / (A_eff × SF). This is the P₀ measurement. Framework validated.</p>
+        <p><strong>If W stays constant after buoyancy correction:</strong> Standard buoyancy alone explains weight changes. UPP master equation's P₀ interpretation needs revision.</p>
+        <p><strong>Either result is scientifically valuable.</strong> Confirmation validates. Non-confirmation refines.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="stepn">E</div>
+      <div class="stepc">
+        <div class="stitle">Sphere vs Flat Plate Comparison</div>
+        <p>Repeat with a flat plate of identical mass and material. Compare weight at identical vacuum levels. If sphere weight differs from flat plate → F-04 geometry dependence confirmed → second major validation of framework.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="fb">
+    <div class="fi">Expected Data Pattern — If UPP Confirmed</div>
+    <div class="fe">W(P) = P₀ × A_eff × (P / P_atm) → Linear decrease with pressure</div>
+  </div>
+
+  <div class="warn">
+    <div class="wt">Control Experiments Required</div>
+    Run identical experiment with non-magnetic material (e.g., glass sphere) to rule out magnetic effects. Run at multiple temperatures to rule out thermal expansion. Run multiple times to establish reproducibility. Science requires controls.
+  </div>
+</section>
+
+<footer>
+  <div>Al-Adal Dynamics Institute · UPP Engineering Manual · Abdul Ahad (S/O Muhammad Iqbal Ansari) · Old Sukkur, Sindh, Pakistan · 2026</div>
+  <div style="margin-top:6px;">DOI: 10.5281/zenodo.20162197 · For construction collaboration: GitHub Issues</div>
+</footer>
+
+</body>
+</html>
